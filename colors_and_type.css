@@ -1,0 +1,351 @@
+/* ============================================================
+   Oscar Get me a Car — Design Tokens
+   Colors, type, and semantic styles.
+   ============================================================ */
+
+/* ---- Söhne (Klim Type Foundry — TEST fonts only) ----------- */
+/* Four widths × eight weights × upright + italic = 64 faces.  */
+/* The "Test" prefix is Klim's evaluation distribution — for  */
+/* production, license the retail fonts from klim.co.nz.       */
+
+/* Söhne */
+
+
+
+
+@font-face { font-family: "Söhne"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/TestSohne-Buch-BF663d89cd32e6a.otf") format("opentype"); }
+
+@font-face { font-family: "Söhne"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/TestSohne-Kraftig-BF663d89cd37e26.otf") format("opentype"); }
+
+@font-face { font-family: "Söhne"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/TestSohne-Halbfett-BF663d89cd2d67b.otf") format("opentype"); }
+
+@font-face { font-family: "Söhne"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/TestSohne-Dreiviertelfett-BF663d89ccc5f66.otf") format("opentype"); }
+
+@font-face { font-family: "Söhne"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/TestSohne-Fett-BF663d89cca89ff.otf") format("opentype"); }
+
+@font-face { font-family: "Söhne"; font-style: normal; font-weight: 900; font-display: swap; src: url("fonts/TestSohne-Extrafett-BF663d89cc9f2c0.otf") format("opentype"); }
+
+
+/* Söhne Schmal */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Söhne Breit */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Söhne Mono */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Inter is shipped locally from fonts/ as two variable fonts —
+   the opsz axis automatically picks the right optical size,
+   and the wght axis covers 100–900.  Söhne is the intended licensed
+   counterpart; if/when licensed, add its @font-face below and update
+   --font-sans / --font-display. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/Inter-VariableFont_opsz_wght.ttf") format("truetype-variations");
+  font-variation-settings: "opsz" 14;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/Inter-Italic-VariableFont_opsz_wght.ttf") format("truetype-variations");
+  font-variation-settings: "opsz" 14;
+}
+
+:root {
+  /* ----------------------------------------------------------
+     CORE BRAND COLORS
+     The four-color palette from the brand board. Cool, calm,
+     trustworthy. Never red/orange/neon urgency.
+     ---------------------------------------------------------- */
+  --oscar-navy:        #1E3A5F;  /* Primary — deep navy, the brand anchor */
+  --oscar-blue:        #2D5A8C;  /* Accent — confident mid blue */
+  --oscar-bg:          #FAFAFA;  /* Background — near-white */
+  --oscar-gray:        #E6E9ED;  /* Neutral gray — surfaces, dividers */
+
+  /* ----------------------------------------------------------
+     EXTENDED PALETTE
+     Tints/shades derived from the core for UI nuance. Use
+     sparingly — the brand is intentionally restrained.
+     ---------------------------------------------------------- */
+  --oscar-navy-900:    #122642;  /* deepest, for type on light bg */
+  --oscar-navy-800:    #1E3A5F;  /* = primary */
+  --oscar-navy-700:    #264a78;
+  --oscar-blue-600:    #2D5A8C;  /* = accent */
+  --oscar-blue-500:    #3E72A8;  /* hover lighten */
+  --oscar-blue-400:    #6B95C2;
+  --oscar-blue-200:    #B8CCDF;
+  --oscar-blue-100:    #DCE6F1;
+  --oscar-blue-050:    #EEF3F8;  /* faint blue wash for hero bg */
+
+  --oscar-ink:         #0F1B2D;  /* deepest text */
+  --oscar-ink-2:       #2A3445;  /* secondary text */
+  --oscar-ink-3:       #5A6577;  /* tertiary / metadata */
+  --oscar-ink-4:       #8A93A1;  /* placeholder */
+  --oscar-line:        #E6E9ED;  /* = neutral gray, default hairline */
+  --oscar-line-2:      #D3D8DF;  /* stronger hairline */
+  --oscar-surface:     #FFFFFF;
+  --oscar-surface-2:   #FAFAFA;  /* = background */
+  --oscar-surface-3:   #F2F4F7;  /* card on background */
+
+  /* ----------------------------------------------------------
+     SEMANTIC COLORS
+     We avoid red for "urgency." Reserve a muted red ONLY for
+     true errors (form validation, destructive actions). Use
+     muted green for success/progress. Never marketing red.
+     ---------------------------------------------------------- */
+  --oscar-success:     #2F7A5B;  /* muted forest green */
+  --oscar-success-bg:  #E8F2EC;
+  --oscar-warning:     #9A6B1F;  /* warm muted amber, almost olive */
+  --oscar-warning-bg:  #F7EFDD;
+  --oscar-danger:      #A93B2E;  /* muted, never bright red */
+  --oscar-danger-bg:   #F6E4E1;
+
+  /* ----------------------------------------------------------
+     FOREGROUND / BACKGROUND ROLES (aliases)
+     Use these in product code so reskinning is a one-line edit.
+     ---------------------------------------------------------- */
+  --fg-1: var(--oscar-ink);        /* primary text */
+  --fg-2: var(--oscar-ink-2);      /* secondary text */
+  --fg-3: var(--oscar-ink-3);      /* metadata, captions */
+  --fg-4: var(--oscar-ink-4);      /* placeholder */
+  --fg-brand: var(--oscar-navy);   /* brand-tinted headings */
+  --fg-accent: var(--oscar-blue);  /* links, accents */
+  --fg-inverse: #FFFFFF;
+
+  --bg-1: var(--oscar-surface);    /* card / page on light */
+  --bg-2: var(--oscar-surface-2);  /* page bg */
+  --bg-3: var(--oscar-surface-3);  /* nested card / chip */
+  --bg-brand: var(--oscar-navy);   /* dark band, footer, hero */
+  --bg-accent: var(--oscar-blue);  /* CTA fill */
+
+  --line-1: var(--oscar-line);
+  --line-2: var(--oscar-line-2);
+
+  /* ----------------------------------------------------------
+     SIGNATURE GRADIENTS
+     From the Graphic System sheet. Use sparingly — at hero
+     scale or for the app icon, not buttons or chips.
+     ---------------------------------------------------------- */
+  --grad-deep:    linear-gradient(135deg, #1E3A5F 0%, #2D5A8C 100%);
+  --grad-mid:     linear-gradient(135deg, #2D5A8C 0%, #E6E9ED 100%);
+  --grad-soft:    linear-gradient(135deg, #FAFAFA 0%, #E6E9ED 100%);
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY — FAMILIES
+     Inter is the working typeface. Söhne is the licensed
+     alternate (swap in if licensed).
+     ---------------------------------------------------------- */
+  --font-sans:    "Söhne", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Söhne", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    "Söhne Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-condensed: "Söhne Schmal", "Söhne", "Inter", sans-serif;
+  --font-wide:    "Söhne Breit", "Söhne", "Inter", sans-serif;
+
+  /* ----------------------------------------------------------
+     TYPE SCALE
+     Humanist sans, modern but warm. Headings are heavy
+     (700/800) and tight. Body is 400/500.
+     ---------------------------------------------------------- */
+  --fs-display:    72px;  --lh-display:    1.02;  --ls-display:    -0.025em;
+  --fs-h1:         48px;  --lh-h1:         1.08;  --ls-h1:         -0.02em;
+  --fs-h2:         36px;  --lh-h2:         1.12;  --ls-h2:         -0.015em;
+  --fs-h3:         28px;  --lh-h3:         1.2;   --ls-h3:         -0.01em;
+  --fs-h4:         22px;  --lh-h4:         1.28;  --ls-h4:         -0.005em;
+  --fs-h5:         18px;  --lh-h5:         1.35;  --ls-h5:          0;
+  --fs-body-lg:    18px;  --lh-body-lg:    1.55;
+  --fs-body:       16px;  --lh-body:       1.55;
+  --fs-body-sm:    14px;  --lh-body-sm:    1.5;
+  --fs-caption:    13px;  --lh-caption:    1.45;
+  --fs-overline:   12px;  --lh-overline:   1.2;   --ls-overline:    0.14em;
+
+  /* ----------------------------------------------------------
+     SPACING — 4px base scale
+     ---------------------------------------------------------- */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ----------------------------------------------------------
+     RADII
+     Generous but not playful. Tracks the rounded squares in
+     the brand color palette swatches (~16px on 168px swatch).
+     ---------------------------------------------------------- */
+  --radius-xs:  4px;   /* chips, tags */
+  --radius-sm:  8px;   /* inputs, small buttons */
+  --radius-md: 12px;   /* buttons, secondary cards */
+  --radius-lg: 16px;   /* cards */
+  --radius-xl: 20px;   /* feature cards */
+  --radius-2xl:28px;   /* hero panels */
+  --radius-pill: 999px;
+
+  /* ----------------------------------------------------------
+     ELEVATION
+     Restrained. Trust comes from clarity, not heavy drop
+     shadows. Shadows are tinted navy at very low alpha.
+     ---------------------------------------------------------- */
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgba(30, 58, 95, 0.06),
+              0 1px 1px rgba(30, 58, 95, 0.04);
+  --shadow-2: 0 4px 12px rgba(30, 58, 95, 0.08),
+              0 1px 2px rgba(30, 58, 95, 0.04);
+  --shadow-3: 0 12px 32px rgba(30, 58, 95, 0.10),
+              0 2px 6px rgba(30, 58, 95, 0.05);
+  --shadow-4: 0 24px 60px rgba(30, 58, 95, 0.14),
+              0 4px 12px rgba(30, 58, 95, 0.06);
+  --shadow-focus: 0 0 0 4px rgba(45, 90, 140, 0.25);
+
+  /* ----------------------------------------------------------
+     MOTION
+     Calm, never bouncy. Short durations, ease-out.
+     ---------------------------------------------------------- */
+  --ease-out:     cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 120ms;
+  --dur-2: 180ms;
+  --dur-3: 240ms;
+  --dur-4: 360ms;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   Apply directly to HTML tags so prose looks right by default.
+   ============================================================ */
+
+html {
+  font-family: var(--font-sans);
+  color: var(--fg-1);
+  background: var(--bg-2);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Use Inter's opsz axis so display heads auto-adjust their optical size */
+  font-optical-sizing: auto;
+}
+
+body { margin: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--fg-brand);
+  margin: 0 0 var(--space-4);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--fs-h1);    line-height: var(--lh-h1);    letter-spacing: var(--ls-h1);    font-weight: 800; }
+h2 { font-size: var(--fs-h2);    line-height: var(--lh-h2);    letter-spacing: var(--ls-h2);    font-weight: 800; }
+h3 { font-size: var(--fs-h3);    line-height: var(--lh-h3);    letter-spacing: var(--ls-h3);    font-weight: 700; }
+h4 { font-size: var(--fs-h4);    line-height: var(--lh-h4);    letter-spacing: var(--ls-h4);    font-weight: 700; }
+h5 { font-size: var(--fs-h5);    line-height: var(--lh-h5);                                     font-weight: 600; }
+
+p, li {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-2);
+  text-wrap: pretty;
+  margin: 0 0 var(--space-4);
+}
+
+a {
+  color: var(--fg-accent);
+  text-decoration: none;
+  transition: color var(--dur-2) var(--ease-out);
+}
+a:hover { color: var(--oscar-blue-500); text-decoration: underline; text-underline-offset: 3px; }
+
+small, .caption {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--fg-3);
+}
+
+.overline {
+  font-size: var(--fs-overline);
+  line-height: var(--lh-overline);
+  letter-spacing: var(--ls-overline);
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--fg-accent);
+}
+
+.display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  font-weight: 800;
+  color: var(--fg-brand);
+}
+
+code, pre, kbd {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-1);
+  margin: var(--space-8) 0;
+}
+
+::selection { background: var(--oscar-blue-100); color: var(--oscar-navy-900); }
