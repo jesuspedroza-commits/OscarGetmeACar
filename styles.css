@@ -180,6 +180,7 @@ select:focus-visible {
   .os-grid-3          { grid-template-columns: 1fr !important; }
   .os-grid-4          { grid-template-columns: repeat(2, 1fr) !important; }
   .os-testimonials-grid { grid-template-columns: 1fr !important; }
+  .os-inv-grid        { grid-template-columns: repeat(2, 1fr) !important; }
   .os-cta-grid        { grid-template-columns: 1fr !important; gap: 32px !important; }
 
   /* Trust bar */
@@ -204,7 +205,8 @@ select:focus-visible {
   .os-h2 { font-size: 26px !important; }
 
   /* Grids */
-  .os-grid-4 { grid-template-columns: 1fr !important; }
+  .os-grid-4  { grid-template-columns: 1fr !important; }
+  .os-inv-grid { grid-template-columns: 1fr !important; }
 
   /* Nav */
   .os-nav-phone { display: none !important; }

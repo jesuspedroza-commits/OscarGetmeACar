@@ -1,4 +1,4 @@
-/* global React, ReactDOM, COPY, Header, Hero, Benefits, HowItWorks, Testimonials, ClosingCTA, Footer, TweaksPanel, useTweaks, TweakSection, TweakSelect */
+/* global React, ReactDOM, COPY, Header, Hero, Benefits, HowItWorks, InventoryPreview, Testimonials, ClosingCTA, Footer, TweaksPanel, useTweaks, TweakSection, TweakSelect */
 
 const { useEffect: useEffectApp, useState: useStateApp } = React;
 
@@ -63,6 +63,10 @@ function App() {
           onSubmitLead={handleLead} />
         <Benefits copy={copy.benefits} />
         <HowItWorks copy={copy.how} />
+        <InventoryPreview copy={copy.inventory} onCta={() => {
+          const el = document.getElementById('contacto');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }} />
         <Testimonials copy={copy.testimonials} />
         <ClosingCTA copy={copy.cta} formLabels={copy.hero.form} onSubmitLead={handleLead} />
       </main>

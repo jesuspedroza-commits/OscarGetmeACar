@@ -155,6 +155,39 @@ const COPY = {
       ],
     },
 
+    inventory: {
+      overline: 'See what\'s out there',
+      comingSoon: 'Coming soon',
+      h2: 'A curated look at what Oscar finds.',
+      sub: 'Recent arrivals, good-value options, and cars worth asking about. Full browsing experience coming soon.',
+      previewLabel: 'Preview',
+      ctaHead: 'Want early access?',
+      ctaSub: 'Ask Oscar what\'s available today.',
+      ctaBtn: 'Ask about current options',
+      cards: [
+        {
+          badge: 'Hot Deal',
+          title: 'Great value options',
+          text: 'Selected cars that stand out compared to similar choices.',
+        },
+        {
+          badge: 'Fresh Arrival',
+          title: 'Recently available',
+          text: 'New opportunities worth checking before they move quickly.',
+        },
+        {
+          badge: 'Budget Friendly',
+          title: 'Practical daily drivers',
+          text: 'Reliable options for everyday needs and realistic budgets.',
+        },
+        {
+          badge: 'Flexible Options',
+          title: 'Different credit situations',
+          text: 'Vehicles that may fit a range of financing paths.',
+        },
+      ],
+    },
+
     cta: {
       overline: 'Your next step',
       h2line1: 'Send a message.',
@@ -344,6 +377,39 @@ const COPY = {
           meta: 'Dueño de pequeño negocio · Hialeah, FL',
           photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop',
           quote: '"Necesitaba una pickup para el trabajo, no para presumir. Me ayudaron a encontrar una F-150 con kilometraje real, no las de 200 mil millas que te muestran en otros lados. Tres meses después, sigue trabajando perfecto."',
+        },
+      ],
+    },
+
+    inventory: {
+      overline: 'Ve lo que hay',
+      comingSoon: 'Próximamente',
+      h2: 'Un vistazo curado a lo que Oscar encuentra.',
+      sub: 'Llegadas recientes, opciones de buen valor y autos que vale la pena preguntar. Experiencia completa próximamente.',
+      previewLabel: 'Vista previa',
+      ctaHead: '¿Quieres acceso anticipado?',
+      ctaSub: 'Pregúntale a Oscar qué hay disponible hoy.',
+      ctaBtn: 'Preguntar por opciones actuales',
+      cards: [
+        {
+          badge: 'Buena oferta',
+          title: 'Opciones de gran valor',
+          text: 'Autos seleccionados que destacan frente a opciones similares.',
+        },
+        {
+          badge: 'Recién llegado',
+          title: 'Disponibles recientemente',
+          text: 'Nuevas oportunidades que vale la pena revisar antes de que se muevan.',
+        },
+        {
+          badge: 'Económico',
+          title: 'Para el día a día',
+          text: 'Opciones confiables para necesidades cotidianas y presupuestos reales.',
+        },
+        {
+          badge: 'Opciones flexibles',
+          title: 'Diferentes situaciones de crédito',
+          text: 'Vehículos que pueden encajar con distintos caminos de financiamiento.',
         },
       ],
     },
