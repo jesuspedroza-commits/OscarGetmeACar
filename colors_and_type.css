@@ -1,11 +1,11 @@
 /* ============================================================
-   Oscar Get me a Car — Design Tokens
+   Oscar Get me a Car - Design Tokens
    Colors, type, and semantic styles.
    ============================================================ */
 
-/* ---- Söhne (Klim Type Foundry — TEST fonts only) ----------- */
+/* ---- Söhne (Klim Type Foundry - TEST fonts only) ----------- */
 /* Four widths × eight weights × upright + italic = 64 faces.  */
-/* The "Test" prefix is Klim's evaluation distribution — for  */
+/* The "Test" prefix is Klim's evaluation distribution - for  */
 /* production, license the retail fonts from klim.co.nz.       */
 
 /* Söhne */
@@ -80,7 +80,7 @@
 
 
 
-/* Inter is shipped locally from fonts/ as two variable fonts —
+/* Inter is shipped locally from fonts/ as two variable fonts -
    the opsz axis automatically picks the right optical size,
    and the wght axis covers 100–900.  Söhne is the intended licensed
    counterpart; if/when licensed, add its @font-face below and update
@@ -108,15 +108,15 @@
      The four-color palette from the brand board. Cool, calm,
      trustworthy. Never red/orange/neon urgency.
      ---------------------------------------------------------- */
-  --oscar-navy:        #1E3A5F;  /* Primary — deep navy, the brand anchor */
-  --oscar-blue:        #2D5A8C;  /* Accent — confident mid blue */
-  --oscar-bg:          #FAFAFA;  /* Background — near-white */
-  --oscar-gray:        #E6E9ED;  /* Neutral gray — surfaces, dividers */
+  --oscar-navy:        #1E3A5F;  /* Primary - deep navy, the brand anchor */
+  --oscar-blue:        #2D5A8C;  /* Accent - confident mid blue */
+  --oscar-bg:          #FAFAFA;  /* Background - near-white */
+  --oscar-gray:        #E6E9ED;  /* Neutral gray - surfaces, dividers */
 
   /* ----------------------------------------------------------
      EXTENDED PALETTE
      Tints/shades derived from the core for UI nuance. Use
-     sparingly — the brand is intentionally restrained.
+     sparingly - the brand is intentionally restrained.
      ---------------------------------------------------------- */
   --oscar-navy-900:    #122642;  /* deepest, for type on light bg */
   --oscar-navy-800:    #1E3A5F;  /* = primary */
@@ -174,7 +174,7 @@
 
   /* ----------------------------------------------------------
      SIGNATURE GRADIENTS
-     From the Graphic System sheet. Use sparingly — at hero
+     From the Graphic System sheet. Use sparingly - at hero
      scale or for the app icon, not buttons or chips.
      ---------------------------------------------------------- */
   --grad-deep:    linear-gradient(135deg, #1E3A5F 0%, #2D5A8C 100%);
@@ -182,7 +182,7 @@
   --grad-soft:    linear-gradient(135deg, #FAFAFA 0%, #E6E9ED 100%);
 
   /* ----------------------------------------------------------
-     TYPOGRAPHY — FAMILIES
+     TYPOGRAPHY - FAMILIES
      Inter is the working typeface. Söhne is the licensed
      alternate (swap in if licensed).
      ---------------------------------------------------------- */
@@ -210,7 +210,7 @@
   --fs-overline:   12px;  --lh-overline:   1.2;   --ls-overline:    0.14em;
 
   /* ----------------------------------------------------------
-     SPACING — 4px base scale
+     SPACING - 4px base scale
      ---------------------------------------------------------- */
   --space-0:  0;
   --space-1:  4px;

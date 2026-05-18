@@ -1,7 +1,7 @@
 /* global React */
 
 // =================================================================
-// HEADER — sticky, glass, logo + nav + lang toggle + CTA
+// HEADER - sticky, glass, logo + nav + lang toggle + CTA
 // =================================================================
 const headerStyles = {
   bar: {

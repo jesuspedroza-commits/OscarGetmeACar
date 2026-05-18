@@ -1,7 +1,7 @@
 /* global React */
 
 // =================================================================
-// BENEFITS — three large feature cards.
+// BENEFITS - three large feature cards.
 // =================================================================
 const benStyles = {
   wrap: { background: '#fff', borderTop: '1px solid var(--line-1)', borderBottom: '1px solid var(--line-1)' },

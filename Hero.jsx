@@ -2,7 +2,7 @@
 const { useState: useStateHero } = React;
 
 // =================================================================
-// HERO — split panel: headline + trust strip on the left, lead form right.
+// HERO - split panel: headline + trust strip on the left, lead form right.
 // =================================================================
 const heroStyles = {
   wrap: { position: 'relative', maxWidth: 1240, margin: '0 auto', padding: '32px 32px 48px' },

@@ -1,7 +1,7 @@
 /* global React */
 
 // =================================================================
-// FOOTER — slim, under the dark CTA band.
+// FOOTER - slim, under the dark CTA band.
 // =================================================================
 const footerStyles = {
   band: {

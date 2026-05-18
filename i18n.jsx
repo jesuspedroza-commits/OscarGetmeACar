@@ -1,6 +1,6 @@
 /* global React */
 /* =============================================================================
-   i18n — single source of truth for every string in the landing.
+   i18n: single source of truth for every string in the landing.
    Default language: English. Toggle via header button.
 ============================================================================= */
 
@@ -46,7 +46,7 @@ const COPY = {
           phone: 'A 10-digit phone number, please.',
         },
         successHead: 'Got it, {name}.',
-        successBody: 'Oscar or someone on his team will reach out within one business day — no pressure, no sales script. Meanwhile, see why our customers choose us.',
+        successBody: 'Oscar or someone on his team will reach out within one business day, no pressure, no sales script. Meanwhile, see why our customers choose us.',
         successLink: 'See why Oscar',
       },
     },
@@ -73,11 +73,11 @@ const COPY = {
           stat: '1 on 1',
           statLabel: 'with a real advisor',
           title: 'Personal guidance.',
-          body: 'You talk straight to Oscar or his team. We help you understand which car fits your life, your job, and your budget — in English or Spanish.',
+          body: 'You talk straight to Oscar or his team. We help you understand which car fits your life, your job, and your budget, in English or Spanish.',
           details: [
             'We explain the numbers in plain words',
             'Recommendations based on your real mileage',
-            'Bilingual — we work in English or Spanish',
+            'Bilingual, we work in English or Spanish',
           ],
         },
         {
@@ -87,7 +87,7 @@ const COPY = {
           title: 'No stress, your pace.',
           body: 'No pushy tactics, no \u201coffer ends today.\u201d You decide when you\u2019re ready, with all the info in your hand.',
           details: [
-            'Your time, your terms — no false urgency',
+            'Your time, your terms. No false urgency',
             'We respond within one business day',
             'If it\u2019s not the right car, we\u2019ll tell you',
           ],
@@ -113,15 +113,15 @@ const COPY = {
       lead: 'We\u2019re not going to make you lose a whole Saturday at the lot. We start by listening.',
       steps: [
         { n: '01', icon: 'message-square', h: 'Tell us what you need.', p: 'Leave your name, email, and phone. We call you to understand your day-to-day, your budget, and what you need from a car.', meta: 'Takes 3 minutes' },
-        { n: '02', icon: 'list-checks',    h: 'Get real options.',      p: 'We send you 3 to 5 cars that actually fit — with history, price, and monthly payment laid out clearly. No fine print.', meta: 'Within 24 business hours' },
-        { n: '03', icon: 'key-round',      h: 'Drive your car home.',   p: 'When you\u2019re ready, we invite you in to see it, drive it, and sign — on your timeline. If you decide no, that\u2019s fine too. No pressure.', meta: 'You decide when' },
+        { n: '02', icon: 'list-checks',    h: 'Get real options.',      p: 'We send you 3 to 5 cars that actually fit, with history, price, and monthly payment laid out clearly. No fine print.', meta: 'Within 24 business hours' },
+        { n: '03', icon: 'key-round',      h: 'Drive your car home.',   p: 'When you\u2019re ready, we invite you in to see it, drive it, and sign on your timeline. If you decide no, that\u2019s fine too. No pressure.', meta: 'You decide when' },
       ],
     },
 
     testimonials: {
       overline: 'Real customers',
       h2: 'Florida families already driving the car they wanted.',
-      lead: 'These are a few of the customers we\u2019ve worked with this year. No script, no actors — real people who showed up with a question and left with a car that fits their life.',
+      lead: 'These are a few of the customers we\u2019ve worked with this year. No script, no actors. Real people who showed up with a question and left with a car that fits their life.',
       rating: { num: '4.9 / 5', label: 'Average across 312 reviews' },
       featured: {
         name: 'Carlos Ramírez',
@@ -138,7 +138,7 @@ const COPY = {
           name: 'María Linares',
           meta: 'Nurse · Miami, FL',
           photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80&auto=format&fit=crop',
-          quote: '"They speak Spanish and walk you through everything patiently. My credit wasn\u2019t perfect and other places shut the door — Oscar got me a Toyota Corolla with a monthly payment that actually fits my budget."',
+          quote: '"They speak Spanish and walk you through everything patiently. My credit wasn\u2019t perfect and other places shut the door. Oscar got me a Toyota Corolla with a monthly payment that actually fits my budget."',
         },
         {
           name: 'Jasmine Thompson',
@@ -150,7 +150,7 @@ const COPY = {
           name: 'Roberto Delgado',
           meta: 'Small business owner · Hialeah, FL',
           photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop',
-          quote: '"I needed a pickup for work, not to show off. They helped me find an F-150 with real mileage — not the 200k-mile ones other places try on you. Three months in, still running like a champ."',
+          quote: '"I needed a pickup for work, not to show off. They helped me find an F-150 with real mileage, not the 200k-mile ones other places try on you. Three months in, still running like a champ."',
         },
       ],
     },
@@ -270,7 +270,7 @@ const COPY = {
           details: [
             'Te explicamos los números en palabras claras',
             'Recomendaciones según tu kilometraje real',
-            'Bilingüe — atendemos en español o inglés',
+            'Bilingüe, atendemos en español o inglés',
           ],
         },
         {
@@ -280,7 +280,7 @@ const COPY = {
           title: 'Sin estrés, a tu ritmo.',
           body: 'Nada de tácticas agresivas ni "ofertas que vencen hoy". Tomas tu decisión cuando estés listo, con toda la información en la mano.',
           details: [
-            'Tu tiempo, tus términos — sin urgencia falsa',
+            'Tu tiempo, tus términos. Sin urgencia falsa',
             'Te respondemos en menos de un día hábil',
             'Si no es el auto correcto, te lo decimos',
           ],
@@ -290,7 +290,7 @@ const COPY = {
           stat: 'A tu puerta',
           statLabel: 'entrega a domicilio disponible',
           title: '¿No quieres manejarlo a casa esa primera vez? Te lo llevamos. 📦',
-          body: 'Si no te apetece manejar el auto a casa la primera vez, no hay problema. Oscar puede entregarlo directo en tu puerta — nuevo o usado, en cualquier parte de Florida.',
+          body: 'Si no te apetece manejar el auto a casa la primera vez, no hay problema. Oscar puede entregarlo directo en tu puerta, nuevo o usado, en cualquier parte de Florida.',
           details: [
             'Disponible para autos nuevos y usados en Florida',
             'Coordinamos la entrega a tu horario',
@@ -306,15 +306,15 @@ const COPY = {
       lead: 'No te vamos a hacer perder un sábado entero en el lote. Empezamos por escucharte.',
       steps: [
         { n: '01', icon: 'message-square', h: 'Cuéntanos qué buscas.', p: 'Déjanos tu nombre, email y teléfono. Te llamamos para entender tu día a día, tu presupuesto y qué necesitas del auto.', meta: 'Toma 3 minutos' },
-        { n: '02', icon: 'list-checks',    h: 'Recibe opciones reales.', p: 'Te enviamos 3 a 5 opciones de autos que sí encajan — con historial, precio y pago mensual claros, sin letra chica.', meta: 'En 24 horas hábiles' },
-        { n: '03', icon: 'key-round',      h: 'Maneja tu auto.', p: 'Cuando estés listo, te invitamos a verlo, manejarlo y firmar — a tu ritmo. Si decides que no, está bien. Sin presión.', meta: 'Tú decides cuándo' },
+        { n: '02', icon: 'list-checks',    h: 'Recibe opciones reales.', p: 'Te enviamos 3 a 5 opciones de autos que sí encajan, con historial, precio y pago mensual claros, sin letra chica.', meta: 'En 24 horas hábiles' },
+        { n: '03', icon: 'key-round',      h: 'Maneja tu auto.', p: 'Cuando estés listo, te invitamos a verlo, manejarlo y firmar a tu ritmo. Si decides que no, está bien. Sin presión.', meta: 'Tú decides cuándo' },
       ],
     },
 
     testimonials: {
       overline: 'Testimonios reales',
       h2: 'Familias de Florida que ya manejan el auto que querían.',
-      lead: 'Estos son algunos de los clientes con los que hemos trabajado este año. Sin guion, sin actores — gente real que llegó con una duda y se fue con un auto que sí les sirve.',
+      lead: 'Estos son algunos de los clientes con los que hemos trabajado este año. Sin guion, sin actores. Gente real que llegó con una duda y se fue con un auto que sí les sirve.',
       rating: { num: '4.9 / 5', label: 'Promedio de 312 reseñas' },
       featured: {
         name: 'Carlos Ramírez',
@@ -331,7 +331,7 @@ const COPY = {
           name: 'María Linares',
           meta: 'Enfermera · Miami, FL',
           photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80&auto=format&fit=crop',
-          quote: '"Hablan español y te explican todo con paciencia. Mi crédito no era perfecto y otros me cerraron la puerta — Oscar me consiguió un Toyota Corolla con un pago mensual que sí cabe en mi presupuesto."',
+          quote: '"Hablan español y te explican todo con paciencia. Mi crédito no era perfecto y otros me cerraron la puerta. Oscar me consiguió un Toyota Corolla con un pago mensual que sí cabe en mi presupuesto."',
         },
         {
           name: 'Jasmine Thompson',

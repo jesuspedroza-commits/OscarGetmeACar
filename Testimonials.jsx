@@ -1,7 +1,7 @@
 /* global React */
 
 // =================================================================
-// TESTIMONIALS — featured + 3 small.
+// TESTIMONIALS - featured + 3 small.
 // =================================================================
 const tStyles = {
   wrap: { background: 'var(--bg-2)', padding: '96px 0 96px' },

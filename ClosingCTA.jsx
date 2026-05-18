@@ -2,7 +2,7 @@
 const { useState: useStateCTA } = React;
 
 // =================================================================
-// CLOSING CTA — dark band with second lead form.
+// CLOSING CTA - dark band with second lead form.
 // Takes ctaCopy + formLabels (reused from hero.form for name/email/phone).
 // =================================================================
 const ctaStyles = {

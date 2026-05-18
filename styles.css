@@ -1,4 +1,4 @@
-/* Oscar Landing — Spanish lead-gen */
+/* Oscar Landing - Spanish lead-gen */
 
 @keyframes oscarFadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes oscarSlideUp {
@@ -151,7 +151,7 @@ select:focus-visible {
   .os-header-inner { padding: 12px 20px !important; }
   .os-nav-links    { display: none !important; }
 
-  /* How it works — switch right borders to bottom borders when stacked */
+  /* How it works - switch right borders to bottom borders when stacked */
   .os-step-item { border-right: none !important; border-bottom: 1px solid var(--line-1) !important; }
   .os-step-item:last-child { border-bottom: none !important; }
 

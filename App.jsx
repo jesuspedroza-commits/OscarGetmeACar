@@ -12,7 +12,7 @@ const SUPPORTED_LANGS = ['en', 'es'];
 const DEFAULT_LANG = 'en';
 
 function App() {
-  // Language is preference-state, not design-state — kept in localStorage so a
+  // Language is preference-state, not design-state - kept in localStorage so a
   // refresh remembers what the visitor picked.
   const [lang, setLang] = useStateApp(() => {
     try {

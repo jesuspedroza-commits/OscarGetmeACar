@@ -1,7 +1,7 @@
 /* global React */
 
 // =================================================================
-// HOW IT WORKS — three-step process strip.
+// HOW IT WORKS - three-step process strip.
 // =================================================================
 const stepStyles = {
   wrap: { background: '#fff', borderTop: '1px solid var(--line-1)' },
