@@ -158,7 +158,7 @@ const COPY = {
     inventory: {
       overline: 'See what\'s out there',
       comingSoon: 'Coming soon',
-      h2: 'A curated look at what Oscar finds.',
+      h2: 'Good cars are out there. Oscar knows where to look.',
       sub: 'Recent arrivals, good-value options, and cars worth asking about. Full browsing experience coming soon.',
       previewLabel: 'Preview',
       ctaHead: 'Want early access?',
@@ -384,7 +384,7 @@ const COPY = {
     inventory: {
       overline: 'Ve lo que hay',
       comingSoon: 'Próximamente',
-      h2: 'Un vistazo curado a lo que Oscar encuentra.',
+      h2: 'Hay buenos autos por ahí. Oscar sabe dónde buscar.',
       sub: 'Llegadas recientes, opciones de buen valor y autos que vale la pena preguntar. Experiencia completa próximamente.',
       previewLabel: 'Vista previa',
       ctaHead: '¿Quieres acceso anticipado?',
