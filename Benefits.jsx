@@ -18,7 +18,7 @@ const benStyles = {
     color: 'var(--oscar-navy)', margin: '0 0 16px', textWrap: 'balance',
   },
   lead: { fontSize: 18, lineHeight: 1.55, color: 'var(--oscar-ink-2)', margin: 0, maxWidth: 620 },
-  grid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 },
+  grid: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 },
   card: {
     background: '#fff', border: '1px solid var(--line-1)', borderRadius: 'var(--radius-xl)',
     padding: '32px 32px 36px',

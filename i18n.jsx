@@ -92,6 +92,18 @@ const COPY = {
             'If it\u2019s not the right car, we\u2019ll tell you',
           ],
         },
+        {
+          icon: 'package',
+          stat: 'Door to door',
+          statLabel: 'home delivery available',
+          title: 'Not ready to drive it home? We bring it to you. \ud83d\udce6',
+          body: 'If you don\u2019t feel like driving it home that first time, no problem. Oscar can deliver your car straight to your door \u2014 new or used, anywhere in Florida.',
+          details: [
+            'Available for new and used cars across Florida',
+            'We coordinate delivery on your schedule',
+            'Oscar handles the paperwork at your door',
+          ],
+        },
       ],
     },
 
@@ -271,6 +283,18 @@ const COPY = {
             'Tu tiempo, tus términos — sin urgencia falsa',
             'Te respondemos en menos de un día hábil',
             'Si no es el auto correcto, te lo decimos',
+          ],
+        },
+        {
+          icon: 'package',
+          stat: 'A tu puerta',
+          statLabel: 'entrega a domicilio disponible',
+          title: '¿No quieres manejarlo a casa esa primera vez? Te lo llevamos. 📦',
+          body: 'Si no te apetece manejar el auto a casa la primera vez, no hay problema. Oscar puede entregarlo directo en tu puerta — nuevo o usado, en cualquier parte de Florida.',
+          details: [
+            'Disponible para autos nuevos y usados en Florida',
+            'Coordinamos la entrega a tu horario',
+            'Oscar lleva el papeleo directo a tu puerta',
           ],
         },
       ],
