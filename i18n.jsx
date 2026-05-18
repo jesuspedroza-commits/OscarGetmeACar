@@ -65,7 +65,7 @@ const COPY = {
           details: [
             'Free Carfax reports and market pricing',
             'We negotiate for you across the Rick Case network',
-            'No surprise fees at signing',
+            'Great deals on new and used cars across Florida',
           ],
         },
         {
@@ -246,7 +246,7 @@ const COPY = {
           details: [
             'Reportes de Carfax y precios de mercado, gratis',
             'Negociamos por ti con la red de Rick Case',
-            'Sin tarifas sorpresa al firmar',
+            'Excelentes ofertas en autos nuevos y usados en Florida',
           ],
         },
         {
