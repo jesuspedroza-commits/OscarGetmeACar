@@ -63,7 +63,7 @@ function HowItWorks({ copy }) {
         </div>
         <div style={{ ...stepStyles.grid, border: '1px solid var(--line-1)', borderRadius: 'var(--radius-xl)', overflow: 'hidden', background: '#fff' }} className="os-grid-3">
           {copy.steps.map((s, i) => (
-            <div key={i} style={{ ...stepStyles.step, ...(i === copy.steps.length - 1 ? stepStyles.stepLast : {}) }}>
+            <div key={i} className="os-step-item" style={{ ...stepStyles.step, ...(i === copy.steps.length - 1 ? stepStyles.stepLast : {}) }}>
               <div style={stepStyles.num}>
                 <span style={stepStyles.numDot}>{s.n}</span>
                 <i data-lucide={s.icon} style={{ width: 18, height: 18, color: 'var(--oscar-navy)', marginLeft: 4 }}></i>

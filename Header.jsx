@@ -59,7 +59,7 @@ function Header({ copy, lang, onToggleLang, onCta }) {
   ];
   return (
     <header style={headerStyles.bar}>
-      <div style={headerStyles.inner}>
+      <div style={headerStyles.inner} className="os-header-inner">
         <a style={headerStyles.logoLink} href="#top">
           <img src="assets/logo-horizontal-transparent.png" alt="Oscar Get me a Car" style={headerStyles.logoImg} />
         </a>

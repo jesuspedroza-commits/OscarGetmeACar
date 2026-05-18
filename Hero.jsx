@@ -123,15 +123,15 @@ function Hero({ copy, heroPhotoUrl, headlineKey = 'perfect', onSubmitLead }) {
   const firstName = form.name.trim().split(' ')[0] || '';
 
   return (
-    <section id="top" style={heroStyles.wrap}>
-      <div style={heroStyles.panel}>
+    <section id="top" style={heroStyles.wrap} className="os-hero-wrap">
+      <div style={heroStyles.panel} className="os-hero-grid">
         {/* photo background on the left half */}
-        <div style={{ position: 'absolute', inset: 0, gridColumn: '1 / 2' }}>
-          <div className="os-hero-photo" style={{
+        <div style={{ position: 'absolute', inset: 0 }}>
+          <div className="os-hero-photo os-hero-photo-img" style={{
             backgroundImage: `url("${heroPhotoUrl}")`,
             width: '60%',
           }}></div>
-          <div className="os-pattern-stripes" style={{ width: '60%', opacity: .7 }}></div>
+          <div className="os-pattern-stripes os-hero-photo-stripe" style={{ width: '60%', opacity: .7 }}></div>
         </div>
 
         {/* left content */}
@@ -157,7 +157,7 @@ function Hero({ copy, heroPhotoUrl, headlineKey = 'perfect', onSubmitLead }) {
                 <div style={heroStyles.trustLabel}>{copy.trust.families.label}</div>
               </div>
             </div>
-            <div style={heroStyles.trustDivider}></div>
+            <div style={heroStyles.trustDivider} className="os-trust-divider"></div>
             <div style={heroStyles.trustCell}>
               <div>
                 <div style={heroStyles.trustNum}>
@@ -167,7 +167,7 @@ function Hero({ copy, heroPhotoUrl, headlineKey = 'perfect', onSubmitLead }) {
                 <div style={heroStyles.trustLabel}>{copy.trust.rating.label}</div>
               </div>
             </div>
-            <div style={heroStyles.trustDivider}></div>
+            <div style={heroStyles.trustDivider} className="os-trust-divider"></div>
             <div style={heroStyles.trustCell}>
               <div>
                 <div style={heroStyles.trustNum}>
