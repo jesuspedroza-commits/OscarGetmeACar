@@ -27,9 +27,9 @@ const COPY = {
       },
       sub: 'We help you find exactly the car you need, at the best prices on the market. No pressure, no tricks, no runaround. Just honest options and a real person who guides you.',
       trust: {
-        families:   { num: '1,200',  suffix: '+', label: 'Families served' },
-        rating:     { num: '4.9',    suffix: '/ 5', label: 'Google reviews' },
-        experience: { num: '10',     suffix: ' years', label: 'Of experience' },
+        families:   { num: '1,200',  suffix: '+',    label: 'Families served' },
+        rating:     { num: '500',    suffix: '+',    label: 'Cars matched in FL' },
+        experience: { num: '15',     suffix: '+ yrs', label: 'Of experience' },
       },
       form: {
         overline: 'Get your free advisory',
@@ -220,9 +220,9 @@ const COPY = {
       },
       sub: 'Te ayudamos a encontrar exactamente el auto que necesitas, con los mejores precios del mercado. Sin presión, sin trucos, sin desgaste. Solo opciones honestas y una persona real que te guía.',
       trust: {
-        families:   { num: '1,200', suffix: '+',     label: 'Familias atendidas' },
-        rating:     { num: '4.9',   suffix: '/ 5',   label: 'Reseñas en Google' },
-        experience: { num: '10',    suffix: ' años', label: 'De experiencia' },
+        families:   { num: '1,200', suffix: '+',       label: 'Familias atendidas' },
+        rating:     { num: '500',   suffix: '+',       label: 'Autos conseguidos en FL' },
+        experience: { num: '15',    suffix: '+ años',  label: 'De experiencia' },
       },
       form: {
         overline: 'Recibe tu asesoría gratis',
