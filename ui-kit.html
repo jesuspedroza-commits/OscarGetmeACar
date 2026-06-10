@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oscar Get me a Car: Florida</title>
+  <link rel="stylesheet" href="colors_and_type.css">
+  <style>
+    @keyframes oscarFadeIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes oscarSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    body { background: var(--bg-2); }
+    main { background: var(--bg-2); }
+    button:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+  </style>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="Header.jsx"></script>
+  <script type="text/babel" src="Hero.jsx"></script>
+  <script type="text/babel" src="ValueRow.jsx"></script>
+  <script type="text/babel" src="Inventory.jsx"></script>
+  <script type="text/babel" src="FooterBand.jsx"></script>
+  <script type="text/babel" src="TalkModal.jsx"></script>
+  <script type="text/babel" src="App.jsx"></script>
+</body>
+</html>
