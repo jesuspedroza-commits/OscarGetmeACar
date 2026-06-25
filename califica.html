@@ -6,6 +6,10 @@
   <title>¿Calificas? Auto-chequeo de 60 segundos · Oscar Get me a Car</title>
   <meta name="description" content="Averigua en 60 segundos qué opciones de financiamiento probablemente tienes hoy. Sin SSN, sin afectar tu crédito, sin compromiso.">
   <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="stylesheet" href="colors_and_type.css">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
@@ -32,7 +36,18 @@
     .btn-block { width: 100%; }
 
     main { flex: 1 0 auto; padding: 40px 0 72px; }
-    .card { background: #fff; border: 1px solid var(--line-1); border-radius: var(--radius-xl); box-shadow: var(--shadow-2); padding: 36px 36px 32px; }
+    .card { position: relative; background: #fff; border: 1px solid var(--line-1); border-radius: var(--radius-xl); box-shadow: var(--shadow-2); padding: 36px 36px 32px; }
+    #optin.glass-step {
+      position: absolute; inset: 0; margin: 0; overflow-y: auto;
+      display: flex; flex-direction: column; justify-content: center;
+      background: rgba(255,255,255,.62);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 24px 60px rgba(15,35,60,.2);
+      padding: 36px 36px 32px;
+    }
     .overline { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 14px; font-size: var(--fs-overline); letter-spacing: var(--ls-overline); text-transform: uppercase; font-weight: 600; color: var(--fg-accent); }
     .overline::before { content: ''; width: 26px; height: 2px; background: var(--oscar-blue); display: inline-block; }
 
@@ -344,7 +359,7 @@
         if (v !== undefined) el.placeholder = v;
       });
       if (!document.getElementById('quiz').classList.contains('hide')) renderQuestion();
-      if (!document.getElementById('result').classList.contains('hide')) renderResult();
+      if (!document.getElementById('result').classList.contains('hide')) paintResult();
       if (window.lucide) lucide.createIcons();
     }
     function toggleLang() { lang = (lang === 'es') ? 'en' : 'es'; localStorage.setItem('oscar_lang', lang); applyLang(); }
@@ -385,11 +400,20 @@
     function next() {
       if (answers[QUESTIONS[current].id] === undefined) return;
       if (current < QUESTIONS.length - 1) { current++; renderQuestion(); }
-      else show('optin');
+      else { paintResult(); showPreview(); }
     }
     function back() { if (current > 0) { current--; renderQuestion(); } }
 
-    function renderResult() {
+    function showPreview() {
+      ['intro', 'quiz'].forEach(s => document.getElementById(s).classList.add('hide'));
+      document.getElementById('result').classList.remove('hide');
+      document.getElementById('optin').classList.remove('hide');
+      document.getElementById('optin').classList.add('glass-step');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function paintResult() {
       const { band, segment } = scoreAnswers(answers);
       const b = BANDS[band];
       const badge = document.getElementById('resultBadge');
@@ -400,11 +424,42 @@
       document.getElementById('resultP').textContent = b.p[lang];
       document.getElementById('estVehicle').textContent = segment.vehicle;
       document.getElementById('estMonthly').textContent = segment.monthly + ' ' + t('per_month');
+      if (window.lucide) lucide.createIcons();
+      return { band, segment };
+    }
+
+    function renderResult() {
+      paintResult();
       show('result');
     }
 
     // ---- KIT submission (canonical values in Spanish for consistent data) ----
-    const KIT_ENDPOINT = 'https://app.kit.com/forms/9610315/subscriptions';
+    const KIT_ENDPOINT = 'https://app.kit.com/forms/9611887/subscriptions';
+
+    // ---- Supabase submission (raw lead storage) ----
+    const SUPABASE_URL = 'https://iwtzzusjuaymmixsvevx.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3dHp6dXNqdWF5bW1peHN2ZXZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0MTQwOTQsImV4cCI6MjA5Nzk5MDA5NH0.MHQkmJIOGB02khMAubYalDtf_LeAUemJsiwMiHPXWwI';
+
+    function submitToSupabase({ email, name, phone, band, segment }) {
+      const respuestas = {};
+      QUESTIONS.forEach(q => {
+        const opt = q.options[answers[q.id]];
+        if (opt) respuestas[q.id] = opt.es;
+      });
+      return fetch(SUPABASE_URL + '/rest/v1/quiz_leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          email, name, phone, lang, banda: band, segmento: segment.name.es,
+          pago_estimado: segment.monthly, fuente: 'quiz', respuestas
+        })
+      }).catch(() => null);
+    }
 
     function submitLead(e) {
       e.preventDefault();
@@ -434,9 +489,14 @@
         if (opt) fd.append('fields[' + q.id + ']', opt.es);
       });
 
+      submitToSupabase({ email, name, phone, band, segment });
+
       fetch(KIT_ENDPOINT, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
         .then(r => r.json()).catch(() => null)
-        .finally(() => { renderResult(); });
+        .finally(() => {
+          document.getElementById('optin').classList.remove('glass-step');
+          renderResult();
+        });
     }
 
     applyLang();
