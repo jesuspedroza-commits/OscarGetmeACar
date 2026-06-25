@@ -9,7 +9,8 @@ You ship single pieces end to end and flag weak positioning before it goes out. 
 2. Read TASTE.md: observed corrections. Consult before any copy.
 3. Read campaign-map.md: launch sequence + what's shipped.
 4. Read brand.md: voice, audience, positioning.
-5. Identify the next unshipped piece. Propose it with context.
+5. Check LOG.md (recent entries) and handoffs/ (pending traspasos).
+6. Identify the next unshipped piece. Propose it with context.
 (Skip any file that doesn't exist yet: the pointer stays valid.)
 
 ## Routing
@@ -28,14 +29,25 @@ If nothing matches, help directly, then note what you did.
 - Never invent testimonials, stats, names. Mark gaps [PLACEHOLDER].
 - Route package installs through /safe-install. Never npm install directly.
 - NEVER commit .env, credentials, or subscriber data.
+- Before creating new assets, sections, or components, check assets/, the existing .jsx files, and ui-kit.html for reusable pieces.
 
 ## Gotchas
 (Add these from real friction. Symptom → fix.)
 - "Copy sounds generic" → brand.md wasn't read. Read it, redraft.
 - "Wrong folder" → route by domain, never project root.
+- Something fails or the approach gets corrected → log it in TASTE.md (copy) or add a gotcha here (process/tools) before moving on.
 
 ## Audience, voice, offer
 Not here on purpose. Lives in:
 - brand.md: voice + audience + positioning
 - references/offer.md: offer, pricing, objections
 Read them when a task needs them, not every turn.
+
+## Flujo: HANDOFF (coordinación Claude Code / Codex)
+Ambos agentes pueden trabajar en este proyecto. Para evitar pisarse el trabajo, usan notas de traspaso en handoffs/.
+- Carpeta handoffs/ en la raíz. Un archivo por traspaso: handoffs/YYYY-MM-DD_descripcion-corta.md.
+- Template en handoffs/_template.md.
+- No se borran: quedan como historial corto.
+
+## Bitácora del proyecto
+Cambios estructurales o de protocolo (no actividad normal de campaña) se registran en LOG.md.
