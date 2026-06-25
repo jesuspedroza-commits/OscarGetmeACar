@@ -2,7 +2,18 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:api.anthropic.com)",
-      "Bash(curl -s \"https://api.anthropic.com/v1/design/h/aVzs1N-eor4AIVMF63VZfg\" -I)"
+      "Bash(curl -s \"https://api.anthropic.com/v1/design/h/aVzs1N-eor4AIVMF63VZfg\" -I)",
+      "mcp__kit__list_forms",
+      "mcp__kit__list_sequences",
+      "mcp__kit__list_email_templates",
+      "mcp__kit__create_sequence",
+      "mcp__kit__create_sequence_email",
+      "Bash(python -m http.server 8731)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8731/index.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8731/checklist-financiamiento.html)",
+      "Bash(curl -s http://localhost:8731/checklist-financiamiento.html)",
+      "Bash(pkill -f \"http.server 8731\")",
+      "Bash(git add *)"
     ]
   }
 }

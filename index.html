@@ -209,6 +209,19 @@
     .mistake-item:hover .mistake-num { color: var(--oscar-blue-050); -webkit-text-stroke: 1.5px var(--oscar-blue); }
     .mistake-title { font-family: var(--font-display); font-size: clamp(20px, 2.6vw, 28px); font-weight: 700; color: var(--oscar-navy); margin: 0 0 14px; letter-spacing: -0.02em; line-height: 1.15; }
     .mistake-body { font-size: 17px; line-height: 1.65; color: var(--fg-2); margin: 0; max-width: 640px; }
+    .leadmagnet-cta { margin-top: 16px; padding: 32px 36px; background: linear-gradient(135deg, var(--oscar-blue-050) 0%, #fff 100%); border: 1px solid var(--oscar-blue-100); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .lm-copy { flex: 1 1 360px; min-width: 260px; }
+    .lm-title { font-family: var(--font-display); font-size: clamp(20px, 2.4vw, 26px); font-weight: 700; color: var(--oscar-navy); margin: 0 0 10px; letter-spacing: -0.015em; line-height: 1.2; }
+    .lm-body { font-size: 15px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 480px; }
+    .lm-form { display: flex; gap: 10px; flex: 0 1 380px; min-width: 280px; }
+    .lm-form input { flex: 1; border: 1px solid var(--line-2); background: #fff; border-radius: 10px; padding: 13px 14px; font-family: inherit; font-size: 14px; color: var(--fg-1); outline: none; transition: border-color var(--dur-2), box-shadow var(--dur-2); }
+    .lm-form input:focus { border-color: var(--oscar-blue); box-shadow: 0 0 0 4px rgba(45,90,140,.16); }
+    .lm-form .btn { padding: 13px 22px; white-space: nowrap; }
+    .lm-fine { font-size: 13px; color: var(--fg-3); margin: 14px 2px 0; }
+    @media (max-width: 900px) {
+      .leadmagnet-cta { flex-direction: column; align-items: stretch; padding: 28px 24px; }
+      .lm-form { flex-direction: column; }
+    }
 
     /* ════════════ PROCESS ════════════ */
     #process { background: var(--bg-2); overflow: hidden; }
@@ -526,6 +539,18 @@
       <div class="mistake-item reveal"><div class="mistake-num">02</div><div><h3 class="mistake-title" data-i18n="mist2_t">Waiting until your credit is "perfect".</h3><p class="mistake-body" data-i18n="mist2_b">Many people wait years out of fear of being told no. The reality: there are options for almost any credit situation today, you just have to know where to look.</p></div></div>
       <div class="mistake-item reveal"><div class="mistake-num">03</div><div><h3 class="mistake-title" data-i18n="mist3_t">Signing without understanding the financing.</h3><p class="mistake-body" data-i18n="mist3_b">The price of the car is only one part. The rate, the term, the down payment, all of it affects what you pay over the years. Oscar reviews every number with you before you sign.</p></div></div>
     </div>
+    <div class="leadmagnet-cta reveal">
+      <div class="lm-copy">
+        <div class="overline" data-i18n="lm_overline">Free checklist</div>
+        <h3 class="lm-title" data-i18n="lm_h3">So you don't sign without understanding the numbers</h3>
+        <p class="lm-body" data-i18n="lm_body">Download the checklist Oscar reviews with his clients before they sign: rate, term, down payment, and the fine print to watch for. It lands in your inbox in under a minute.</p>
+      </div>
+      <form class="lm-form" id="lmForm" onsubmit="handleLeadMagnet(event)">
+        <input type="email" id="lmEmail" placeholder="you@email.com" required>
+        <button type="submit" class="btn btn-navy" id="lmSubmit"><span data-i18n="lm_cta">Send me the checklist</span> <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+      </form>
+    </div>
+    <p class="lm-fine" data-i18n="lm_fine">No spam. Just the checklist and honest financing tips.</p>
   </div>
 </section>
 
@@ -699,6 +724,9 @@
     mist2_b: "Muchos esperan años por miedo a que les digan que no. La realidad: hay opciones para casi cualquier situación crediticia hoy, solo hay que saber dónde buscar.",
     mist3_t: "Firmar sin entender el financiamiento.",
     mist3_b: "El precio del carro es solo una parte. La tasa, el plazo, el enganche, todo afecta lo que pagas durante años. Oscar revisa cada número contigo antes de que firmes.",
+    lm_overline: "Checklist gratis", lm_h3: "Para no firmar sin entender los números",
+    lm_body: "Descarga el checklist que Oscar revisa con sus clientes antes de firmar: tasa, plazo, enganche y la letra chica que hay que vigilar. Te llega a tu correo en menos de un minuto.",
+    lm_cta: "Enviarme el checklist", lm_fine: "Sin spam. Solo el checklist y consejos honestos sobre financiamiento.",
     proc_overline: "El proceso", proc_h2: "Esto pasa cuando hablas con Oscar", proc_sub: "Cuatro pasos. Sin sorpresas en el camino.", proc_step: "Paso",
     proc1_t: "Me cuentas tu situación.", proc1_b: "Qué necesitas, qué tienes, qué te preocupa. Sin juicios. La conversación es confidencial y sin costo.",
     proc2_t: "Revisamos tus opciones reales.", proc2_b: "No las que le convienen al dealer, las que funcionan para tu situación y tu presupuesto mensual.",
@@ -798,6 +826,20 @@
     document.getElementById('modalForm').classList.add('hide');
     document.getElementById('modalSuccess').classList.add('show');
     lucide.createIcons();
+  }
+  const LM_KIT_ENDPOINT = 'https://app.kit.com/forms/9610315/subscriptions';
+  function handleLeadMagnet(e) {
+    e.preventDefault();
+    const email = document.getElementById('lmEmail').value.trim();
+    if (!email) return;
+    const fd = new FormData();
+    fd.append('email_address', email);
+    fd.append('fields[idioma]', lang);
+    fd.append('fields[fuente]', 'lead_magnet_checklist');
+    const btn = document.getElementById('lmSubmit');
+    btn.disabled = true;
+    const go = () => { window.location.href = 'checklist-financiamiento.html'; };
+    fetch(LM_KIT_ENDPOINT, { method: 'POST', mode: 'no-cors', body: fd }).then(go).catch(go);
   }
   function toggleFaq(btn) {
     const answer = btn.nextElementSibling, isOpen = btn.getAttribute('aria-expanded') === 'true';

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>El Checklist Antes de Firmar · Oscar Get me a Car</title>
+  <meta name="description" content="7 cosas que debes revisar en tu financiamiento de auto antes de firmar: tasa, plazo, enganche y la letra chica.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="colors_and_type.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { background: var(--bg-2); min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    .ck-header { border-bottom: 1px solid var(--line-1); background: #fff; }
+    .ck-header .container { max-width: 1080px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .ck-header img.logo { height: 30px; display: block; }
+    .ck-back { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; color: var(--fg-2); }
+    .ck-back:hover { color: var(--oscar-blue); text-decoration: none; }
+
+    main { flex: 1 0 auto; padding: 48px 0 72px; }
+    .page { background: #fff; border: 1px solid var(--line-1); border-radius: var(--radius-xl); box-shadow: var(--shadow-2); padding: 44px 44px 40px; }
+
+    .overline { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 14px; font-size: var(--fs-overline); letter-spacing: var(--ls-overline); text-transform: uppercase; font-weight: 600; color: var(--fg-accent); }
+    .overline::before { content: ''; width: 26px; height: 2px; background: var(--oscar-blue); display: inline-block; }
+    h1.ck-title { font-size: clamp(28px, 4vw, 38px); line-height: 1.12; letter-spacing: -0.02em; font-weight: 800; color: var(--oscar-navy); margin: 0 0 14px; }
+    .ck-sub { font-size: 17px; line-height: 1.55; color: var(--fg-2); margin: 0 0 30px; max-width: 560px; }
+
+    .checklist { list-style: none; margin: 0 0 36px; padding: 0; }
+    .check-item { display: grid; grid-template-columns: 28px 1fr; gap: 16px; padding: 18px 0; border-top: 1px solid var(--line-1); }
+    .checklist .check-item:last-child { border-bottom: 1px solid var(--line-1); }
+    .check-box { width: 22px; height: 22px; border: 1.5px solid var(--oscar-blue-200); border-radius: 6px; margin-top: 2px; }
+    .check-title { font-size: 16px; font-weight: 700; color: var(--oscar-navy); margin: 0 0 4px; }
+    .check-body { font-size: 15px; line-height: 1.55; color: var(--fg-2); margin: 0; }
+
+    .ck-cta { padding: 26px 28px; background: linear-gradient(135deg, var(--oscar-blue-050) 0%, #fff 100%); border: 1px solid var(--oscar-blue-100); border-radius: var(--radius-lg); text-align: center; }
+    .ck-cta p { font-size: 15px; color: var(--fg-2); margin: 0 0 16px; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; border: none; border-radius: var(--radius-md); font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; text-decoration: none; letter-spacing: -0.01em; padding: 14px 26px; background: var(--oscar-navy); color: #fff; transition: transform 180ms ease-out, box-shadow 180ms ease-out; }
+    .btn:hover { background: var(--oscar-navy-700); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(30,58,95,.3); color: #fff; text-decoration: none; }
+    .print-btn { background: transparent; color: var(--oscar-navy); border: 1.5px solid var(--line-2); margin-top: 14px; }
+    .print-btn:hover { border-color: var(--oscar-blue); color: var(--oscar-blue); transform: none; box-shadow: none; }
+
+    footer { border-top: 1px solid var(--line-1); padding: 24px 0; }
+    footer .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 13px; color: var(--fg-3); flex-wrap: wrap; }
+
+    @media (max-width: 640px) {
+      .page { padding: 30px 22px 28px; }
+      .ck-cta { padding: 22px 20px; }
+    }
+
+    @page { size: letter; margin: 0.6in 0.7in; }
+    @media print {
+      body { background: #fff; }
+      .ck-header, .ck-cta, .print-only-hide, footer { display: none; }
+      .page { border: none; box-shadow: none; padding: 0; }
+      main { padding: 0; }
+      .check-item { break-inside: avoid-page; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="ck-header print-only-hide">
+    <div class="container">
+      <a href="index.html"><img class="logo" src="assets/logo-horizontal-transparent.png" alt="Oscar Get me a Car"></a>
+      <a class="ck-back" href="index.html"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Volver al inicio</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="page">
+        <div class="overline">Checklist gratis</div>
+        <h1 class="ck-title">El Checklist Antes de Firmar</h1>
+        <p class="ck-sub">7 cosas que debes revisar en tu financiamiento de auto antes de poner tu firma. Llévalo impreso o ábrelo en tu teléfono cuando estés en el dealer.</p>
+
+        <ol class="checklist">
+          <li class="check-item"><span class="check-box"></span><div><p class="check-title">1. Tu situación de crédito real</p><p class="check-body">No el número que crees tener, el que el dealer va a ver. Pide tu reporte antes de sentarte a negociar.</p></div></li>
+          <li class="check-item"><span class="check-box"></span><div><p class="check-title">2. La tasa de interés (APR)</p><p class="check-body">No solo el pago mensual. Dos carros con el mismo pago pueden tener tasas muy distintas si cambia el plazo.</p></div></li>
+          <li class="check-item"><span class="check-box"></span><div><p class="check-title">3. El plazo del préstamo</p><p class="check-body">Más años significa pagos más bajos, pero más interés total. Pregunta cuánto pagarías en total, no solo al mes.</p></div></li>
+          <li class="check-item"><span class="check-box"></span><div><p class="check-title">4. El enganche</p><p class="check-body">Cuánto te conviene poner según tu presupuesto, y cuánto te están pidiendo. Más enganche no siempre te conviene más a ti.</p></div></li>
+          <li class="check-item"><span class="check-box"></span><div><p class="check-title">5. El pago mensual real</p><p class="check-body">Con seguro, impuestos y cualquier cargo adicional incluido, no solo el número que te muestran primero.</p></div></li>
+          <li class="check-item"><span class="check-box"></span><div><p class="check-title">6. La letra chica</p><p class="check-body">Penalidades por pago anticipado, seguros que no pediste, cargos de "protección" agregados sin preguntar.</p></div></li>
+          <li class="check-item"><span class="check-box"></span><div><p class="check-title">7. El valor del carro frente al precio</p><p class="check-body">Si el precio que pagas tiene sentido para el carro que te llevas, no solo para el pago mensual que te ofrecen.</p></div></li>
+        </ol>
+
+        <div class="ck-cta print-only-hide">
+          <p>Si quieres revisar estos números con alguien antes de firmar, habla con Oscar. La consulta no cuesta nada.</p>
+          <a class="btn" href="index.html#hablar">Habla con Oscar <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+          <div><button class="btn print-btn" onclick="window.print()"><i data-lucide="printer" style="width:15px;height:15px;"></i> Imprimir este checklist</button></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="print-only-hide">
+    <div class="container">
+      <span>Honest options. Forward movement.</span>
+      <span>© 2026 Oscar Get me a Car · Florida</span>
+    </div>
+  </footer>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
