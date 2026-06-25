@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>¿Calificas? Auto-chequeo de 60 segundos · Oscar Get me a Car</title>
+  <meta name="description" content="Averigua en 60 segundos qué opciones de financiamiento probablemente tienes hoy. Sin SSN, sin afectar tu crédito, sin compromiso.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="colors_and_type.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg-2); min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    .ck-header { border-bottom: 1px solid var(--line-1); background: #fff; }
+    .ck-header .container { max-width: 1080px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .ck-header img.logo { height: 30px; display: block; }
+    .ck-right { display: inline-flex; align-items: center; gap: 16px; }
+    .ck-back { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; color: var(--fg-2); }
+    .ck-back:hover { color: var(--oscar-blue); text-decoration: none; }
+    .ck-lang { display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 1px solid var(--line-2); color: var(--fg-2); border-radius: var(--radius-pill); padding: 7px 14px; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; transition: all var(--dur-2) var(--ease-out); }
+    .ck-lang:hover { border-color: var(--oscar-blue); color: var(--oscar-blue); }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: none; border-radius: var(--radius-md); font-size: 16px; font-weight: 700; font-family: inherit; cursor: pointer; text-decoration: none; letter-spacing: -0.01em; transition: transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out); padding: 15px 28px; }
+    .btn:disabled { opacity: .45; cursor: not-allowed; }
+    .btn-primary { background: var(--oscar-blue); color: #fff; }
+    .btn-primary:not(:disabled):hover { background: var(--oscar-blue-500); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(45,90,140,.32); color: #fff; text-decoration: none; }
+    .btn-ghost { background: transparent; color: var(--oscar-navy); border: 1.5px solid var(--line-2); }
+    .btn-ghost:hover { border-color: var(--oscar-blue); color: var(--oscar-blue); text-decoration: none; }
+    .btn-block { width: 100%; }
+
+    main { flex: 1 0 auto; padding: 40px 0 72px; }
+    .card { background: #fff; border: 1px solid var(--line-1); border-radius: var(--radius-xl); box-shadow: var(--shadow-2); padding: 36px 36px 32px; }
+    .overline { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 14px; font-size: var(--fs-overline); letter-spacing: var(--ls-overline); text-transform: uppercase; font-weight: 600; color: var(--fg-accent); }
+    .overline::before { content: ''; width: 26px; height: 2px; background: var(--oscar-blue); display: inline-block; }
+
+    .progress { height: 5px; background: var(--bg-3); border-radius: 999px; overflow: hidden; margin-bottom: 28px; }
+    .progress-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--oscar-blue) 0%, var(--oscar-blue-400) 100%); border-radius: 999px; transition: width 300ms var(--ease-out); }
+    .step-meta { font-size: var(--fs-caption); color: var(--fg-3); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 10px; }
+
+    .q-title { font-size: 26px; line-height: 1.18; letter-spacing: -0.015em; font-weight: 800; color: var(--oscar-navy); margin: 0 0 22px; }
+    .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .option { display: flex; align-items: center; gap: 14px; text-align: left; width: 100%; padding: 16px 18px; background: #fff; border: 1.5px solid var(--line-2); border-radius: var(--radius-md); font-family: inherit; font-size: 15px; font-weight: 500; color: var(--fg-1); cursor: pointer; transition: all var(--dur-2) var(--ease-out); }
+    .option:hover { border-color: var(--oscar-blue-400); background: var(--oscar-blue-050); }
+    .option.selected { border-color: var(--oscar-blue); background: var(--oscar-blue-050); box-shadow: var(--shadow-focus); }
+    .option .dot { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line-2); display: inline-flex; align-items: center; justify-content: center; transition: all var(--dur-2) var(--ease-out); }
+    .option.selected .dot { border-color: var(--oscar-blue); background: var(--oscar-blue); }
+    .option.selected .dot::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; }
+    .nav-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .field label { font-size: 13px; font-weight: 600; color: var(--fg-1); }
+    .field input { border: 1px solid var(--line-2); background: #fff; border-radius: 10px; padding: 13px 14px; font-family: inherit; font-size: 15px; color: var(--fg-1); outline: none; transition: all var(--dur-2) var(--ease-out); }
+    .field input:focus { border-color: var(--oscar-blue); box-shadow: var(--shadow-focus); }
+    .consent { font-size: 12px; color: var(--fg-3); line-height: 1.5; margin: 6px 0 18px; }
+    .form-error { background: var(--oscar-danger-bg); border: 1px solid var(--oscar-danger); color: var(--oscar-danger); border-radius: 10px; padding: 11px 14px; font-size: 13px; margin-bottom: 16px; display: none; }
+
+    .result-badge { display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: .03em; margin-bottom: 18px; }
+    .band-a { background: var(--oscar-success-bg); color: var(--oscar-success); }
+    .band-b { background: var(--oscar-blue-050); color: var(--oscar-blue); }
+    .band-c { background: var(--oscar-warning-bg); color: var(--oscar-warning); }
+    .result-h { font-size: 30px; line-height: 1.12; letter-spacing: -0.02em; font-weight: 800; color: var(--oscar-navy); margin: 0 0 14px; }
+    .estimate { background: var(--bg-2); border: 1px solid var(--line-1); border-radius: var(--radius-lg); padding: 20px 22px; margin: 22px 0; }
+    .estimate-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 8px 0; }
+    .estimate-row + .estimate-row { border-top: 1px solid var(--line-1); }
+    .estimate-label { font-size: 13px; color: var(--fg-3); font-weight: 500; }
+    .estimate-val { font-size: 18px; color: var(--oscar-navy); font-weight: 800; font-family: var(--font-display); text-align: right; }
+    .disclaimer { font-size: 12px; color: var(--fg-3); line-height: 1.55; margin-top: 18px; }
+    .bring-list { list-style: none; padding: 0; margin: 16px 0 0; }
+    .bring-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--fg-2); margin-bottom: 8px; }
+    .bring-list i { color: var(--oscar-success); flex: none; margin-top: 2px; }
+
+    footer { flex-shrink: 0; background: var(--oscar-navy); color: #fff; padding: 20px 0; }
+    footer .container { max-width: 1080px; display: flex; align-items: center; justify-content: space-between; gap: 14px; font-size: 12px; color: var(--oscar-blue-200); letter-spacing: .04em; }
+
+    .hide { display: none; }
+    @media (max-width: 560px) {
+      .card { padding: 26px 22px 24px; }
+      .q-title { font-size: 22px; }
+      .result-h { font-size: 25px; }
+      footer .container { flex-direction: column; gap: 8px; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <header class="ck-header">
+    <div class="container">
+      <a href="index.html"><img class="logo" src="assets/logo-horizontal-transparent.png" alt="Oscar Get me a Car"></a>
+      <div class="ck-right">
+        <button class="ck-lang" id="langToggle" onclick="toggleLang()"><i data-lucide="globe" style="width:15px;height:15px;"></i><span id="langLabel">EN</span></button>
+        <a class="ck-back" href="index.html"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> <span data-i18n="back">Volver al inicio</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="card" id="card">
+
+        <!-- INTRO -->
+        <div id="intro">
+          <div class="overline" data-i18n="intro_overline">Auto-chequeo · 60 segundos</div>
+          <h1 class="q-title" data-i18n="intro_title">¿Calificas para financiamiento? Averígualo en 60 segundos.</h1>
+          <p data-i18n="intro_p">Responde 6 preguntas rápidas y te decimos qué opciones probablemente tienes hoy, con un estimado de pago mensual. Sin número de seguro social, sin afectar tu crédito, sin compromiso.</p>
+          <ul class="bring-list" style="margin-bottom:26px;">
+            <li><i data-lucide="shield-check" style="width:18px;height:18px;"></i> <span data-i18n="intro_li1">No pedimos SSN ni hacemos consulta dura de crédito.</span></li>
+            <li><i data-lucide="lock" style="width:18px;height:18px;"></i> <span data-i18n="intro_li2">Es un estimado honesto, no una aprobación.</span></li>
+            <li><i data-lucide="message-circle" style="width:18px;height:18px;"></i> <span data-i18n="intro_li3">Al final, Oscar revisa los números reales contigo.</span></li>
+          </ul>
+          <button class="btn btn-primary btn-block" onclick="start()"><span data-i18n="intro_btn">Empezar el chequeo</span> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></button>
+        </div>
+
+        <!-- QUIZ -->
+        <div id="quiz" class="hide">
+          <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+          <div class="step-meta" id="stepMeta"></div>
+          <h2 class="q-title" id="qTitle"></h2>
+          <div class="options" id="options"></div>
+          <div class="nav-row">
+            <button class="btn btn-ghost" id="backBtn" onclick="back()"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> <span id="backLabel"></span></button>
+            <button class="btn btn-primary" id="nextBtn" onclick="next()" disabled><span id="nextLabel"></span> <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+
+        <!-- OPT-IN -->
+        <div id="optin" class="hide">
+          <div class="overline" data-i18n="optin_overline">Último paso</div>
+          <h2 class="q-title" data-i18n="optin_title">¿A dónde te enviamos tu resultado?</h2>
+          <p style="margin-bottom:22px;" data-i18n="optin_p">Déjanos tus datos y te mostramos tus opciones. Oscar te escribe para revisar los números reales, sin presión.</p>
+          <div class="form-error" id="formError"></div>
+          <form id="leadForm" onsubmit="submitLead(event)">
+            <div class="field">
+              <label for="name" data-i18n="label_name">Nombre</label>
+              <input id="name" name="name" type="text" data-i18n-ph="ph_name" placeholder="Tu nombre" autocomplete="given-name">
+            </div>
+            <div class="field">
+              <label for="email" data-i18n="label_email">Correo electrónico</label>
+              <input id="email" name="email" type="email" placeholder="tucorreo@ejemplo.com" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="phone" data-i18n="label_phone">Teléfono (para que Oscar te escriba)</label>
+              <input id="phone" name="phone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="3050000000" autocomplete="tel" required oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            </div>
+            <p class="consent" data-i18n="consent">Al enviar aceptas que Oscar te contacte sobre tus opciones de financiamiento. Solo para esto, sin spam. Puedes pedir que paremos cuando quieras.</p>
+            <button class="btn btn-primary btn-block" id="submitBtn" type="submit"><span id="submitLabel" data-i18n="submit_btn">Ver mis opciones</span> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></button>
+          </form>
+        </div>
+
+        <!-- RESULT -->
+        <div id="result" class="hide">
+          <span class="result-badge" id="resultBadge"></span>
+          <h2 class="result-h" id="resultH"></h2>
+          <p id="resultP"></p>
+          <div class="estimate">
+            <div class="estimate-row"><span class="estimate-label" data-i18n="est_vehicle_label">Rango de vehículo estimado</span><span class="estimate-val" id="estVehicle"></span></div>
+            <div class="estimate-row"><span class="estimate-label" data-i18n="est_monthly_label">Pago mensual estimado</span><span class="estimate-val" id="estMonthly"></span></div>
+          </div>
+          <p style="font-weight:600;color:var(--oscar-navy);margin-bottom:6px;" data-i18n="bring_title">Para la conversación con Oscar, ten a mano:</p>
+          <ul class="bring-list">
+            <li><i data-lucide="check" style="width:18px;height:18px;"></i> <span data-i18n="bring1">Licencia o identificación válida.</span></li>
+            <li><i data-lucide="check" style="width:18px;height:18px;"></i> <span data-i18n="bring2">Una idea de tu ingreso mensual.</span></li>
+            <li><i data-lucide="check" style="width:18px;height:18px;"></i> <span data-i18n="bring3">Cuánto puedes dar de enganche hoy.</span></li>
+          </ul>
+          <div class="result-confirm" style="margin-top:24px;display:flex;gap:12px;align-items:flex-start;padding:18px 20px;border-radius:12px;background:var(--oscar-blue-050,#eef4fb);border:1px solid var(--oscar-blue-100,#d6e4f5);">
+            <i data-lucide="check-circle" style="width:22px;height:22px;flex-shrink:0;color:var(--oscar-blue,#2d5a8c);margin-top:1px;"></i>
+            <span data-i18n="result_confirm" style="color:var(--oscar-navy,#1e3a5f);font-weight:500;">Listo, ya tenemos tus datos. Oscar te contacta en 1 día hábil para revisar tus números reales. Sin spam, sin presión.</span>
+          </div>
+          <a class="btn btn-primary btn-block" href="index.html" style="margin-top:16px;"><i data-lucide="arrow-left" style="width:18px;height:18px;"></i> <span data-i18n="result_back">Volver al inicio</span></a>
+          <p class="disclaimer" data-i18n="disclaimer">Este resultado es un estimado basado en tus respuestas, no una aprobación ni una oferta de crédito. Los números reales (tasa, plazo, enganche y pago) dependen de tu situación y los revisa Oscar contigo. Oscar no promete financiamiento que no puedas pagar.</p>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span data-i18n="foot_tagline">Honest options. Forward movement.</span>
+      <span>© 2026 Oscar Get me a Car · Florida</span>
+    </div>
+  </footer>
+
+  <script>
+    // ---- Static UI translations ----
+    const T = {
+      es: {
+        back: 'Volver al inicio',
+        intro_overline: 'Auto-chequeo · 60 segundos',
+        intro_title: '¿Calificas para financiamiento? Averígualo en 60 segundos.',
+        intro_p: 'Responde 6 preguntas rápidas y te decimos qué opciones probablemente tienes hoy, con un estimado de pago mensual. Sin número de seguro social, sin afectar tu crédito, sin compromiso.',
+        intro_li1: 'No pedimos SSN ni hacemos consulta dura de crédito.',
+        intro_li2: 'Es un estimado honesto, no una aprobación.',
+        intro_li3: 'Al final, Oscar revisa los números reales contigo.',
+        intro_btn: 'Empezar el chequeo',
+        back_btn: 'Atrás', next_btn: 'Siguiente', see_result: 'Ver mi resultado',
+        optin_overline: 'Último paso',
+        optin_title: '¿A dónde te enviamos tu resultado?',
+        optin_p: 'Déjanos tus datos y te mostramos tus opciones. Oscar te escribe para revisar los números reales, sin presión.',
+        label_name: 'Nombre', ph_name: 'Tu nombre',
+        label_email: 'Correo electrónico',
+        label_phone: 'Teléfono (para que Oscar te escriba)',
+        consent: 'Al enviar aceptas que Oscar te contacte sobre tus opciones de financiamiento. Solo para esto, sin spam. Puedes pedir que paremos cuando quieras.',
+        submit_btn: 'Ver mis opciones', sending: 'Enviando...',
+        err_email: 'Necesitamos tu correo para enviarte el resultado.',
+        est_vehicle_label: 'Rango de vehículo estimado',
+        est_monthly_label: 'Pago mensual estimado', per_month: '/ mes',
+        bring_title: 'Para la conversación con Oscar, ten a mano:',
+        bring1: 'Licencia o identificación válida.',
+        bring2: 'Una idea de tu ingreso mensual.',
+        bring3: 'Cuánto puedes dar de enganche hoy.',
+        result_confirm: 'Listo, ya tenemos tus datos. Oscar te contacta en 1 día hábil para revisar tus números reales. Sin spam, sin presión.',
+        result_back: 'Volver al inicio',
+        disclaimer: 'Este resultado es un estimado basado en tus respuestas, no una aprobación ni una oferta de crédito. Los números reales (tasa, plazo, enganche y pago) dependen de tu situación y los revisa Oscar contigo. Oscar no promete financiamiento que no puedas pagar.',
+        foot_tagline: 'Opciones honestas. Movimiento hacia adelante.',
+        step_of: (n, t) => 'Pregunta ' + n + ' de ' + t,
+      },
+      en: {
+        back: 'Back to home',
+        intro_overline: 'Self-check · 60 seconds',
+        intro_title: 'Do you qualify for financing? Find out in 60 seconds.',
+        intro_p: 'Answer 6 quick questions and we tell you what options you likely have today, with an estimated monthly payment. No Social Security number, no hit to your credit, no commitment.',
+        intro_li1: 'No SSN and no hard credit check.',
+        intro_li2: 'It is an honest estimate, not an approval.',
+        intro_li3: 'At the end, Oscar reviews the real numbers with you.',
+        intro_btn: 'Start the check',
+        back_btn: 'Back', next_btn: 'Next', see_result: 'See my result',
+        optin_overline: 'Last step',
+        optin_title: 'Where do we send your result?',
+        optin_p: 'Leave your details and we show you your options. Oscar texts you to review the real numbers, no pressure.',
+        label_name: 'Name', ph_name: 'Your name',
+        label_email: 'Email',
+        label_phone: 'Phone (so Oscar can text you)',
+        consent: 'By submitting you agree to be contacted by Oscar about your financing options. For this only, no spam. You can ask us to stop anytime.',
+        submit_btn: 'See my options', sending: 'Sending...',
+        err_email: 'We need your email to send your result.',
+        est_vehicle_label: 'Estimated vehicle range',
+        est_monthly_label: 'Estimated monthly payment', per_month: '/ mo',
+        bring_title: 'For your conversation with Oscar, have ready:',
+        bring1: 'A valid license or ID.',
+        bring2: 'A rough idea of your monthly income.',
+        bring3: 'How much you can put down today.',
+        result_confirm: 'Done, we have your info. Oscar will reach out within one business day to go over your real numbers. No spam, no pressure.',
+        result_back: 'Back to home',
+        disclaimer: 'This result is an estimate based on your answers, not an approval or a credit offer. The real numbers (rate, term, down payment and payment) depend on your situation and Oscar reviews them with you. Oscar does not promise financing you cannot afford.',
+        foot_tagline: 'Honest options. Forward movement.',
+        step_of: (n, t) => 'Question ' + n + ' of ' + t,
+      },
+    };
+
+    // ---- Conservative pre-qualification model (bilingual labels) ----
+    const QUESTIONS = [
+      { id: 'credito', title: { es: '¿Cómo está tu crédito hoy?', en: 'How is your credit today?' }, options: [
+        { es: 'Bueno', en: 'Good', pts: 3 },
+        { es: 'Regular, más o menos', en: 'Fair, so-so', pts: 2 },
+        { es: 'Bajo o con problemas', en: 'Low or with problems', pts: 1 },
+        { es: 'Sin historial, es mi primer crédito', en: 'No history, my first credit', pts: 1 },
+        { es: 'No estoy seguro', en: 'Not sure', pts: 1 },
+      ]},
+      { id: 'ingresos', title: { es: '¿Cómo recibes tus ingresos?', en: 'How do you receive your income?' }, options: [
+        { es: 'Empleo con talón (W-2)', en: 'Employed with paystub (W-2)', pts: 3 },
+        { es: 'Por mi cuenta o 1099', en: 'Self-employed or 1099', pts: 2 },
+        { es: 'Con ITIN', en: 'With ITIN', pts: 2 },
+        { es: 'En efectivo', en: 'In cash', pts: 1 },
+      ]},
+      { id: 'antiguedad', title: { es: '¿Cuánto llevas en tu trabajo o fuente de ingresos?', en: 'How long in your job or income source?' }, options: [
+        { es: 'Más de 3 años', en: 'More than 3 years', pts: 3 },
+        { es: 'Entre 1 y 3 años', en: 'Between 1 and 3 years', pts: 2 },
+        { es: 'Entre 6 y 12 meses', en: 'Between 6 and 12 months', pts: 1 },
+        { es: 'Menos de 6 meses', en: 'Less than 6 months', pts: 0 },
+      ]},
+      { id: 'enganche', title: { es: '¿Cuánto puedes dar de enganche hoy?', en: 'How much can you put down today?' }, options: [
+        { es: '$3,000 o más', en: '$3,000 or more', pts: 3 },
+        { es: 'Entre $1,500 y $3,000', en: 'Between $1,500 and $3,000', pts: 2 },
+        { es: 'Entre $500 y $1,500', en: 'Between $500 and $1,500', pts: 1 },
+        { es: 'Menos de $500', en: 'Less than $500', pts: 0 },
+      ]},
+      { id: 'presupuesto', title: { es: '¿Qué pago mensual te sentirías cómodo?', en: 'What monthly payment feels comfortable?' }, options: [
+        { es: 'Menos de $300 al mes', en: 'Less than $300 a month', pts: 1, seg: 0 },
+        { es: 'Entre $300 y $450 al mes', en: 'Between $300 and $450 a month', pts: 2, seg: 1 },
+        { es: 'Entre $450 y $600 al mes', en: 'Between $450 and $600 a month', pts: 2, seg: 2 },
+        { es: 'Más de $600 al mes', en: 'More than $600 a month', pts: 3, seg: 3 },
+      ]},
+      { id: 'documentos', title: { es: '¿Tienes identificación y comprobante de ingresos?', en: 'Do you have ID and proof of income?' }, options: [
+        { es: 'Tengo ambos', en: 'I have both', pts: 2 },
+        { es: 'Tengo uno de los dos', en: 'I have one of the two', pts: 1 },
+        { es: 'Ninguno todavía', en: 'Neither yet', pts: 0 },
+      ]},
+    ];
+
+    const SEGMENTS = [
+      { name: { es: 'Económico', en: 'Economy' }, vehicle: '$8,000 - $14,000', monthly: '$200 - $350' },
+      { name: { es: 'Económico a intermedio', en: 'Economy to mid-range' }, vehicle: '$12,000 - $20,000', monthly: '$300 - $450' },
+      { name: { es: 'Intermedio', en: 'Mid-range' }, vehicle: '$18,000 - $28,000', monthly: '$450 - $600' },
+      { name: { es: 'Intermedio a reciente', en: 'Mid-range to recent' }, vehicle: '$25,000 - $40,000', monthly: '$550 - $700' },
+    ];
+
+    const BANDS = {
+      A: { cls: 'band-a',
+        badge: { es: 'Buenas opciones', en: 'Strong options' },
+        h: { es: 'Tienes buenas opciones disponibles hoy.', en: 'You have strong options available today.' },
+        p: { es: 'Por lo que nos cuentas, tu perfil encaja bien con varias opciones de financiamiento. El siguiente paso es ver los números reales con Oscar y elegir el carro que mejor te sirve.', en: 'Based on what you told us, your profile fits well with several financing options. The next step is to review the real numbers with Oscar and pick the car that works best for you.' } },
+      B: { cls: 'band-b',
+        badge: { es: 'Opciones probables', en: 'Likely options' },
+        h: { es: 'Muy probablemente hay una opción para ti.', en: 'There is very likely an option for you.' },
+        p: { es: 'Tu situación es de las que trabajamos todos los días. Con la información correcta hay buenas posibilidades de encontrar un financiamiento que funcione para tu presupuesto. Hablemos para verlo en concreto.', en: 'Your situation is one we work with every day. With the right information there is a good chance of finding financing that fits your budget. Let us talk to look at it in detail.' } },
+      C: { cls: 'band-c',
+        badge: { es: 'Vale la pena hablar', en: 'Worth a conversation' },
+        h: { es: 'Hay caminos por explorar. Vale la pena que hablemos.', en: 'There are paths to explore. It is worth talking.' },
+        p: { es: 'Tu caso necesita una mirada más de cerca, y eso es exactamente lo que hace Oscar. No prometemos lo imposible, pero sí revisamos opciones reales que quizá no sabías que tenías. Sin costo y sin presión.', en: 'Your case needs a closer look, and that is exactly what Oscar does. We do not promise the impossible, but we do review real options you may not have known you had. No cost and no pressure.' } },
+    };
+
+    // Pure scoring function (no DOM, no fetch)
+    function scoreAnswers(answers) {
+      let total = 0, seg = 0;
+      QUESTIONS.forEach(q => {
+        const opt = q.options[answers[q.id]];
+        if (!opt) return;
+        total += opt.pts;
+        if (q.id === 'presupuesto') seg = opt.seg;
+      });
+      let band = total >= 13 ? 'A' : (total >= 8 ? 'B' : 'C');
+      return { total, band, segment: SEGMENTS[seg] };
+    }
+
+    // ---- i18n state shared with the main site ----
+    let lang = localStorage.getItem('oscar_lang') || 'es';
+    let current = 0;
+    const answers = {};
+
+    function t(key) { return T[lang][key]; }
+
+    function applyLang() {
+      document.documentElement.lang = lang;
+      document.getElementById('langLabel').textContent = lang === 'es' ? 'EN' : 'ES';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const v = T[lang][el.getAttribute('data-i18n')];
+        if (v !== undefined) el.textContent = v;
+      });
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const v = T[lang][el.getAttribute('data-i18n-ph')];
+        if (v !== undefined) el.placeholder = v;
+      });
+      if (!document.getElementById('quiz').classList.contains('hide')) renderQuestion();
+      if (!document.getElementById('result').classList.contains('hide')) renderResult();
+      if (window.lucide) lucide.createIcons();
+    }
+    function toggleLang() { lang = (lang === 'es') ? 'en' : 'es'; localStorage.setItem('oscar_lang', lang); applyLang(); }
+
+    function show(id) {
+      ['intro','quiz','optin','result'].forEach(s => document.getElementById(s).classList.toggle('hide', s !== id));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function start() { current = 0; show('quiz'); renderQuestion(); }
+
+    function renderQuestion() {
+      const q = QUESTIONS[current];
+      document.getElementById('stepMeta').textContent = t('step_of')(current + 1, QUESTIONS.length);
+      document.getElementById('progressBar').style.width = (current / QUESTIONS.length * 100) + '%';
+      document.getElementById('qTitle').textContent = q.title[lang];
+      document.getElementById('backBtn').classList.toggle('hide', current === 0);
+      document.getElementById('backLabel').textContent = t('back_btn');
+      const isLast = current === QUESTIONS.length - 1;
+      document.getElementById('nextLabel').textContent = isLast ? t('see_result') : t('next_btn');
+
+      const wrap = document.getElementById('options');
+      wrap.innerHTML = '';
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option' + (answers[q.id] === i ? ' selected' : '');
+        btn.innerHTML = '<span class="dot"></span><span></span>';
+        btn.querySelector('span:last-child').textContent = opt[lang];
+        btn.onclick = () => { answers[q.id] = i; renderQuestion(); };
+        wrap.appendChild(btn);
+      });
+      document.getElementById('nextBtn').disabled = answers[q.id] === undefined;
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function next() {
+      if (answers[QUESTIONS[current].id] === undefined) return;
+      if (current < QUESTIONS.length - 1) { current++; renderQuestion(); }
+      else show('optin');
+    }
+    function back() { if (current > 0) { current--; renderQuestion(); } }
+
+    function renderResult() {
+      const { band, segment } = scoreAnswers(answers);
+      const b = BANDS[band];
+      const badge = document.getElementById('resultBadge');
+      badge.className = 'result-badge ' + b.cls;
+      badge.innerHTML = '<i data-lucide="circle-check-big" style="width:16px;height:16px;"></i> <span></span>';
+      badge.querySelector('span').textContent = b.badge[lang];
+      document.getElementById('resultH').textContent = b.h[lang];
+      document.getElementById('resultP').textContent = b.p[lang];
+      document.getElementById('estVehicle').textContent = segment.vehicle;
+      document.getElementById('estMonthly').textContent = segment.monthly + ' ' + t('per_month');
+      show('result');
+    }
+
+    // ---- KIT submission (canonical values in Spanish for consistent data) ----
+    const KIT_ENDPOINT = 'https://app.kit.com/forms/9610315/subscriptions';
+
+    function submitLead(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const err = document.getElementById('formError');
+      if (!email) { err.textContent = t('err_email'); err.style.display = 'block'; return; }
+      err.style.display = 'none';
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      document.getElementById('submitLabel').textContent = t('sending');
+
+      const { band, segment } = scoreAnswers(answers);
+      const fd = new FormData();
+      fd.append('email_address', email);
+      if (name) fd.append('first_name', name);
+      fd.append('fields[telefono]', phone);
+      fd.append('fields[banda]', band);
+      fd.append('fields[pago_estimado]', segment.monthly);
+      fd.append('fields[segmento]', segment.name.es);
+      fd.append('fields[idioma]', lang);
+      fd.append('fields[fuente]', 'quiz');
+      QUESTIONS.forEach(q => {
+        const opt = q.options[answers[q.id]];
+        if (opt) fd.append('fields[' + q.id + ']', opt.es);
+      });
+
+      fetch(KIT_ENDPOINT, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+        .then(r => r.json()).catch(() => null)
+        .finally(() => { renderResult(); });
+    }
+
+    applyLang();
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>

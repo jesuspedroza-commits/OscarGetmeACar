@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Oscar Get me a Car: Used Cars in Florida, Honest Financing</title>
-  <meta name="description" content="Find the car your family needs even if your credit is not perfect. Free consultation, no pressure. South Florida.">
-  <meta property="og:title" content="Oscar Get me a Car: Your next car is waiting">
-  <meta property="og:description" content="Honest financing for challenging credit in South Florida. Talk to Oscar today.">
+  <title>Oscar Get me a Car: Autos usados en Florida, financiamiento honesto</title>
+  <meta name="description" content="Encuentra el carro que tu familia necesita, aunque tu crédito no sea perfecto. Consulta sin costo, sin presión. South Florida.">
+  <meta property="og:title" content="Oscar Get me a Car: Tu próximo carro te está esperando">
+  <meta property="og:description" content="Financiamiento honesto para crédito desafiante en South Florida. Habla con Oscar hoy.">
   <meta property="og:image" content="assets/brandboard.png">
   <link rel="stylesheet" href="colors_and_type.css">
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -342,8 +342,9 @@
         <p class="hero-sub reveal visible d2" data-i18n="hero_sub">Oscar shows you the real options you have today. A free consultation. No commitment. None of the usual dealer show.</p>
         <div class="hero-ctas reveal visible d3">
           <button class="btn btn-primary btn-lg" onclick="openModal()"><span data-i18n="cta_long">Talk to Oscar</span> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></button>
-          <button class="btn btn-ghost btn-lg" onclick="scrollToId('instructor')" data-i18n="hero_cta2">Meet Oscar</button>
+          <a class="btn btn-light btn-lg" href="califica.html"><span data-i18n="hero_cta3">See if you qualify · 60 sec</span> <i data-lucide="gauge" style="width:18px;height:18px;"></i></a>
         </div>
+        <button class="hero-textlink reveal visible d4" onclick="scrollToId('instructor')" data-i18n="hero_cta2" style="background:none;border:none;color:#fff;opacity:.85;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:10px 2px 0;margin-top:6px;">Meet Oscar</button>
       </div>
     </div>
   </div>
@@ -442,7 +443,7 @@
     </div>
     <div class="inv-footer reveal">
       <div><p class="inv-footer-title" data-i18n="inv_foot_title">Want early access?</p><p class="inv-footer-sub" data-i18n="inv_foot_sub">Ask Oscar what's available today.</p></div>
-      <button class="btn btn-navy" onclick="openModal()"><span data-i18n="inv_foot_cta">Ask about current options</span> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></button>
+      <button class="btn btn-navy" onclick="openModal()"><span data-i18n="cta_long">Talk to Oscar</span> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></button>
     </div>
   </div>
 </section>
@@ -618,14 +619,15 @@
       <!-- TODO: Replace action with your form endpoint (Formspree, Kit, Mailchimp, etc.) -->
       <form id="contactForm" onsubmit="handleSubmit(event)">
         <div class="field"><label for="fname" data-i18n="modal_name">Full name</label><input type="text" id="fname" name="name" placeholder="Carlos Ramírez" required></div>
-        <div class="field"><label for="fphone" data-i18n="modal_phone">Phone</label><input type="tel" id="fphone" name="phone" placeholder="(407) 555-0198" required><span class="hint" data-i18n="modal_hint">We'll only text. No spam.</span></div>
+        <div class="field"><label for="femail" data-i18n="modal_email">Email</label><input type="email" id="femail" name="email" placeholder="carlos@email.com" required></div>
+        <div class="field"><label for="fphone" data-i18n="modal_phone">Phone</label><input type="tel" id="fphone" name="phone" inputmode="numeric" pattern="[0-9]*" placeholder="4075550198" required oninput="this.value=this.value.replace(/[^0-9]/g,'')"><span class="hint" data-i18n="modal_hint">We'll only text. No spam.</span></div>
         <div class="field"><label for="fbudget" data-i18n="modal_budget">Comfortable monthly budget</label>
           <select id="fbudget" name="budget">
-            <option data-i18n="modal_b1">Under $450/mo</option>
-            <option selected data-i18n="modal_b2">$450 to $550/mo</option>
-            <option data-i18n="modal_b3">$550 to $650/mo</option>
-            <option data-i18n="modal_b4">More than $650/mo</option>
-            <option data-i18n="modal_b5">Not sure yet</option>
+            <option value="Menos de $300 al mes" data-i18n="modal_b1">Under $300/mo</option>
+            <option value="Entre $300 y $450 al mes" data-i18n="modal_b2">$300 to $450/mo</option>
+            <option value="Entre $450 y $600 al mes" selected data-i18n="modal_b3">$450 to $600/mo</option>
+            <option value="Más de $600 al mes" data-i18n="modal_b4">More than $600/mo</option>
+            <option value="No estoy seguro" data-i18n="modal_b5">Not sure yet</option>
           </select>
         </div>
         <button type="submit" class="modal-submit"><span data-i18n="modal_submit">See my options</span> <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
@@ -647,7 +649,7 @@
 
   // ── Spanish translations (default render is English) ──
   const ES = {
-    cta_short: "Habla con Oscar", cta_long: "Habla con Oscar", hero_cta2: "Conoce a Oscar",
+    cta_short: "Habla con Oscar", cta_long: "Habla con Oscar", hero_cta2: "Conoce a Oscar", hero_cta3: "Averigua si calificas · 60 seg",
     hero_overline: "Autos en Florida · Financiamiento honesto · Sin presión",
     hero_h1: 'Tu próximo carro te está esperando, aunque tu crédito no sea <span class="accent">perfecto.</span>',
     hero_sub: "Oscar te muestra las opciones reales que tienes hoy. Una consulta sin costo. Sin compromiso. Sin el show del dealer tradicional.",
@@ -712,8 +714,8 @@
     faq9_q: "¿Qué documentos necesito?", faq9_a: "Para la primera llamada, nada. Si avanzamos, necesitarás licencia, comprobante de ingresos y seguro. Te digo exactamente qué traer cuando llegues a ese punto.",
     guar_overline: "Garantía", guar_h3: "La consulta es sin costo y sin compromiso.", guar_p: "Si la conversación con Oscar no te da claridad sobre tus opciones reales, no firmaste nada y no debes nada. El objetivo es que salgas con información, no con deuda.",
     modal_title: "Cuéntanos un poco sobre ti.", modal_sub: "Te respondemos por texto para coordinar una llamada sin presión. Toma 30 segundos.",
-    modal_name: "Nombre completo", modal_phone: "Teléfono", modal_hint: "Solo te escribimos. Sin spam.", modal_budget: "¿Cuánto cómodo pagas al mes?",
-    modal_b1: "Menos de $450/mes", modal_b2: "$450 a $550/mes", modal_b3: "$550 a $650/mes", modal_b4: "Más de $650/mes", modal_b5: "No estoy seguro aún",
+    modal_name: "Nombre completo", modal_email: "Correo", modal_phone: "Teléfono", modal_hint: "Solo te escribimos. Sin spam.", modal_budget: "¿Cuánto cómodo pagas al mes?",
+    modal_b1: "Menos de $300/mes", modal_b2: "$300 a $450/mes", modal_b3: "$450 a $600/mes", modal_b4: "Más de $600/mes", modal_b5: "No estoy seguro aún",
     modal_submit: "Quiero ver mis opciones", modal_fine: "Al enviar aceptas que Oscar te contacte. Nada más.",
     modal_done: "Listo", modal_done_title: "Oscar te escribe en menos de un día hábil.", modal_done_sub: "Sin spam, sin presión. Solo una conversación real sobre lo que funciona para ti.", modal_close: "Cerrar"
   };
@@ -722,7 +724,7 @@
   const EN = {};
   document.querySelectorAll('[data-i18n]').forEach(el => { EN[el.getAttribute('data-i18n')] = el.innerHTML; });
 
-  let lang = localStorage.getItem('oscar_lang') || 'en';
+  let lang = localStorage.getItem('oscar_lang') || 'es';
   function applyLang() {
     const dict = lang === 'es' ? ES : EN;
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -777,10 +779,18 @@
     setTimeout(() => { document.getElementById('modalForm').classList.remove('hide'); document.getElementById('modalSuccess').classList.remove('show'); document.getElementById('contactForm').reset(); }, 300);
   }
   function handleScrimClick(e) { if (e.target === document.getElementById('modal')) closeModal(); }
+  const KIT_ENDPOINT = 'https://app.kit.com/forms/9610315/subscriptions';
   function handleSubmit(e) {
     e.preventDefault();
-    // TODO: Replace with real submission (Formspree example):
-    // fetch('https://formspree.io/f/YOUR_ID', { method: 'POST', body: new FormData(e.target), headers: { Accept: 'application/json' } });
+    const fd = new FormData();
+    fd.append('email_address', document.getElementById('femail').value.trim());
+    const name = document.getElementById('fname').value.trim();
+    if (name) fd.append('first_name', name);
+    fd.append('fields[telefono]', document.getElementById('fphone').value.trim());
+    fd.append('fields[presupuesto]', document.getElementById('fbudget').value);
+    fd.append('fields[idioma]', lang);
+    fd.append('fields[fuente]', 'landing');
+    fetch(KIT_ENDPOINT, { method: 'POST', body: fd, headers: { Accept: 'application/json' } }).catch(() => {});
     document.getElementById('modalForm').classList.add('hide');
     document.getElementById('modalSuccess').classList.add('show');
     lucide.createIcons();
@@ -791,6 +801,7 @@
     if (!isOpen) { btn.setAttribute('aria-expanded', 'true'); answer.classList.add('open'); }
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  if (location.hash === '#hablar') openModal();
 </script>
 </body>
 </html>
