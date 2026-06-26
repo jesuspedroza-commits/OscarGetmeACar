@@ -131,7 +131,7 @@
     #instructor { background: #fff; overflow: hidden; }
     .instructor-layout { display: grid; grid-template-columns: 5fr 6fr; gap: 72px; align-items: center; }
     .instructor-visual { position: relative; border-radius: var(--radius-2xl); overflow: hidden; aspect-ratio: 4/5; background: radial-gradient(80% 60% at 30% 20%, rgba(62,114,168,.55) 0%, transparent 60%), linear-gradient(150deg, #264A78 0%, #1E3A5F 55%, #122642 100%); display: flex; align-items: flex-end; padding: 32px; }
-    .instructor-visual .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+    .instructor-visual .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; z-index: 1; }
     .instructor-visual .routes { position: absolute; inset: 0; z-index: 2; opacity: .4; background-image: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.06) 30.2%, rgba(255,255,255,.06) 30.5%, transparent 30.5%), linear-gradient(115deg, transparent 62%, rgba(255,255,255,.04) 62.2%, rgba(255,255,255,.04) 62.5%, transparent 62.5%); }
     .instructor-visual .watermark { position: absolute; top: 28px; left: 28px; width: 56px; opacity: .85; z-index: 3; filter: brightness(0) invert(1); }
     .instructor-visual .big-quote { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 40px; z-index: 3; }
@@ -216,7 +216,7 @@
     .lm-fine { font-size: 13px; color: var(--fg-3); margin: 14px 2px 0; }
     @media (max-width: 900px) {
       .leadmagnet-cta { flex-direction: column; align-items: stretch; padding: 28px 24px; }
-      .lm-form { flex-direction: column; }
+      .lm-form { flex-direction: column; flex: 1 1 auto; min-width: 0; }
     }
 
     /* ════════════ PROCESS ════════════ */
@@ -803,11 +803,19 @@
       gsap.from('.hero-trust', { autoAlpha: 0, y: 18, duration: 0.8, delay: 1.0, ease: 'power2.out' });
     }
 
-    // Image parallax inside inventory + instructor (scale floor prevents edge gaps)
-    gsap.utils.toArray('.inv-visual .photo, .instructor-visual .photo').forEach(img => {
+    // Image parallax inside inventory (scale floor prevents edge gaps)
+    gsap.utils.toArray('.inv-visual .photo').forEach(img => {
       gsap.fromTo(img, { yPercent: -6, scale: 1.12 }, {
         yPercent: 6, scale: 1.12, ease: 'none',
-        scrollTrigger: { trigger: img.closest('.inv-card, .instructor-visual'), start: 'top bottom', end: 'bottom top', scrub: 0.6 }
+        scrollTrigger: { trigger: img.closest('.inv-card'), start: 'top bottom', end: 'bottom top', scrub: 0.6 }
+      });
+    });
+
+    // Instructor photo: gentle drift only, keeps the face/forehead in frame
+    gsap.utils.toArray('.instructor-visual .photo').forEach(img => {
+      gsap.fromTo(img, { yPercent: -2, scale: 1.06 }, {
+        yPercent: 2, scale: 1.06, ease: 'none',
+        scrollTrigger: { trigger: img.closest('.instructor-visual'), start: 'top bottom', end: 'bottom top', scrub: 0.6 }
       });
     });
   })();
