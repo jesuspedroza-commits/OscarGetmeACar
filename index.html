@@ -52,6 +52,14 @@
     .btn-navy { background: var(--oscar-navy); color: #fff; padding: 15px 28px; }
     .btn-navy:hover { background: var(--oscar-navy-700); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(30,58,95,.3); color:#fff; }
     .btn-lg { font-size: 17px; padding: 18px 36px; }
+    /* Reveal button: label fades, arrow chip expands to fill on hover */
+    .btn-reveal { position: relative; overflow: hidden; padding-right: 64px; }
+    .btn-reveal .br-label { display: inline-block; transition: opacity var(--dur-4) var(--ease-out); }
+    .btn-reveal:hover .br-label { opacity: 0; }
+    .btn-reveal .br-arrow { position: absolute; top: 6px; right: 6px; bottom: 6px; width: 46px; display: grid; place-items: center; border-radius: 9px; background: var(--oscar-navy); color: #fff; transition: width var(--dur-4) var(--ease-out); pointer-events: none; }
+    .btn-reveal:hover .br-arrow { width: calc(100% - 12px); }
+    .btn-reveal:active .br-arrow { transform: scale(.96); }
+    @media (prefers-reduced-motion: reduce) { .btn-reveal .br-label, .btn-reveal .br-arrow { transition: none; } }
 
     /* ════════════ HEADER ════════════ */
     .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; transition: background var(--dur-3) var(--ease-out), border-color var(--dur-3) var(--ease-out); border-bottom: 1px solid transparent; }
@@ -70,8 +78,8 @@
     .site-header:not(.scrolled) .header-cta:hover { background: rgba(255,255,255,.26); }
 
     /* ════════════ HERO ════════════ */
-    #hero { min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; background: linear-gradient(135deg, #122642 0%, #1E3A5F 45%, #264A78 100%); }
-    #hero .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    #hero { min-height: 100dvh; display: flex; flex-direction: column; position: relative; overflow: hidden; background: linear-gradient(135deg, #122642 0%, #1E3A5F 45%, #264A78 100%); }
+    #hero .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; will-change: transform; transform-origin: center 40%; }
     #hero .hero-overlay { position: absolute; inset: 0; z-index: 1; background: radial-gradient(120% 90% at 80% 15%, rgba(62,114,168,.40) 0%, transparent 55%), linear-gradient(115deg, rgba(15,27,45,.92) 0%, rgba(30,58,95,.82) 45%, rgba(38,74,120,.62) 100%); }
     #hero .routes { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: .45; background-image: linear-gradient(115deg, transparent 14%, rgba(255,255,255,.05) 14.15%, rgba(255,255,255,.05) 14.4%, transparent 14.4%), linear-gradient(115deg, transparent 34%, rgba(255,255,255,.04) 34.15%, rgba(255,255,255,.04) 34.4%, transparent 34.4%), linear-gradient(115deg, transparent 58%, rgba(255,255,255,.05) 58.15%, rgba(255,255,255,.05) 58.4%, transparent 58.4%), linear-gradient(115deg, transparent 78%, rgba(255,255,255,.03) 78.15%, rgba(255,255,255,.03) 78.4%, transparent 78.4%); }
     #hero .arrow-motif { position: absolute; right: -8%; top: 46%; transform: translateY(-50%); width: 56vw; max-width: 820px; height: 80%; opacity: .07; pointer-events: none; color: #fff; z-index: 2; }
@@ -188,18 +196,6 @@
     .proof-card-name { font-size: 14px; font-weight: 700; color: var(--fg-1); }
     .proof-card-meta { font-size: 11px; color: var(--fg-3); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 2px; }
 
-    /* ════════════ PROBLEMS ════════════ */
-    #problems { background: radial-gradient(90% 80% at 80% 20%, rgba(45,90,140,.35) 0%, transparent 55%), linear-gradient(135deg, #1E3A5F 0%, #122642 100%); color: #fff; position: relative; overflow: hidden; }
-    #problems .routes { position: absolute; inset: 0; opacity: .35; pointer-events: none; background-image: linear-gradient(115deg, transparent 20%, rgba(255,255,255,.04) 20.2%, rgba(255,255,255,.04) 20.4%, transparent 20.4%), linear-gradient(115deg, transparent 50%, rgba(255,255,255,.03) 50.2%, rgba(255,255,255,.03) 50.4%, transparent 50.4%), linear-gradient(115deg, transparent 76%, rgba(255,255,255,.04) 76.2%, rgba(255,255,255,.04) 76.4%, transparent 76.4%); }
-    #problems .container { position: relative; z-index: 2; }
-    #problems .overline { color: #6B95C2; } #problems .overline::before { background-color: #6B95C2; }
-    #problems .section-head h2 { color: #fff; }
-    .problems-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-    .problem-item { display: flex; align-items: flex-start; gap: 18px; padding: 26px 30px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius-lg); transition: background var(--dur-2), transform var(--dur-2); }
-    .problem-item:hover { background: rgba(255,255,255,.08); transform: translateX(4px); }
-    .problem-icon { color: #6B95C2; flex-shrink: 0; margin-top: 2px; }
-    .problem-item p { font-size: 16px; line-height: 1.6; color: #C9D8E8; margin: 0; }
-
     /* ════════════ MISTAKES ════════════ */
     #mistakes { background: #fff; overflow: hidden; }
     .mistakes-list { display: flex; flex-direction: column; }
@@ -306,7 +302,7 @@
     }
     @media (max-width: 900px) {
       .section { padding: 88px 0; }
-      .archetype-grid, .problems-grid, .steps-layout, .stats-grid { grid-template-columns: 1fr; }
+      .archetype-grid, .steps-layout, .stats-grid { grid-template-columns: 1fr; }
       .stats-grid { gap: 32px; }
       .instructor-layout { grid-template-columns: 1fr; gap: 48px; }
       .instructor-visual { aspect-ratio: 16/10; }
@@ -354,12 +350,12 @@
   <div class="hero-main">
     <div class="container">
       <div class="hero-inner">
-        <div class="overline reveal visible"><span data-i18n="hero_overline">Cars in Florida · Honest financing · No pressure</span></div>
+        <div class="overline reveal visible"><span data-i18n="hero_overline">Cars in Florida · Honest financing</span></div>
         <h1 class="hero-h1 reveal visible d1" data-i18n="hero_h1">Your next car is waiting, even if your credit is not <span class="accent">perfect.</span></h1>
         <p class="hero-sub reveal visible d2" data-i18n="hero_sub">Oscar shows you the real options you have today. A free consultation. No commitment. None of the usual dealer show.</p>
         <div class="hero-ctas reveal visible d3">
           <button class="btn btn-primary btn-lg" onclick="openModal()"><span data-i18n="cta_long">Talk to Oscar</span> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></button>
-          <a class="btn btn-light btn-lg" href="califica.html"><span data-i18n="hero_cta3">See if you qualify · 60 sec</span> <i data-lucide="gauge" style="width:18px;height:18px;"></i></a>
+          <a class="btn btn-light btn-lg btn-reveal" href="califica.html"><span class="br-label" data-i18n="hero_cta3">Your monthly payment · 60 sec</span><span class="br-arrow"><i data-lucide="chevron-right" style="width:16px;height:16px;"></i></span></a>
         </div>
         <button class="hero-textlink reveal visible d4" onclick="scrollToId('instructor')" data-i18n="hero_cta2" style="background:none;border:none;color:#fff;opacity:.85;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:10px 2px 0;margin-top:6px;">Meet Oscar</button>
       </div>
@@ -509,23 +505,6 @@
   </div>
 </section>
 
-<!-- PROBLEMS -->
-<section id="problems" class="section">
-  <div class="routes"></div>
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="overline"><span data-i18n="prob_overline">If this is your situation…</span></div>
-      <h2 data-i18n="prob_h2">You know exactly what we mean</h2>
-    </div>
-    <div class="problems-grid">
-      <div class="problem-item reveal"><i class="problem-icon" data-lucide="circle-help" style="width:22px;height:22px;"></i><p data-i18n="prob1">You need a car but you don't know if you qualify for financing.</p></div>
-      <div class="problem-item reveal d1"><i class="problem-icon" data-lucide="trending-down" style="width:22px;height:22px;"></i><p data-i18n="prob2">You're afraid of getting terms you can't keep up with long term.</p></div>
-      <div class="problem-item reveal"><i class="problem-icon" data-lucide="shield-alert" style="width:22px;height:22px;"></i><p data-i18n="prob3">You don't trust dealers, and you have reasons for that.</p></div>
-      <div class="problem-item reveal d1"><i class="problem-icon" data-lucide="users" style="width:22px;height:22px;"></i><p data-i18n="prob4">Your family needs the right decision, not the fast one.</p></div>
-    </div>
-  </div>
-</section>
-
 <!-- MISTAKES -->
 <section id="mistakes" class="section">
   <div class="container">
@@ -560,19 +539,19 @@
     <div class="section-head reveal">
       <div class="overline"><span data-i18n="proc_overline">The process</span></div>
       <h2 data-i18n="proc_h2">Here's what happens when you talk to Oscar</h2>
-      <p class="section-sub" data-i18n="proc_sub">Four steps. No surprises along the way.</p>
+      <p class="section-sub" data-i18n="proc_sub">Four steps, clear from start to finish.</p>
     </div>
     <div class="steps-layout">
       <div class="step-card reveal"><div class="step-bg-num">01</div><div class="step-num" data-i18n="proc_step">Step 01</div><h3 class="step-title" data-i18n="proc1_t">You tell me your situation.</h3><p class="step-body" data-i18n="proc1_b">What you need, what you have, what worries you. No judgment. The conversation is confidential and free.</p></div>
       <div class="step-card reveal d1"><div class="step-bg-num">02</div><div class="step-num" data-i18n="proc_step">Step 02</div><h3 class="step-title" data-i18n="proc2_t">We review your real options.</h3><p class="step-body" data-i18n="proc2_b">Not the ones that suit the dealer, the ones that work for your situation and your monthly budget.</p></div>
       <div class="step-card reveal"><div class="step-bg-num">03</div><div class="step-num" data-i18n="proc_step">Step 03</div><h3 class="step-title" data-i18n="proc3_t">I show you the cars that fit.</h3><p class="step-body" data-i18n="proc3_b">With clear numbers: down payment, monthly payment, term. No fine print. No surprises at signing.</p></div>
-      <div class="step-card reveal d1"><div class="step-bg-num">04</div><div class="step-num" data-i18n="proc_step">Step 04</div><h3 class="step-title" data-i18n="proc4_t">If it works, we close. If not, I tell you.</h3><p class="step-body" data-i18n="proc4_b">No closing pressure. If there is no real option for you today, I tell you straight, and you lost nothing.</p></div>
+      <div class="step-card reveal d1"><div class="step-bg-num">04</div><div class="step-num" data-i18n="proc_step">Step 04</div><h3 class="step-title" data-i18n="proc4_t">If it works, we close. If not, I tell you.</h3><p class="step-body" data-i18n="proc4_b">No closing pressure. If there is no real option for you today, I say so up front, and you lost nothing.</p></div>
     </div>
     <div class="process-footer reveal">
       <div class="process-pills">
         <span class="pill"><i data-lucide="check" style="width:14px;height:14px;"></i> <span data-i18n="proc_pill1">From $450/mo</span></span>
         <span class="pill"><i data-lucide="check" style="width:14px;height:14px;"></i> <span data-i18n="proc_pill2">Flexible down payment</span></span>
-        <span class="pill"><i data-lucide="check" style="width:14px;height:14px;"></i> <span data-i18n="proc_pill3">Challenging credit welcome</span></span>
+        <span class="pill"><i data-lucide="check" style="width:14px;height:14px;"></i> <span data-i18n="proc_pill3">No matter your credit</span></span>
         <span class="pill"><i data-lucide="check" style="width:14px;height:14px;"></i> <span data-i18n="proc_pill4">ITIN accepted</span></span>
       </div>
       <button class="btn btn-navy" onclick="openModal()"><span data-i18n="cta_long">Talk to Oscar</span> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></button>
@@ -673,13 +652,15 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
   lucide.createIcons();
 
   // ── Spanish translations (default render is English) ──
   const ES = {
-    cta_short: "Habla con Oscar", cta_long: "Habla con Oscar", hero_cta2: "Conoce a Oscar", hero_cta3: "Averigua si calificas · 60 seg",
-    hero_overline: "Autos en Florida · Financiamiento honesto · Sin presión",
+    cta_short: "Habla con Oscar", cta_long: "Habla con Oscar", hero_cta2: "Conoce a Oscar", hero_cta3: "¿Cuánto pagarías al mes? · 60 seg",
+    hero_overline: "Autos en Florida · Financiamiento honesto",
     hero_h1: 'Tu próximo carro te está esperando, aunque tu crédito no sea <span class="accent">perfecto.</span>',
     hero_sub: "Oscar te muestra las opciones reales que tienes hoy. Una consulta sin costo. Sin compromiso. Sin el show del dealer tradicional.",
     trust1: "Consulta sin costo", trust2: "Cero presión", trust3: "Crédito desafiante bienvenido", trust_loc: "Florida · Vendedor de confianza",
@@ -695,10 +676,10 @@
     instr_p1: "Oscar lleva más de 10 años vendiendo carros en Florida. En una industria que vive de la presión y la letra chica, construyó su carrera haciendo lo opuesto.",
     instr_p2: "Explicar con claridad. Recomendar solo lo que tiene sentido para tu situación. Y decirte cuando algo no funciona, aunque eso signifique no cerrar la venta ese día.",
     instr_p3: "Trabaja en Rick Case Florida. Su reputación la construyó vecino por vecino, referido por referido.",
-    instr_s1: "años en Florida", instr_s2: "Florida", instr_s3: "referidos y red",
+    instr_s1: "años en Florida", instr_s2: "Florida", instr_s3: "referidos y de boca en boca",
     inv_overline: "Mira lo que hay", inv_soon: "Muy pronto", inv_h2: "Hay buenos carros allá afuera. Oscar sabe dónde buscar.",
     inv_sub: "Llegadas recientes, opciones de buen valor, y carros que vale la pena preguntar. La experiencia completa de búsqueda llega pronto.",
-    inv1_pill: "Buen precio", inv1_title: "Opciones de buen valor", inv1_desc: "Carros seleccionados que destacan frente a opciones similares.",
+    inv1_pill: "Buen precio", inv1_title: "Carros que rinden tu dinero", inv1_desc: "Carros seleccionados que destacan frente a opciones similares.",
     inv2_pill: "Recién llegado", inv2_title: "Disponibles hace poco", inv2_desc: "Nuevas oportunidades que vale la pena ver antes de que se vayan.",
     inv3_pill: "Económico", inv3_title: "Para el día a día", inv3_desc: "Opciones confiables para necesidades diarias y presupuestos reales.",
     inv4_pill: "Opciones flexibles", inv4_title: "Distintas situaciones de crédito", inv4_desc: "Vehículos que pueden encajar en varios caminos de financiamiento.",
@@ -712,11 +693,6 @@
     proof_j_meta: "Compradora primeriza · Tampa, FL",
     proof_r_quote: "Necesitaba una pickup para trabajar, no para presumir. Me ayudaron a encontrar una F-150 con millaje real, no las de 200 mil millas que otros te quieren meter. Tres meses después, sigue como nueva.",
     proof_r_meta: "Dueño de pequeño negocio · Hialeah, FL",
-    prob_overline: "Si esta es tu situación…", prob_h2: "Sabes exactamente de qué hablamos",
-    prob1: "Necesitas un carro pero no sabes si calificas para financiamiento.",
-    prob2: "Tienes miedo de que te den condiciones que no puedas pagar a largo plazo.",
-    prob3: "No confías en los dealers, y tienes razones para eso.",
-    prob4: "Tu familia necesita la decisión correcta, no la decisión rápida.",
     mist_overline: "Errores comunes", mist_h2: "Los 3 errores que comete la mayoría antes de llegar con Oscar", mist_sub: "No por falta de criterio, por falta de información clara.",
     mist1_t: "Ir a un dealer sin saber tu situación crediticia real.",
     mist1_b: "Si no conoces tu punto de partida, el dealer lo usa en tu contra. Te ofrecen tasas altísimas y te hacen creer que no hay alternativa. Oscar te muestra los números antes de que entres a negociar.",
@@ -727,12 +703,12 @@
     lm_overline: "Checklist gratis", lm_h3: "Para no firmar sin entender los números",
     lm_body: "Descarga el checklist que Oscar revisa con sus clientes antes de firmar: tasa, plazo, enganche y la letra chica que hay que vigilar. Te llega a tu correo en menos de un minuto.",
     lm_cta: "Enviarme el checklist", lm_fine: "Sin spam. Solo el checklist y consejos honestos sobre financiamiento.",
-    proc_overline: "El proceso", proc_h2: "Esto pasa cuando hablas con Oscar", proc_sub: "Cuatro pasos. Sin sorpresas en el camino.", proc_step: "Paso",
+    proc_overline: "El proceso", proc_h2: "Esto pasa cuando hablas con Oscar", proc_sub: "Cuatro pasos, claros de principio a fin.", proc_step: "Paso",
     proc1_t: "Me cuentas tu situación.", proc1_b: "Qué necesitas, qué tienes, qué te preocupa. Sin juicios. La conversación es confidencial y sin costo.",
     proc2_t: "Revisamos tus opciones reales.", proc2_b: "No las que le convienen al dealer, las que funcionan para tu situación y tu presupuesto mensual.",
     proc3_t: "Te muestro los vehículos que caben.", proc3_b: "Con números claros: enganche, pago mensual, plazo. Sin letra chica. Sin sorpresas al firmar.",
-    proc4_t: "Si funciona, cerramos. Si no, te lo digo.", proc4_b: "No hay presión de cierre. Si no hay una opción real para ti hoy, te lo digo directo, y no perdiste nada.",
-    proc_pill1: "Desde $450/mes", proc_pill2: "Enganche flexible", proc_pill3: "Crédito desafiante bienvenido", proc_pill4: "ITIN aceptado",
+    proc4_t: "Si funciona, cerramos. Si no, te lo digo.", proc4_b: "No hay presión de cierre. Si no hay una opción real para ti hoy, te lo digo de frente, y no perdiste nada.",
+    proc_pill1: "Desde $450/mes", proc_pill2: "Enganche flexible", proc_pill3: "Sin importar tu crédito", proc_pill4: "ITIN aceptado",
     nudge_h2: "La consulta con Oscar no cuesta nada.", nudge_p: "Lo que cuesta es seguir un día más sin el carro que tu familia necesita.",
     faq_overline: "Preguntas frecuentes", faq_h2: "Todo lo que necesitas saber", faq_sub: "Si tienes una pregunta que no está aquí, es parte de la conversación con Oscar.",
     faq1_q: "¿Tengo que ir en persona?", faq1_a: "No para empezar. Hablamos por teléfono o texto, revisamos tu situación, y si hay opciones que tienen sentido coordinamos una visita cuando estés listo.",
@@ -746,7 +722,7 @@
     faq9_q: "¿Qué documentos necesito?", faq9_a: "Para la primera llamada, nada. Si avanzamos, necesitarás licencia, comprobante de ingresos y seguro. Te digo exactamente qué traer cuando llegues a ese punto.",
     guar_overline: "Garantía", guar_h3: "La consulta es sin costo y sin compromiso.", guar_p: "Si la conversación con Oscar no te da claridad sobre tus opciones reales, no firmaste nada y no debes nada. El objetivo es que salgas con información, no con deuda.",
     modal_title: "Cuéntanos un poco sobre ti.", modal_sub: "Te respondemos por texto para coordinar una llamada sin presión. Toma 30 segundos.",
-    modal_name: "Nombre completo", modal_email: "Correo", modal_phone: "Teléfono", modal_hint: "Solo te escribimos. Sin spam.", modal_budget: "¿Cuánto cómodo pagas al mes?",
+    modal_name: "Nombre completo", modal_email: "Correo", modal_phone: "Teléfono", modal_hint: "Solo te escribimos. Sin spam.", modal_budget: "¿Cuánto puedes pagar cómodo al mes?",
     modal_b1: "Menos de $300/mes", modal_b2: "$300 a $450/mes", modal_b3: "$450 a $600/mes", modal_b4: "Más de $600/mes", modal_b5: "No estoy seguro aún",
     modal_submit: "Quiero ver mis opciones", modal_fine: "Al enviar aceptas que Oscar te contacte. Nada más.",
     modal_done: "Listo", modal_done_title: "Oscar te escribe en menos de un día hábil.", modal_done_sub: "Sin spam, sin presión. Solo una conversación real sobre lo que funciona para ti.", modal_close: "Cerrar"
@@ -801,6 +777,40 @@
     });
   }, { threshold: 0.5 });
   document.querySelectorAll('[data-count]').forEach(el => countIO.observe(el));
+
+  // ── Cinematic motion (GSAP) ──────────────────────────────────
+  // Subtle, calm, premium. Disabled entirely under reduced-motion.
+  (function cinematicMotion() {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !window.gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero background: cinematic settle + slow parallax drift
+    const heroBg = document.querySelector('#hero .hero-bg');
+    if (heroBg && heroBg.offsetParent !== null) {
+      gsap.fromTo(heroBg, { scale: 1.22 }, { scale: 1.14, duration: 2.6, ease: 'power2.out' });
+      gsap.to(heroBg, {
+        yPercent: 8, ease: 'none',
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.6 }
+      });
+    }
+
+    // Hero content: staggered cascade in
+    const heroItems = gsap.utils.toArray('#hero .hero-inner > *');
+    if (heroItems.length) {
+      gsap.set(heroItems, { y: 30, autoAlpha: 0 });
+      gsap.to(heroItems, { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.1, ease: 'power3.out', delay: 0.2 });
+      gsap.from('.hero-trust', { autoAlpha: 0, y: 18, duration: 0.8, delay: 1.0, ease: 'power2.out' });
+    }
+
+    // Image parallax inside inventory + instructor (scale floor prevents edge gaps)
+    gsap.utils.toArray('.inv-visual .photo, .instructor-visual .photo').forEach(img => {
+      gsap.fromTo(img, { yPercent: -6, scale: 1.12 }, {
+        yPercent: 6, scale: 1.12, ease: 'none',
+        scrollTrigger: { trigger: img.closest('.inv-card, .instructor-visual'), start: 'top bottom', end: 'bottom top', scrub: 0.6 }
+      });
+    });
+  })();
 
   function scrollToId(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
 

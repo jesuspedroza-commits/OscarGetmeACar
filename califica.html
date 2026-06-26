@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>¿Calificas? Auto-chequeo de 60 segundos · Oscar Get me a Car</title>
+  <title>¿Cuánto carro puedes pagar? Calculadora de 60 segundos · Oscar Get me a Car</title>
   <meta name="description" content="Averigua en 60 segundos qué opciones de financiamiento probablemente tienes hoy. Sin SSN, sin afectar tu crédito, sin compromiso.">
   <meta name="robots" content="noindex">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -37,17 +37,6 @@
 
     main { flex: 1 0 auto; padding: 40px 0 72px; }
     .card { position: relative; background: #fff; border: 1px solid var(--line-1); border-radius: var(--radius-xl); box-shadow: var(--shadow-2); padding: 36px 36px 32px; }
-    #optin.glass-step {
-      position: absolute; inset: 0; margin: 0; overflow-y: auto;
-      display: flex; flex-direction: column; justify-content: center;
-      background: rgba(255,255,255,.62);
-      backdrop-filter: blur(22px) saturate(160%);
-      -webkit-backdrop-filter: blur(22px) saturate(160%);
-      border: 1px solid rgba(255,255,255,.55);
-      border-radius: var(--radius-xl);
-      box-shadow: 0 24px 60px rgba(15,35,60,.2);
-      padding: 36px 36px 32px;
-    }
     .overline { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 14px; font-size: var(--fs-overline); letter-spacing: var(--ls-overline); text-transform: uppercase; font-weight: 600; color: var(--fg-accent); }
     .overline::before { content: ''; width: 26px; height: 2px; background: var(--oscar-blue); display: inline-block; }
 
@@ -77,11 +66,39 @@
     .band-b { background: var(--oscar-blue-050); color: var(--oscar-blue); }
     .band-c { background: var(--oscar-warning-bg); color: var(--oscar-warning); }
     .result-h { font-size: 30px; line-height: 1.12; letter-spacing: -0.02em; font-weight: 800; color: var(--oscar-navy); margin: 0 0 14px; }
-    .estimate { background: var(--bg-2); border: 1px solid var(--line-1); border-radius: var(--radius-lg); padding: 20px 22px; margin: 22px 0; }
-    .estimate-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 8px 0; }
-    .estimate-row + .estimate-row { border-top: 1px solid var(--line-1); }
-    .estimate-label { font-size: 13px; color: var(--fg-3); font-weight: 500; }
-    .estimate-val { font-size: 18px; color: var(--oscar-navy); font-weight: 800; font-family: var(--font-display); text-align: right; }
+    /* Result: premium navy header */
+    .result-hero { position: relative; overflow: hidden; background: radial-gradient(120% 120% at 85% 0%, rgba(62,114,168,.45) 0%, transparent 55%), linear-gradient(150deg, #264A78 0%, #1E3A5F 60%, #122642 100%); border-radius: var(--radius-lg); padding: 28px 30px 26px; margin-bottom: 20px; }
+    .result-hero .result-badge { margin-bottom: 14px; }
+    .result-hero .result-h { color: #fff; margin: 0 0 10px; }
+    .result-hero p { color: #C9D8E8; font-size: 15px; line-height: 1.6; margin: 0; }
+
+    /* Result: representative car */
+    .result-car { position: relative; margin: 0 0 20px; border: 1px solid var(--line-1); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-2); }
+    .result-car img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+    .result-car figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 14px 9px; font-size: 12px; font-weight: 600; color: #fff; background: linear-gradient(transparent, rgba(15,27,45,.78)); }
+
+    /* Result: estimate cells */
+    .estimate { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 24px; }
+    .estimate-cell { background: var(--bg-2); border: 1px solid var(--line-1); border-radius: var(--radius-lg); padding: 18px 18px 16px; }
+    .estimate-label { display: block; font-size: 11px; color: var(--fg-3); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 10px; }
+    .estimate-val { font-family: var(--font-display); font-weight: 800; color: var(--oscar-navy); letter-spacing: -0.02em; line-height: 1.05; }
+    .estimate-val:not(.big) { font-size: clamp(16px, 3.2vw, 20px); }
+    .estimate-val.big { font-size: clamp(21px, 4.6vw, 29px); color: var(--oscar-blue); }
+    .estimate-val .suf { font-size: .5em; font-weight: 600; color: var(--fg-3); font-family: var(--font-sans); margin-left: 3px; letter-spacing: 0; }
+
+    /* Reveal button (same as landing) */
+    .btn-reveal { position: relative; overflow: hidden; padding-right: 64px; }
+    .btn-reveal .br-label { display: inline-block; transition: opacity var(--dur-4) var(--ease-out); }
+    .btn-reveal:hover .br-label { opacity: 0; }
+    .btn-reveal .br-arrow { position: absolute; top: 6px; right: 6px; bottom: 6px; width: 46px; display: grid; place-items: center; border-radius: 9px; background: var(--oscar-navy); color: #fff; transition: width var(--dur-4) var(--ease-out); pointer-events: none; }
+    .btn-reveal:hover .br-arrow { width: calc(100% - 12px); }
+    .btn-reveal:active .br-arrow { transform: scale(.96); }
+
+    /* Submit loading spinner */
+    .btn .spinner { display: none; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
+    .btn.loading .spinner { display: inline-block; }
+    .btn.loading i { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .disclaimer { font-size: 12px; color: var(--fg-3); line-height: 1.55; margin-top: 18px; }
     .bring-list { list-style: none; padding: 0; margin: 16px 0 0; }
     .bring-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--fg-2); margin-bottom: 8px; }
@@ -95,6 +112,8 @@
       .card { padding: 26px 22px 24px; }
       .q-title { font-size: 22px; }
       .result-h { font-size: 25px; }
+      .result-hero { padding: 24px 22px; }
+      .estimate { grid-template-columns: 1fr; }
       footer .container { flex-direction: column; gap: 8px; text-align: center; }
     }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
@@ -117,15 +136,15 @@
 
         <!-- INTRO -->
         <div id="intro">
-          <div class="overline" data-i18n="intro_overline">Auto-chequeo · 60 segundos</div>
-          <h1 class="q-title" data-i18n="intro_title">¿Calificas para financiamiento? Averígualo en 60 segundos.</h1>
+          <div class="overline" data-i18n="intro_overline">Calculadora · 60 segundos</div>
+          <h1 class="q-title" data-i18n="intro_title">¿Cuánto carro puedes pagar? Descúbrelo en 60 segundos.</h1>
           <p data-i18n="intro_p">Responde 6 preguntas rápidas y te decimos qué opciones probablemente tienes hoy, con un estimado de pago mensual. Sin número de seguro social, sin afectar tu crédito, sin compromiso.</p>
           <ul class="bring-list" style="margin-bottom:26px;">
             <li><i data-lucide="shield-check" style="width:18px;height:18px;"></i> <span data-i18n="intro_li1">No pedimos SSN ni hacemos consulta dura de crédito.</span></li>
             <li><i data-lucide="lock" style="width:18px;height:18px;"></i> <span data-i18n="intro_li2">Es un estimado honesto, no una aprobación.</span></li>
             <li><i data-lucide="message-circle" style="width:18px;height:18px;"></i> <span data-i18n="intro_li3">Al final, Oscar revisa los números reales contigo.</span></li>
           </ul>
-          <button class="btn btn-primary btn-block" onclick="start()"><span data-i18n="intro_btn">Empezar el chequeo</span> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></button>
+          <button class="btn btn-primary btn-block btn-reveal" onclick="start()"><span class="br-label" data-i18n="intro_btn">Calcular mis opciones</span><span class="br-arrow"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i></span></button>
         </div>
 
         <!-- QUIZ -->
@@ -160,19 +179,34 @@
               <input id="phone" name="phone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="3050000000" autocomplete="tel" required oninput="this.value=this.value.replace(/[^0-9]/g,'')">
             </div>
             <p class="consent" data-i18n="consent">Al enviar aceptas que Oscar te contacte sobre tus opciones de financiamiento. Solo para esto, sin spam. Puedes pedir que paremos cuando quieras.</p>
-            <button class="btn btn-primary btn-block" id="submitBtn" type="submit"><span id="submitLabel" data-i18n="submit_btn">Ver mis opciones</span> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></button>
+            <button class="btn btn-primary btn-block" id="submitBtn" type="submit"><span id="submitLabel" data-i18n="submit_btn">Ver mis opciones</span> <span class="spinner"></span> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></button>
           </form>
         </div>
 
         <!-- RESULT -->
         <div id="result" class="hide">
-          <span class="result-badge" id="resultBadge"></span>
-          <h2 class="result-h" id="resultH"></h2>
-          <p id="resultP"></p>
-          <div class="estimate">
-            <div class="estimate-row"><span class="estimate-label" data-i18n="est_vehicle_label">Rango de vehículo estimado</span><span class="estimate-val" id="estVehicle"></span></div>
-            <div class="estimate-row"><span class="estimate-label" data-i18n="est_monthly_label">Pago mensual estimado</span><span class="estimate-val" id="estMonthly"></span></div>
+          <div class="result-hero" id="resultHero">
+            <span class="result-badge" id="resultBadge"></span>
+            <h2 class="result-h" id="resultH"></h2>
+            <p id="resultP"></p>
           </div>
+
+          <figure class="result-car" id="resultCarFig">
+            <img id="resultCar" src="" alt="" onerror="document.getElementById('resultCarFig').style.display='none'">
+            <figcaption data-i18n="car_caption">Ejemplo de carro en tu rango estimado</figcaption>
+          </figure>
+
+          <div class="estimate">
+            <div class="estimate-cell">
+              <span class="estimate-label" data-i18n="est_monthly_label">Pago mensual estimado</span>
+              <span class="estimate-val big" id="estMonthly"></span>
+            </div>
+            <div class="estimate-cell">
+              <span class="estimate-label" data-i18n="est_vehicle_label">Rango de vehículo estimado</span>
+              <span class="estimate-val" id="estVehicle"></span>
+            </div>
+          </div>
+
           <p style="font-weight:600;color:var(--oscar-navy);margin-bottom:6px;" data-i18n="bring_title">Para la conversación con Oscar, ten a mano:</p>
           <ul class="bring-list">
             <li><i data-lucide="check" style="width:18px;height:18px;"></i> <span data-i18n="bring1">Licencia o identificación válida.</span></li>
@@ -183,7 +217,9 @@
             <i data-lucide="check-circle" style="width:22px;height:22px;flex-shrink:0;color:var(--oscar-blue,#2d5a8c);margin-top:1px;"></i>
             <span data-i18n="result_confirm" style="color:var(--oscar-navy,#1e3a5f);font-weight:500;">Listo, ya tenemos tus datos. Oscar te contacta en 1 día hábil para revisar tus números reales. Sin spam, sin presión.</span>
           </div>
-          <a class="btn btn-primary btn-block" href="index.html" style="margin-top:16px;"><i data-lucide="arrow-left" style="width:18px;height:18px;"></i> <span data-i18n="result_back">Volver al inicio</span></a>
+          <button class="btn btn-primary btn-block btn-reveal" id="bookBtn" type="button" style="margin-top:16px;"><span class="br-label" data-i18n="result_book">Agenda tu cita con Oscar</span><span class="br-arrow"><i data-lucide="calendar-check" style="width:16px;height:16px;"></i></span></button>
+          <p class="disclaimer" style="margin-top:8px;text-align:center;" data-i18n="result_book_sub">Sin compromiso. Tú eliges el horario.</p>
+          <a class="btn btn-ghost btn-block" href="index.html" style="margin-top:10px;"><span data-i18n="result_back">Volver al inicio</span></a>
           <p class="disclaimer" data-i18n="disclaimer">Este resultado es un estimado basado en tus respuestas, no una aprobación ni una oferta de crédito. Los números reales (tasa, plazo, enganche y pago) dependen de tu situación y los revisa Oscar contigo. Oscar no promete financiamiento que no puedas pagar.</p>
         </div>
 
@@ -198,18 +234,24 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script>
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", { origin: "https://cal.com" });
+    Cal("ui", { theme: "light", styles: { branding: { brandColor: "#2D5A8C" } }, hideEventTypeDetails: false, layout: "month_view" });
+  </script>
   <script>
     // ---- Static UI translations ----
     const T = {
       es: {
         back: 'Volver al inicio',
-        intro_overline: 'Auto-chequeo · 60 segundos',
-        intro_title: '¿Calificas para financiamiento? Averígualo en 60 segundos.',
+        intro_overline: 'Calculadora · 60 segundos',
+        intro_title: '¿Cuánto carro puedes pagar? Descúbrelo en 60 segundos.',
         intro_p: 'Responde 6 preguntas rápidas y te decimos qué opciones probablemente tienes hoy, con un estimado de pago mensual. Sin número de seguro social, sin afectar tu crédito, sin compromiso.',
         intro_li1: 'No pedimos SSN ni hacemos consulta dura de crédito.',
         intro_li2: 'Es un estimado honesto, no una aprobación.',
         intro_li3: 'Al final, Oscar revisa los números reales contigo.',
-        intro_btn: 'Empezar el chequeo',
+        intro_btn: 'Calcular mis opciones',
         back_btn: 'Atrás', next_btn: 'Siguiente', see_result: 'Ver mi resultado',
         optin_overline: 'Último paso',
         optin_title: '¿A dónde te enviamos tu resultado?',
@@ -227,6 +269,9 @@
         bring2: 'Una idea de tu ingreso mensual.',
         bring3: 'Cuánto puedes dar de enganche hoy.',
         result_confirm: 'Listo, ya tenemos tus datos. Oscar te contacta en 1 día hábil para revisar tus números reales. Sin spam, sin presión.',
+        result_book: 'Agenda tu cita con Oscar',
+        result_book_sub: 'Sin compromiso. Tú eliges el horario.',
+        car_caption: 'Ejemplo de carro en tu rango estimado',
         result_back: 'Volver al inicio',
         disclaimer: 'Este resultado es un estimado basado en tus respuestas, no una aprobación ni una oferta de crédito. Los números reales (tasa, plazo, enganche y pago) dependen de tu situación y los revisa Oscar contigo. Oscar no promete financiamiento que no puedas pagar.',
         foot_tagline: 'Opciones honestas. Movimiento hacia adelante.',
@@ -234,13 +279,13 @@
       },
       en: {
         back: 'Back to home',
-        intro_overline: 'Self-check · 60 seconds',
-        intro_title: 'Do you qualify for financing? Find out in 60 seconds.',
+        intro_overline: 'Calculator · 60 seconds',
+        intro_title: 'How much car can you afford? Find out in 60 seconds.',
         intro_p: 'Answer 6 quick questions and we tell you what options you likely have today, with an estimated monthly payment. No Social Security number, no hit to your credit, no commitment.',
         intro_li1: 'No SSN and no hard credit check.',
         intro_li2: 'It is an honest estimate, not an approval.',
         intro_li3: 'At the end, Oscar reviews the real numbers with you.',
-        intro_btn: 'Start the check',
+        intro_btn: 'Calculate my options',
         back_btn: 'Back', next_btn: 'Next', see_result: 'See my result',
         optin_overline: 'Last step',
         optin_title: 'Where do we send your result?',
@@ -258,6 +303,9 @@
         bring2: 'A rough idea of your monthly income.',
         bring3: 'How much you can put down today.',
         result_confirm: 'Done, we have your info. Oscar will reach out within one business day to go over your real numbers. No spam, no pressure.',
+        result_book: 'Book your time with Oscar',
+        result_book_sub: 'No commitment. You pick the time.',
+        car_caption: 'Example car in your estimated range',
         result_back: 'Back to home',
         disclaimer: 'This result is an estimate based on your answers, not an approval or a credit offer. The real numbers (rate, term, down payment and payment) depend on your situation and Oscar reviews them with you. Oscar does not promise financing you cannot afford.',
         foot_tagline: 'Honest options. Forward movement.',
@@ -306,10 +354,10 @@
     ];
 
     const SEGMENTS = [
-      { name: { es: 'Económico', en: 'Economy' }, vehicle: '$8,000 - $14,000', monthly: '$200 - $350' },
-      { name: { es: 'Económico a intermedio', en: 'Economy to mid-range' }, vehicle: '$12,000 - $20,000', monthly: '$300 - $450' },
-      { name: { es: 'Intermedio', en: 'Mid-range' }, vehicle: '$18,000 - $28,000', monthly: '$450 - $600' },
-      { name: { es: 'Intermedio a reciente', en: 'Mid-range to recent' }, vehicle: '$25,000 - $40,000', monthly: '$550 - $700' },
+      { name: { es: 'Económico', en: 'Economy' }, vehicle: '$8,000 - $14,000', monthly: '$200 - $350', img: 'assets/photos/car-budget.jpg' },
+      { name: { es: 'Económico a intermedio', en: 'Economy to mid-range' }, vehicle: '$12,000 - $20,000', monthly: '$300 - $450', img: 'assets/photos/car-fresh.jpg' },
+      { name: { es: 'Intermedio', en: 'Mid-range' }, vehicle: '$18,000 - $28,000', monthly: '$450 - $600', img: 'assets/photos/car-value.jpg' },
+      { name: { es: 'Intermedio a reciente', en: 'Mid-range to recent' }, vehicle: '$25,000 - $40,000', monthly: '$550 - $700', img: 'assets/photos/car-flexible.jpg' },
     ];
 
     const BANDS = {
@@ -343,7 +391,23 @@
     // ---- i18n state shared with the main site ----
     let lang = localStorage.getItem('oscar_lang') || 'es';
     let current = 0;
+    let leadName = '', leadEmail = '', leadPhone = '';
+    const OSCAR_CAL_LINK = 'oscargmc/consulta';
     const answers = {};
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const lcFirst = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : s;
+    const parseMoney = str => (String(str).match(/[\d,]+/g) || []).map(s => +s.replace(/,/g, ''));
+    const moneyHTML = (str, suf) => parseMoney(str).map(n => '$' + n.toLocaleString('en-US')).join(' – ') + (suf ? '<span class="suf">' + suf + '</span>' : '');
+    function countMoney(el, str, suf) {
+      const nums = parseMoney(str), dur = 1100; let start = null;
+      function tick(now) {
+        if (start === null) start = now;
+        const p = Math.min((now - start) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        el.innerHTML = nums.map(n => '$' + Math.round(n * e).toLocaleString('en-US')).join(' – ') + (suf ? '<span class="suf">' + suf + '</span>' : '');
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
 
     function t(key) { return T[lang][key]; }
 
@@ -370,9 +434,9 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    function start() { current = 0; show('quiz'); renderQuestion(); }
+    function start() { current = 0; show('quiz'); renderQuestion('next'); }
 
-    function renderQuestion() {
+    function renderQuestion(dir) {
       const q = QUESTIONS[current];
       document.getElementById('stepMeta').textContent = t('step_of')(current + 1, QUESTIONS.length);
       document.getElementById('progressBar').style.width = (current / QUESTIONS.length * 100) + '%';
@@ -390,28 +454,40 @@
         btn.className = 'option' + (answers[q.id] === i ? ' selected' : '');
         btn.innerHTML = '<span class="dot"></span><span></span>';
         btn.querySelector('span:last-child').textContent = opt[lang];
-        btn.onclick = () => { answers[q.id] = i; renderQuestion(); };
+        btn.onclick = () => selectOption(btn, q.id, i);
         wrap.appendChild(btn);
       });
       document.getElementById('nextBtn').disabled = answers[q.id] === undefined;
       if (window.lucide) lucide.createIcons();
+
+      if (!reduce && window.gsap && (dir === 'next' || dir === 'back')) {
+        const dx = dir === 'back' ? -26 : 26;
+        gsap.fromTo('#qTitle', { x: dx, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: .4, ease: 'power3.out' });
+        gsap.fromTo('#options .option', { x: dx, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: .4, stagger: .05, ease: 'power3.out' });
+      }
+    }
+
+    function selectOption(btn, qid, i) {
+      answers[qid] = i;
+      document.querySelectorAll('#options .option').forEach((b, bi) => b.classList.toggle('selected', bi === i));
+      const nextBtn = document.getElementById('nextBtn');
+      const wasDisabled = nextBtn.disabled;
+      nextBtn.disabled = false;
+      if (!reduce && window.gsap) {
+        gsap.fromTo(btn.querySelector('.dot'), { scale: .6 }, { scale: 1, duration: .35, ease: 'back.out(2.5)' });
+        if (wasDisabled) gsap.fromTo('#nextBtn i', { x: -4 }, { x: 0, duration: .4, ease: 'back.out(3)' });
+      }
     }
 
     function next() {
       if (answers[QUESTIONS[current].id] === undefined) return;
-      if (current < QUESTIONS.length - 1) { current++; renderQuestion(); }
-      else { paintResult(); showPreview(); }
+      if (current < QUESTIONS.length - 1) { current++; renderQuestion('next'); }
+      else {
+        show('optin');
+        if (!reduce && window.gsap) gsap.from('#optin > *', { y: 16, autoAlpha: 0, stagger: .06, duration: .45, ease: 'power3.out' });
+      }
     }
-    function back() { if (current > 0) { current--; renderQuestion(); } }
-
-    function showPreview() {
-      ['intro', 'quiz'].forEach(s => document.getElementById(s).classList.add('hide'));
-      document.getElementById('result').classList.remove('hide');
-      document.getElementById('optin').classList.remove('hide');
-      document.getElementById('optin').classList.add('glass-step');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      if (window.lucide) lucide.createIcons();
-    }
+    function back() { if (current > 0) { current--; renderQuestion('back'); } }
 
     function paintResult() {
       const { band, segment } = scoreAnswers(answers);
@@ -420,17 +496,36 @@
       badge.className = 'result-badge ' + b.cls;
       badge.innerHTML = '<i data-lucide="circle-check-big" style="width:16px;height:16px;"></i> <span></span>';
       badge.querySelector('span').textContent = b.badge[lang];
-      document.getElementById('resultH').textContent = b.h[lang];
+      document.getElementById('resultH').textContent = leadName ? leadName + ', ' + lcFirst(b.h[lang]) : b.h[lang];
       document.getElementById('resultP').textContent = b.p[lang];
-      document.getElementById('estVehicle').textContent = segment.vehicle;
-      document.getElementById('estMonthly').textContent = segment.monthly + ' ' + t('per_month');
+      const fig = document.getElementById('resultCarFig'), car = document.getElementById('resultCar');
+      if (segment.img) { fig.style.display = ''; car.src = segment.img; car.alt = t('car_caption'); }
+      document.getElementById('estMonthly').innerHTML = moneyHTML(segment.monthly, t('per_month'));
+      document.getElementById('estVehicle').innerHTML = moneyHTML(segment.vehicle, '');
+      const bookBtn = document.getElementById('bookBtn');
+      if (bookBtn) {
+        const notes = lang === 'es'
+          ? 'Resultado del quiz: Banda ' + band + ', ' + segment.name.es + ', pago estimado ' + segment.monthly + '. Tel: ' + leadPhone
+          : 'Quiz result: Band ' + band + ', ' + segment.name.en + ', estimated payment ' + segment.monthly + '. Phone: ' + leadPhone;
+        bookBtn.setAttribute('data-cal-link', OSCAR_CAL_LINK);
+        bookBtn.setAttribute('data-cal-config', JSON.stringify({ name: leadName, email: leadEmail, notes: notes, layout: 'month_view' }));
+      }
       if (window.lucide) lucide.createIcons();
       return { band, segment };
     }
 
-    function renderResult() {
+    function revealResult() {
       paintResult();
-      show('result');
+      if (reduce || !window.gsap) { show('result'); return; }
+      gsap.to('#optin', { autoAlpha: 0, y: -8, duration: .3, ease: 'power2.in', onComplete: () => {
+        document.getElementById('optin').style.cssText = '';
+        show('result');
+        gsap.fromTo('#resultHero', { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .55, ease: 'power3.out' });
+        gsap.fromTo('#resultCarFig', { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .55, delay: .12, ease: 'power3.out' });
+        const seg = scoreAnswers(answers).segment;
+        countMoney(document.getElementById('estMonthly'), seg.monthly, t('per_month'));
+        countMoney(document.getElementById('estVehicle'), seg.vehicle, '');
+      } });
     }
 
     // ---- KIT submission (canonical values in Spanish for consistent data) ----
@@ -466,12 +561,14 @@
       const email = document.getElementById('email').value.trim();
       const name = document.getElementById('name').value.trim();
       const phone = document.getElementById('phone').value.trim();
+      leadName = name; leadEmail = email; leadPhone = phone;
       const err = document.getElementById('formError');
       if (!email) { err.textContent = t('err_email'); err.style.display = 'block'; return; }
       err.style.display = 'none';
 
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
       document.getElementById('submitLabel').textContent = t('sending');
 
       const { band, segment } = scoreAnswers(answers);
@@ -494,13 +591,16 @@
       fetch(KIT_ENDPOINT, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
         .then(r => r.json()).catch(() => null)
         .finally(() => {
-          document.getElementById('optin').classList.remove('glass-step');
-          renderResult();
+          submitBtn.classList.remove('loading');
+          revealResult();
         });
     }
 
     applyLang();
     if (window.lucide) lucide.createIcons();
+    if (!reduce && window.gsap) {
+      gsap.from('#intro > *', { y: 20, autoAlpha: 0, stagger: .08, duration: .6, ease: 'power3.out', delay: .1 });
+    }
   </script>
 </body>
 </html>
