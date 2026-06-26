@@ -13,7 +13,10 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8731/checklist-financiamiento.html)",
       "Bash(curl -s http://localhost:8731/checklist-financiamiento.html)",
       "Bash(pkill -f \"http.server 8731\")",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git commit -m 'Corrige footer en español en checklist-financiamiento.html *)"
     ]
   }
 }
