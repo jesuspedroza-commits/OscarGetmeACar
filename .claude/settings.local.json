@@ -16,7 +16,15 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(git commit -m 'Corrige footer en español en checklist-financiamiento.html *)"
+      "Bash(git commit -m 'Corrige footer en español en checklist-financiamiento.html *)",
+      "Bash(git check-ignore *)",
+      "Bash(curl -sI https://oscar-getmeacar-git-dev-agenc-ia1.vercel.app/favicon.ico)",
+      "Bash(curl -sI https://oscar-getmeacar-git-dev-agenc-ia1.vercel.app/assets/favicon-32.png)",
+      "Bash(curl -sI https://oscar-getmeacar-git-dev-agenc-ia1.vercel.app/)",
+      "Bash(xxd favicon.ico)",
+      "Bash(curl -sI https://oscar-getmeacar.vercel.app/favicon.ico)",
+      "Bash(ls -la \"C:\\\\Users\\\\jesus\\\\Agents-Global\\\\Proyectos\\\\My Second Brain\\\\RAW\\\\Proyectos\\\\reto-marketer.md\" 2>&1)",
+      "Read(//c/Users/jesus/Agents-Global/Proyectos/My Second Brain/RAW/Proyectos/**)"
     ]
   }
 }
