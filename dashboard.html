@@ -210,6 +210,7 @@
 
 <script>
 const DASH = '–'; // en-dash: dato sin conector
+const EASTERN_TIME = 'America/New_York';
 const fmt = (n) => (n == null || Number.isNaN(n)) ? DASH : new Intl.NumberFormat('es-MX').format(Math.round(n));
 
 const setText = (k, v) => document.querySelectorAll(`[data-k="${k}"]`).forEach(el => {
@@ -302,7 +303,14 @@ async function load() {
 
   const t = d.updated_at ? new Date(d.updated_at) : new Date();
   document.getElementById('stamp').textContent =
-    'Actualizado ' + t.toLocaleString('es-MX', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
+    'Actualizado ' + t.toLocaleString('es-MX', {
+      day: 'numeric',
+      month: 'short',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZone: EASTERN_TIME,
+      timeZoneName: 'short',
+    });
 }
 
 document.getElementById('logout').addEventListener('click', async () => {
