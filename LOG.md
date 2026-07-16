@@ -21,6 +21,17 @@ Bitácora de cambios estructurales y de protocolo de este proyecto (no actividad
 - Flujo de git nuevo para este proyecto: rama `dev` para cambios antes de producción. Vercel ya tiene alias fijo por rama: `oscar-getmeacar-git-dev-agenc-ia1.vercel.app`, se actualiza solo con cada push a `dev`.
 - Gotcha de sesión: las MCP tools de un servidor agregado a media sesión (`claude mcp add`) no aparecen hasta usar `ToolSearch` (o reiniciar Claude Code); el servidor puede mostrar "Connected" en `claude mcp list` sin que sus tools estén cargadas todavía.
 
+## 2026-07-16
+- Dashboard privado del quiz (cadena `marketing-dashboard-kit`) sobre el sitio estatico. Primeras funciones serverless del proyecto (`api/`), antes era 100% estatico.
+  - SQL: funcion `dashboard_funnel_metrics()` (`SECURITY DEFINER`, `set search_path=public`, solo agregados de `quiz_leads`, cero filas crudas). Aplicada via MCP `apply_migration`, guardada en `supabase/002_dashboard_funnel_metrics.sql`.
+  - `api/metrics.js`: capa de proyeccion. Funnel `live` via RPC con anon key; `emails` (Kit) y `bookings` (Cal.com) como adaptadores `pending` con `null` (nunca 0 falso). Verifica la cookie de sesion (401 sin ella).
+  - `dashboard.html` (ruta `/dashboard`): hereda `colors_and_type.css`, copy en espanol, numeros en display, hairlines, dots live/pending. Dato faltante = en-dash (U+2013), NO em-dash (prohibido); la plantilla del skill usaba em-dash, se cambio.
+  - Gate (`deploy-gated-site`): `middleware.js` (Edge, Web Crypto) protege `/dashboard`; `api/login.js` (Node crypto) valida SHA-256 del password y firma cookie HMAC `<exp>.<sig>`; `api/logout.js`; `login.html`. `.vercelignore` excluye `supabase/ handoffs/ *.md .env*` etc.
+  - Env vars en Vercel (los 4 entornos): `DASHBOARD_PASSWORD_HASH`, `SESSION_SECRET`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`. El password (proyecto de clase) NO se pone aqui: el repo es publico y publicarlo anularia el gate; vive en las env vars de Vercel y en la memoria privada del agente.
+  - Verificado en `dev` (commit `4da85a4`) end-to-end: gate 302, login 401/200, `/api/metrics` 401 sin sesion y 200 con funnel live. Sin mergear a `main` todavia.
+- Gotcha (confirmado): los preview por rama estan detras del **SSO de Deployment Protection de Vercel** (302 a `vercel.com/sso-api`), que intercepta ANTES de las funciones propias. Para smoke-test de un preview protegido: MCP `get_access_to_vercel_url` da un `?_vercel_share=<token>` que setea la cookie `_vercel_jwt`; guardarla en un cookie jar (`curl -c/-b`) y recien ahi se prueba el gate real. Produccion (`main`) es publica, sin este SSO.
+- Gotcha: el conector MCP de Vercel puede desplegar (`deploy_to_vercel`) y leer, pero NO tiene tool para setear env vars; eso se hace en el dashboard web de Vercel o por CLI.
+
 ## 2026-06-26
 - Primer lead magnet del proyecto: "El Checklist Antes de Firmar" (`checklist-financiamiento.html`), via el skill `/lead-magnet`.
 - Decisión de placement: la idea original era convertir el error #3 de la sección Mistakes en el anuncio del lead magnet. Se descartó: convierte un insight genuino en autopromoción y choca con la voz de marca ("no promete lo imposible"). Se dejaron los 3 errores intactos y se agregó el CTA como bloque aparte, justo después de la lista, enganchado al error #3 (firmar sin entender el financiamiento). Lección para futuros lead magnets en esta landing: el magnet debe ofrecerse como solución a un dolor ya declarado, no reemplazar el dolor mismo.
