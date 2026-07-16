@@ -4,20 +4,26 @@
 import crypto from 'node:crypto';
 
 function timingSafeEqualStr(a, b) {
-  const ab = Buffer.from(String(a || ''), 'utf8');
-  const bb = Buffer.from(String(b || ''), 'utf8');
+  const ab = Buffer.from(String(a || '').trim(), 'utf8');
+  const bb = Buffer.from(String(b || '').trim(), 'utf8');
   return ab.length === bb.length && crypto.timingSafeEqual(ab, bb);
 }
 
 function verifySecret(req) {
-  const expected = process.env.CAL_WEBHOOK_SECRET;
+  const expected = process.env.CAL_WEBHOOK_SECRET?.trim();
   if (!expected) return false;
+  const auth = req.headers['authorization']?.replace(/^Bearer\s+/i, '');
   const headerSecret =
     req.headers['x-cal-webhook-secret'] ||
+    req.headers['x-cal-secret'] ||
+    req.headers['x-calcom-secret'] ||
     req.headers['x-webhook-secret'] ||
-    req.headers['authorization']?.replace(/^Bearer\s+/i, '');
-  const querySecret = req.query?.secret;
-  return timingSafeEqualStr(headerSecret, expected) || timingSafeEqualStr(querySecret, expected);
+    req.headers['cal-webhook-secret'] ||
+    req.headers['secret'] ||
+    auth;
+  const querySecret = Array.isArray(req.query?.secret) ? req.query.secret[0] : req.query?.secret;
+  const urlSecret = req.url ? new URL(req.url, 'https://local.invalid').searchParams.get('secret') : null;
+  return [headerSecret, querySecret, urlSecret].some(value => timingSafeEqualStr(value, expected));
 }
 
 function parseBody(req) {
