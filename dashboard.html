@@ -75,7 +75,28 @@
   .grid2 h3{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
     color:var(--fg-3);margin:0 0 4px;font-weight:600}
   .pending-note{font-size:14px;color:var(--fg-3);line-height:1.5;margin:0}
-  @media(max-width:640px){.grid2{grid-template-columns:1fr;gap:32px}}
+
+  /* Ultimos leads: tabla con hairlines */
+  .leads{border-top:1px solid var(--line-1)}
+  .lead{display:grid;grid-template-columns:88px 1.4fr 1.1fr 64px 1.2fr 1fr;gap:16px;align-items:center;
+    padding:14px 0;border-bottom:1px solid var(--line-1)}
+  .lead.head{padding:0 0 10px;border-bottom:1px solid var(--line-2)}
+  .lead.head span{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--fg-4)}
+  .lead .lname{font-weight:600;color:var(--oscar-ink-2)}
+  .lead .lmeta{color:var(--oscar-ink-3);font-size:14px}
+  .lead .muted{color:var(--fg-4)}
+  .lead .badge{display:inline-flex;align-items:center;justify-content:center;min-width:26px;padding:2px 8px;
+    font-family:var(--font-mono);font-size:12px;font-weight:600;border-radius:var(--radius-pill);
+    background:var(--oscar-blue-050);color:var(--oscar-blue-600);border:1px solid var(--oscar-blue-100)}
+  .lead a.lphone{color:var(--oscar-blue-600);text-decoration:none}
+  .lead a.lphone:hover{text-decoration:underline}
+  .leads .empty{padding:16px 0;font-family:var(--font-mono);font-size:12px;color:var(--fg-4)}
+  @media(max-width:640px){
+    .grid2{grid-template-columns:1fr;gap:32px}
+    .lead,.lead.head{grid-template-columns:1fr auto;gap:4px 12px}
+    .lead.head{display:none}
+    .lead .lseg,.lead .lpago{grid-column:1/-1;font-size:13px}
+  }
 </style>
 </head>
 <body>
@@ -138,6 +159,15 @@
       <div><h3>Idioma</h3><div class="rows" id="rows-lang"></div></div>
       <div><h3>Fuente</h3><div class="rows" id="rows-fuente"></div></div>
     </div>
+  </section>
+
+  <!-- Ultimos leads (live, PII, solo tras login) -->
+  <section>
+    <div class="shead">
+      <h2>Ultimos leads</h2>
+      <span class="src pending" id="src-leads"><span class="dot"></span>fuente &#183; pendiente</span>
+    </div>
+    <div class="leads" id="leads"></div>
   </section>
 
   <!-- Emails (pending) -->
@@ -204,6 +234,28 @@ function renderTrend(daily) {
   axis.innerHTML = `<span>${f}</span><span>${l}</span>`;
 }
 
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const shortDate = (iso) => { const d = new Date(iso); return isNaN(d) ? DASH : d.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }); };
+
+function renderLeads(arr) {
+  const el = document.getElementById('leads');
+  if (!el) return;
+  if (arr == null) { el.innerHTML = `<div class="empty">Fuente sin conectar ${DASH}</div>`; return; }
+  if (!arr.length) { el.innerHTML = `<div class="empty">Aun no hay leads.</div>`; return; }
+  const head = `<div class="lead head"><span>Fecha</span><span>Nombre</span><span>Telefono</span><span>Banda</span><span>Segmento</span><span>Pago est.</span></div>`;
+  const rows = arr.map(l => {
+    const name = l.name ? esc(l.name) : `<span class="muted">Sin nombre</span>`;
+    const phone = l.phone ? `<a class="lphone" href="tel:${esc(l.phone)}">${esc(l.phone)}</a>` : `<span class="muted">${DASH}</span>`;
+    const banda = l.banda ? `<span class="badge">${esc(l.banda)}</span>` : `<span class="muted">${DASH}</span>`;
+    const seg = l.segmento ? esc(l.segmento) : DASH;
+    const pago = l.pago_estimado ? esc(l.pago_estimado) : DASH;
+    return `<div class="lead"><span class="lmeta">${shortDate(l.created_at)}</span><span class="lname">${name}</span>` +
+           `<span class="lmeta">${phone}</span><span>${banda}</span>` +
+           `<span class="lmeta lseg">${seg}</span><span class="lmeta lpago">${pago}</span></div>`;
+  }).join('');
+  el.innerHTML = head + rows;
+}
+
 async function load() {
   let d;
   try {
@@ -219,9 +271,11 @@ async function load() {
   renderBreakdown('rows-segmento', f.by_segmento);
   renderBreakdown('rows-lang', f.by_lang);
   renderBreakdown('rows-fuente', f.by_fuente);
+  renderLeads(d.recent_leads);
 
   const s = d.sources || {};
   ['src-funnel', 'src-banda', 'src-segmento', 'src-idfu'].forEach(id => setSrc(id, s.funnel));
+  setSrc('src-leads', s.leads);
   setSrc('src-emails', s.emails);
   setSrc('src-bookings', s.bookings);
 

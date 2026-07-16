@@ -1,7 +1,7 @@
 // GET /api/metrics - capa de proyeccion del dashboard (Node serverless runtime).
 // Un solo endpoint, muchos adaptadores. Cada fuente reporta status honesto (live | pending).
 // Un dato sin conector es null (la UI lo pinta como en-dash), nunca un 0 falso.
-// Env: SUPABASE_URL, SUPABASE_ANON_KEY, SESSION_SECRET.
+// Env: SUPABASE_URL, SUPABASE_ANON_KEY, SESSION_SECRET, SUPABASE_SERVICE_ROLE_KEY.
 
 import crypto from 'node:crypto';
 
@@ -40,14 +40,34 @@ async function fetchQuizFunnel() {
   }
 }
 
+// Adaptador: ultimos leads con datos de contacto (PII). Usa el service_role key,
+// SOLO del lado del servidor y SOLO tras verificar la sesion. El anon key nunca
+// puede leer esto (RLS deja quiz_leads en insert-only para anon).
+async function fetchRecentLeads() {
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return { configured: false };
+  try {
+    const cols = 'created_at,name,phone,email,banda,segmento,pago_estimado,lang,fuente';
+    const r = await fetch(`${url}/rest/v1/quiz_leads?select=${cols}&order=created_at.desc&limit=25`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+    });
+    if (!r.ok) return { configured: true, error: 'query_failed' };
+    return { configured: true, data: await r.json() };
+  } catch {
+    return { configured: true, error: 'fetch_failed' };
+  }
+}
+
 export default async function handler(req, res) {
   if (!verifySession(req.headers.cookie)) {
     return res.status(401).json({ error: 'unauthorized' });
   }
 
-  const [quiz] = await Promise.all([fetchQuizFunnel()]);
+  const [quiz, leads] = await Promise.all([fetchQuizFunnel(), fetchRecentLeads()]);
   const funnelLive = quiz.configured && !quiz.error;
   const f = funnelLive ? (quiz.data || {}) : {};
+  const leadsLive = leads.configured && !leads.error;
 
   res.setHeader('cache-control', 'private, max-age=60');
   return res.status(200).json({
@@ -60,6 +80,7 @@ export default async function handler(req, res) {
       by_fuente:   funnelLive ? (f.by_fuente ?? {}) : null,
       daily:       funnelLive ? (f.daily ?? []) : null,
     },
+    recent_leads: leadsLive ? (leads.data || []) : null,
     // Adaptadores pendientes: no llamamos a nadie todavia, reportamos null + pending.
     emails: null,
     bookings: null,
@@ -67,6 +88,9 @@ export default async function handler(req, res) {
       funnel: funnelLive
         ? { status: 'live', note: 'Supabase RPC · dashboard_funnel_metrics · live' }
         : { status: 'pending', note: 'Falta SUPABASE_URL / SUPABASE_ANON_KEY o desplegar la RPC' },
+      leads: leadsLive
+        ? { status: 'live', note: 'Supabase · quiz_leads (service role, server) · live' }
+        : { status: 'pending', note: 'Falta SUPABASE_SERVICE_ROLE_KEY en el servidor' },
       emails:   { status: 'pending', note: 'Kit · webhooks sin wirear (forms 9611887 / 9610315)' },
       bookings: { status: 'pending', note: 'Cal.com · webhook sin wirear (oscargmc/consulta)' },
     },
