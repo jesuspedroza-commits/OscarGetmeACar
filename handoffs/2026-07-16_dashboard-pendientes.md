@@ -1,6 +1,6 @@
 ---
 from: claude
-status: pending
+status: reviewed
 date: 2026-07-16
 ---
 
