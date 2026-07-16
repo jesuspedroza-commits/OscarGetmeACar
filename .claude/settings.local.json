@@ -24,7 +24,22 @@
       "Bash(xxd favicon.ico)",
       "Bash(curl -sI https://oscar-getmeacar.vercel.app/favicon.ico)",
       "Bash(ls -la \"C:\\\\Users\\\\jesus\\\\Agents-Global\\\\Proyectos\\\\My Second Brain\\\\RAW\\\\Proyectos\\\\reto-marketer.md\" 2>&1)",
-      "Read(//c/Users/jesus/Agents-Global/Proyectos/My Second Brain/RAW/Proyectos/**)"
+      "Read(//c/Users/jesus/Agents-Global/Proyectos/My Second Brain/RAW/Proyectos/**)",
+      "Bash(cd \"C:\\\\Users\\\\jesus\\\\.claude\\\\plugins\\\\cache\\\\claude-code-marketing-bootcamp\\\\claude-code-marketing\\\\1.3.1\\\\skills\\\\deploy-gated-site\\\\assets\" && ls -la)",
+      "Read(//c/Users/jesus/Agents-Global/.claude/plugins/cache/claude-code-marketing-bootcamp/claude-code-marketing/1.3.1/skills/deploy-gated-site/assets/**)",
+      "mcp__claude_ai_Supabase__execute_sql",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(command -v magick cwebp ffmpeg)",
+      "Bash(node \"C:\\\\Users\\\\jesus\\\\.claude\\\\skills\\\\impeccable\\\\scripts\\\\context.mjs\")",
+      "Bash(head -80 \"C:\\\\Users\\\\jesus\\\\.claude\\\\skills\\\\impeccable\\\\reference\\\\init.md\")",
+      "Bash(python -c \"import fontTools; print\\('fonttools ok'\\)\")",
+      "Bash(python -c \"import brotli; print\\('brotli ok'\\)\")",
+      "Bash(pip install *)",
+      "Bash(python -c \"import fontTools, brotli; print\\('ok'\\)\")",
+      "Bash(python -m pip install --user --quiet fonttools brotli)",
+      "Bash(python -)",
+      "Bash(npx -y sharp-cli --version)",
+      "Bash(python -m fontTools.subset fonts/Inter-VariableFont_opsz_wght.ttf --output-file=fonts/Inter-Variable-subset.woff2 --flavor=woff2 --unicodes=\"U+0020-007E,U+00A0-00FF,U+0152-0153,U+2010-2027,U+2030-203A,U+20AC,U+2212\" --layout-features=\"kern,liga,calt,ccmp,mark,mkmk\")"
     ]
   }
 }
