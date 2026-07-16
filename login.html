@@ -10,27 +10,32 @@
 <style>
   *{box-sizing:border-box}
   body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-    background:var(--grad-deep, linear-gradient(135deg,#1E3A5F,#2D5A8C));color:#fff;
-    font-family:var(--font-sans);-webkit-font-smoothing:antialiased;padding:24px}
-  .card{width:100%;max-width:380px;padding:40px;background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.16);border-radius:var(--radius-xl,20px);backdrop-filter:blur(8px)}
-  h1{font-family:var(--font-display);font-size:26px;font-weight:800;letter-spacing:-0.02em;margin:0 0 6px}
-  .sub{font-size:14px;color:rgba(255,255,255,.6);margin:0 0 28px}
+    background:var(--oscar-bg,#FAFAFA);color:var(--oscar-ink,#0F1B2D);
+    font-family:var(--font-sans);-webkit-font-smoothing:antialiased;padding:24px;
+    background-image:radial-gradient(1100px 520px at 50% -10%, var(--oscar-blue-050,#EEF3F8), transparent 70%)}
+  .card{width:100%;max-width:380px;padding:44px 40px;background:var(--oscar-surface,#fff);
+    border:1px solid var(--line-1,#E6E9ED);border-radius:var(--radius-xl,20px);box-shadow:var(--shadow-2,0 12px 32px rgba(18,38,66,.10))}
+  .mark{width:38px;height:38px;border-radius:var(--radius-md,12px);background:var(--grad-deep,linear-gradient(135deg,#1E3A5F,#2D5A8C));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-weight:800;font-size:19px;margin:0 0 20px}
+  h1{font-family:var(--font-display);font-size:25px;font-weight:800;letter-spacing:-0.02em;margin:0 0 6px;color:var(--oscar-navy,#1E3A5F)}
+  .sub{font-size:14px;color:var(--oscar-ink-3,#5A6577);margin:0 0 28px;line-height:1.45}
   label{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;
-    text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px}
-  input{width:100%;padding:13px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
-    border-radius:var(--radius-md,12px);color:#fff;font-size:15px;font-family:inherit;outline:0;transition:border-color var(--dur-2)}
-  input:focus{border-color:#fff}
-  button{width:100%;margin-top:16px;padding:13px;background:#fff;color:var(--oscar-navy);
+    text-transform:uppercase;color:var(--oscar-ink-4,#8A93A1);margin-bottom:8px}
+  input{width:100%;padding:13px 14px;background:var(--oscar-surface-2,#FAFAFA);border:1px solid var(--line-2,#D3D8DF);
+    border-radius:var(--radius-md,12px);color:var(--oscar-ink,#0F1B2D);font-size:15px;font-family:inherit;outline:0;
+    transition:border-color var(--dur-2),box-shadow var(--dur-2)}
+  input:focus{border-color:var(--oscar-blue,#2D5A8C);box-shadow:0 0 0 3px var(--oscar-blue-100,#DCE6F1)}
+  button{width:100%;margin-top:18px;padding:14px;background:var(--oscar-blue,#2D5A8C);color:#fff;
     border:0;border-radius:var(--radius-md,12px);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;
-    transition:transform var(--dur-2) var(--ease-out)}
-  button:hover{transform:translateY(-1px)}
+    transition:background var(--dur-2),transform var(--dur-2) var(--ease-out)}
+  button:hover{background:var(--oscar-blue-500,#3E72A8);transform:translateY(-1px)}
   button:disabled{opacity:.6;cursor:default;transform:none}
-  .err{color:#FFD7CF;font-size:13px;min-height:1.2em;margin-top:10px}
+  .err{color:var(--oscar-danger,#A93B2E);font-size:13px;min-height:1.2em;margin-top:10px}
 </style>
 </head>
 <body>
   <main class="card">
+    <div class="mark">O</div>
     <h1>Panel de Oscar</h1>
     <p class="sub">Acceso privado. Ingresa la contrasena para ver el rendimiento.</p>
     <form id="f">
