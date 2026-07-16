@@ -91,8 +91,16 @@
   .lead a.lphone{color:var(--oscar-blue-600);text-decoration:none}
   .lead a.lphone:hover{text-decoration:underline}
   .leads .empty{padding:16px 0;font-family:var(--font-mono);font-size:12px;color:var(--fg-4)}
+  .mini-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;margin-bottom:24px}
+  .mini-metric{border-top:1px solid var(--line-1);padding-top:14px}
+  .mini-metric .n{font-family:var(--font-display);font-size:44px;font-weight:800;line-height:.95;
+    color:var(--oscar-navy);letter-spacing:-0.035em}
+  .mini-metric .n.muted{color:var(--fg-4)}
+  .mini-metric .cap{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;
+    letter-spacing:.12em;color:var(--fg-3);margin-top:8px}
   @media(max-width:640px){
     .grid2{grid-template-columns:1fr;gap:32px}
+    .mini-metrics{grid-template-columns:1fr;gap:20px}
     .lead,.lead.head{grid-template-columns:1fr auto;gap:4px 12px}
     .lead.head{display:none}
     .lead .lseg,.lead .lpago{grid-column:1/-1;font-size:13px}
@@ -180,14 +188,23 @@
        Por ahora: <span data-k="_dash">&#8211;</span></p>
   </section>
 
-  <!-- Citas (pending) -->
+  <!-- Citas -->
   <section>
     <div class="shead">
       <h2>Citas agendadas</h2>
       <span class="src pending" id="src-bookings"><span class="dot"></span>fuente &#183; pendiente</span>
     </div>
-    <p class="pending-note">Las citas de Cal.com (oscargmc/consulta) apareceran aqui cuando se wire su webhook.
-       Por ahora: <span data-k="_dash2">&#8211;</span></p>
+    <div class="mini-metrics">
+      <div class="mini-metric">
+        <div class="n muted" data-k="bookings-total">&#8211;</div>
+        <div class="cap">citas activas</div>
+      </div>
+      <div class="mini-metric">
+        <div class="n muted" data-k="bookings-latest">&#8211;</div>
+        <div class="cap">ultima cita</div>
+      </div>
+    </div>
+    <div class="rows" id="rows-bookings"></div>
   </section>
 </div>
 
@@ -272,6 +289,10 @@ async function load() {
   renderBreakdown('rows-lang', f.by_lang);
   renderBreakdown('rows-fuente', f.by_fuente);
   renderLeads(d.recent_leads);
+  const b = d.bookings || null;
+  setText('bookings-total', fmt(b?.total));
+  setText('bookings-latest', b?.latest ? shortDate(b.latest) : DASH);
+  renderBreakdown('rows-bookings', b?.by_status ?? null);
 
   const s = d.sources || {};
   ['src-funnel', 'src-banda', 'src-segmento', 'src-idfu'].forEach(id => setSrc(id, s.funnel));

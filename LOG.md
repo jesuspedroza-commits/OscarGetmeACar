@@ -36,6 +36,11 @@ Bitácora de cambios estructurales y de protocolo de este proyecto (no actividad
   - Gotcha (confirmado, mordio aca): agregar/cambiar una env var en Vercel NO afecta a un deployment ya construido; Vercel snapshotea el env en build time. Tras agregar `SUPABASE_SERVICE_ROLE_KEY` hubo que forzar un redeploy (commit vacio) para que la funcion la tomara. Cada cambio de env var = redeploy.
 - Gotcha (confirmado): los preview por rama estan detras del **SSO de Deployment Protection de Vercel** (302 a `vercel.com/sso-api`), que intercepta ANTES de las funciones propias. Para smoke-test de un preview protegido: MCP `get_access_to_vercel_url` da un `?_vercel_share=<token>` que setea la cookie `_vercel_jwt`; guardarla en un cookie jar (`curl -c/-b`) y recien ahi se prueba el gate real. Produccion (`main`) es publica, sin este SSO.
 - Gotcha: el conector MCP de Vercel puede desplegar (`deploy_to_vercel`) y leer, pero NO tiene tool para setear env vars; eso se hace en el dashboard web de Vercel o por CLI.
+- Preparado wire de Cal.com para citas del dashboard:
+  - Nueva migracion `supabase/003_cal_bookings.sql`: tabla `cal_bookings` con RLS sin policies, escritura solo server-side con service role, y `dashboard_funnel_metrics()` ampliada para devolver agregados de bookings (`total`, `by_status`, `daily`, `latest`) sin PII.
+  - Nuevo endpoint `api/cal-webhook.js`: recibe POST de Cal.com, exige `CAL_WEBHOOK_SECRET`, normaliza payloads flexibles y hace upsert en `cal_bookings`.
+  - `api/metrics.js` ahora expone `bookings` como `live` cuando la RPC devuelve el objeto; `dashboard.html` renderiza citas activas, ultima cita y desglose por status.
+  - Pendiente para activar en produccion: aplicar la migracion en Supabase, crear `CAL_WEBHOOK_SECRET` en Vercel, redeploy, y configurar el webhook de Cal.com a `/api/cal-webhook`.
 
 ## 2026-06-26
 - Primer lead magnet del proyecto: "El Checklist Antes de Firmar" (`checklist-financiamiento.html`), via el skill `/lead-magnet`.

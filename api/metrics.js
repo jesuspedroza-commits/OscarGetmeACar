@@ -68,6 +68,8 @@ export default async function handler(req, res) {
   const funnelLive = quiz.configured && !quiz.error;
   const f = funnelLive ? (quiz.data || {}) : {};
   const leadsLive = leads.configured && !leads.error;
+  const bookings = funnelLive ? (f.bookings || null) : null;
+  const bookingsLive = funnelLive && bookings !== null;
 
   res.setHeader('cache-control', 'private, max-age=60');
   return res.status(200).json({
@@ -81,9 +83,9 @@ export default async function handler(req, res) {
       daily:       funnelLive ? (f.daily ?? []) : null,
     },
     recent_leads: leadsLive ? (leads.data || []) : null,
-    // Adaptadores pendientes: no llamamos a nadie todavia, reportamos null + pending.
+    // Adaptadores externos: lo no configurado sale como null + pending, nunca 0 falso.
     emails: null,
-    bookings: null,
+    bookings: bookingsLive ? bookings : null,
     sources: {
       funnel: funnelLive
         ? { status: 'live', note: 'Supabase RPC · dashboard_funnel_metrics · live' }
@@ -92,7 +94,9 @@ export default async function handler(req, res) {
         ? { status: 'live', note: 'Supabase · quiz_leads (service role, server) · live' }
         : { status: 'pending', note: 'Falta SUPABASE_SERVICE_ROLE_KEY en el servidor' },
       emails:   { status: 'pending', note: 'Kit · webhooks sin wirear (forms 9611887 / 9610315)' },
-      bookings: { status: 'pending', note: 'Cal.com · webhook sin wirear (oscargmc/consulta)' },
+      bookings: bookingsLive
+        ? { status: 'live', note: 'Cal.com - cal_bookings via webhook - live' }
+        : { status: 'pending', note: 'Cal.com - falta migracion o webhook (oscargmc/consulta)' },
     },
   });
 }
