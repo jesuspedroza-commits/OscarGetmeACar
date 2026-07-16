@@ -47,7 +47,7 @@ f.addEventListener('submit',async ev=>{
   try{
     const r=await fetch('/api/login',{method:'POST',headers:{'content-type':'application/json'},
       body:JSON.stringify({password:document.getElementById('pw').value}),credentials:'same-origin'});
-    if(r.ok){ location = new URLSearchParams(location.search).get('next') || '/dashboard'; }
+    if(r.ok){ location = new URLSearchParams(location.search).get('next') || '/dashboard.html'; }
     else { e.textContent = r.status===429?'Demasiados intentos. Espera un minuto.':'Contrasena incorrecta.';
            b.disabled=false; b.textContent='Entrar'; }
   }catch{ e.textContent='Error de red.'; b.disabled=false; b.textContent='Entrar'; }

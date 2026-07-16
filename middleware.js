@@ -37,7 +37,7 @@ export default async function middleware(request) {
 
   if (await verify(value, process.env.SESSION_SECRET)) return; // pasa
 
-  const loginUrl = new URL('/login', url);
+  const loginUrl = new URL('/login.html', url);
   loginUrl.searchParams.set('next', url.pathname);
   return Response.redirect(loginUrl, 302);
 }

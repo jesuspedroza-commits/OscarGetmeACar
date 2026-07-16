@@ -208,7 +208,7 @@ async function load() {
   let d;
   try {
     const r = await fetch('/api/metrics', { credentials: 'same-origin' });
-    if (r.status === 401) { location = '/login'; return; }
+    if (r.status === 401) { location = '/login.html'; return; }
     d = await r.json();
   } catch { return; }
 
@@ -232,7 +232,7 @@ async function load() {
 
 document.getElementById('logout').addEventListener('click', async () => {
   await fetch('/api/logout', { method: 'POST', credentials: 'same-origin' });
-  location = '/login';
+  location = '/login.html';
 });
 
 load();
