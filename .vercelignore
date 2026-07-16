@@ -1,0 +1,10 @@
+# Nunca servir en Vercel: docs, datos internos, config de agentes.
+supabase/
+handoffs/
+references/
+_backup-react-version/
+.claude/
+.codex/
+*.md
+.env
+.env.*

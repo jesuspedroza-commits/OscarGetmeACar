@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Entrar · Oscar Get me a Car</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="/colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:var(--grad-deep, linear-gradient(135deg,#1E3A5F,#2D5A8C));color:#fff;
+    font-family:var(--font-sans);-webkit-font-smoothing:antialiased;padding:24px}
+  .card{width:100%;max-width:380px;padding:40px;background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.16);border-radius:var(--radius-xl,20px);backdrop-filter:blur(8px)}
+  h1{font-family:var(--font-display);font-size:26px;font-weight:800;letter-spacing:-0.02em;margin:0 0 6px}
+  .sub{font-size:14px;color:rgba(255,255,255,.6);margin:0 0 28px}
+  label{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px}
+  input{width:100%;padding:13px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
+    border-radius:var(--radius-md,12px);color:#fff;font-size:15px;font-family:inherit;outline:0;transition:border-color var(--dur-2)}
+  input:focus{border-color:#fff}
+  button{width:100%;margin-top:16px;padding:13px;background:#fff;color:var(--oscar-navy);
+    border:0;border-radius:var(--radius-md,12px);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;
+    transition:transform var(--dur-2) var(--ease-out)}
+  button:hover{transform:translateY(-1px)}
+  button:disabled{opacity:.6;cursor:default;transform:none}
+  .err{color:#FFD7CF;font-size:13px;min-height:1.2em;margin-top:10px}
+</style>
+</head>
+<body>
+  <main class="card">
+    <h1>Panel de Oscar</h1>
+    <p class="sub">Acceso privado. Ingresa la contrasena para ver el rendimiento.</p>
+    <form id="f">
+      <label for="pw">Contrasena</label>
+      <input id="pw" type="password" required autocomplete="current-password" autofocus>
+      <div class="err" id="e"></div>
+      <button id="b" type="submit">Entrar</button>
+    </form>
+  </main>
+<script>
+const f=document.getElementById('f'),e=document.getElementById('e'),b=document.getElementById('b');
+f.addEventListener('submit',async ev=>{
+  ev.preventDefault(); e.textContent=''; b.disabled=true; b.textContent='Verificando...';
+  try{
+    const r=await fetch('/api/login',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({password:document.getElementById('pw').value}),credentials:'same-origin'});
+    if(r.ok){ location = new URLSearchParams(location.search).get('next') || '/dashboard'; }
+    else { e.textContent = r.status===429?'Demasiados intentos. Espera un minuto.':'Contrasena incorrecta.';
+           b.disabled=false; b.textContent='Entrar'; }
+  }catch{ e.textContent='Error de red.'; b.disabled=false; b.textContent='Entrar'; }
+});
+</script>
+</body>
+</html>

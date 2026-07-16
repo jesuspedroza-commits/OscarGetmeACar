@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel · Oscar Get me a Car</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="/colors_and_type.css">
+<style>
+  /* Hereda tokens de colors_and_type.css. Tesis visual: claro y confiable,
+     navy sobre casi-blanco, numeros grandes en display, labels mono-caps,
+     hairlines en vez de tarjetas, un solo acento para estado. */
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--oscar-bg);color:var(--oscar-ink);font-family:var(--font-sans);
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  nav{display:flex;justify-content:space-between;align-items:center;height:64px;border-bottom:1px solid var(--line-1)}
+  nav .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:800;
+    color:var(--oscar-navy);letter-spacing:-0.02em;font-size:17px}
+  nav .right{display:flex;gap:16px;align-items:center}
+  .stamp{font-family:var(--font-mono);font-size:11px;color:var(--fg-4);text-transform:uppercase;letter-spacing:.1em}
+  .logout{font-family:var(--font-mono);font-size:11px;color:var(--fg-2);background:transparent;
+    border:1px solid var(--line-2);border-radius:var(--radius-pill);padding:7px 14px;cursor:pointer;
+    text-transform:uppercase;letter-spacing:.1em;transition:all var(--dur-2) var(--ease-out)}
+  .logout:hover{border-color:var(--oscar-blue);color:var(--oscar-navy)}
+
+  header{padding:48px 0 8px}
+  header h1{font-family:var(--font-display);font-size:clamp(30px,4.5vw,46px);font-weight:800;
+    color:var(--oscar-navy);letter-spacing:-0.025em;line-height:1.05;margin:0 0 12px}
+  header p{color:var(--fg-3);margin:0;max-width:60ch;font-size:15px;line-height:1.5}
+  header .key{font-family:var(--font-mono);font-size:12px;color:var(--fg-4)}
+
+  section{padding:40px 0;border-top:1px solid var(--line-1)}
+  section:first-of-type{border-top:0}
+  .shead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px;flex-wrap:wrap;gap:10px}
+  .shead h2{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--oscar-navy);
+    margin:0;letter-spacing:-0.02em}
+  .src{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;
+    color:var(--fg-4);display:inline-flex;align-items:center;gap:8px}
+  .src .dot{width:7px;height:7px;border-radius:999px;background:var(--fg-4);flex:none}
+  .src.live .dot{background:var(--oscar-success)}
+  .src.pending .dot{background:var(--oscar-warning)}
+
+  /* Total protagonista */
+  .hero-metric{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap}
+  .hero-metric .n{font-family:var(--font-display);font-weight:800;font-size:clamp(64px,12vw,120px);
+    line-height:.85;color:var(--oscar-navy);letter-spacing:-0.04em}
+  .hero-metric .n.muted{color:var(--fg-4)}
+  .hero-metric .cap{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;
+    letter-spacing:.14em;color:var(--fg-3);padding-bottom:10px}
+
+  /* Tendencia diaria: barras minimas */
+  .trend{margin-top:32px}
+  .trend .bars{display:flex;align-items:flex-end;gap:6px;height:80px;border-bottom:1px solid var(--line-1);padding-bottom:0}
+  .trend .bar{flex:1;min-width:4px;background:var(--oscar-blue-200);border-radius:3px 3px 0 0;
+    position:relative;transition:background var(--dur-2)}
+  .trend .bar:hover{background:var(--oscar-blue)}
+  .trend .axis{display:flex;justify-content:space-between;margin-top:8px;
+    font-family:var(--font-mono);font-size:10px;color:var(--fg-4)}
+  .trend .empty{font-family:var(--font-mono);font-size:12px;color:var(--fg-4)}
+
+  /* Desgloses: filas con hairline, el numero manda */
+  .rows{border-top:1px solid var(--line-1)}
+  .row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;
+    padding:16px 0;border-bottom:1px solid var(--line-1)}
+  .row .label{font-size:15px;color:var(--oscar-ink-2);font-weight:500}
+  .row .track{grid-column:1/-1;height:4px;background:var(--oscar-surface-3);border-radius:999px;overflow:hidden;margin-top:-4px}
+  .row .fill{height:100%;background:var(--oscar-blue);border-radius:999px}
+  .row .n{font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--oscar-navy);
+    line-height:1;letter-spacing:-0.02em}
+  .row .n.muted{color:var(--fg-4)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .grid2 h3{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
+    color:var(--fg-3);margin:0 0 4px;font-weight:600}
+  .pending-note{font-size:14px;color:var(--fg-3);line-height:1.5;margin:0}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;gap:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand">Oscar · Panel</div>
+    <div class="right">
+      <span class="stamp" id="stamp">Actualizado &#8211;</span>
+      <button class="logout" id="logout" type="button">Salir</button>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Rendimiento del auto-chequeo</h1>
+    <p>Quien esta llegando por la calculadora, en que banda de credito cae y con que presupuesto.
+       El signo <span class="key">&#8211;</span> quiere decir que esa fuente todavia no esta conectada, nunca un cero falso.</p>
+  </header>
+
+  <!-- Total + tendencia (live) -->
+  <section>
+    <div class="shead">
+      <h2>Leads del quiz</h2>
+      <span class="src pending" id="src-funnel"><span class="dot"></span>fuente &#183; pendiente</span>
+    </div>
+    <div class="hero-metric">
+      <div class="n muted" data-k="total">&#8211;</div>
+      <span class="cap">leads capturados</span>
+    </div>
+    <div class="trend">
+      <div class="bars" id="trend-bars"></div>
+      <div class="axis" id="trend-axis"></div>
+    </div>
+  </section>
+
+  <!-- Banda -->
+  <section>
+    <div class="shead">
+      <h2>Por banda de credito</h2>
+      <span class="src pending" id="src-banda"><span class="dot"></span>fuente &#183; pendiente</span>
+    </div>
+    <div class="rows" id="rows-banda"></div>
+  </section>
+
+  <!-- Segmento -->
+  <section>
+    <div class="shead">
+      <h2>Por segmento de presupuesto</h2>
+      <span class="src pending" id="src-segmento"><span class="dot"></span>fuente &#183; pendiente</span>
+    </div>
+    <div class="rows" id="rows-segmento"></div>
+  </section>
+
+  <!-- Idioma + fuente -->
+  <section>
+    <div class="shead">
+      <h2>Idioma y fuente</h2>
+      <span class="src pending" id="src-idfu"><span class="dot"></span>fuente &#183; pendiente</span>
+    </div>
+    <div class="grid2">
+      <div><h3>Idioma</h3><div class="rows" id="rows-lang"></div></div>
+      <div><h3>Fuente</h3><div class="rows" id="rows-fuente"></div></div>
+    </div>
+  </section>
+
+  <!-- Emails (pending) -->
+  <section>
+    <div class="shead">
+      <h2>Secuencia de emails</h2>
+      <span class="src pending" id="src-emails"><span class="dot"></span>fuente &#183; pendiente</span>
+    </div>
+    <p class="pending-note">Entregados, aperturas y clics apareceran aqui cuando se wiren los webhooks de Kit.
+       Por ahora: <span data-k="_dash">&#8211;</span></p>
+  </section>
+
+  <!-- Citas (pending) -->
+  <section>
+    <div class="shead">
+      <h2>Citas agendadas</h2>
+      <span class="src pending" id="src-bookings"><span class="dot"></span>fuente &#183; pendiente</span>
+    </div>
+    <p class="pending-note">Las citas de Cal.com (oscargmc/consulta) apareceran aqui cuando se wire su webhook.
+       Por ahora: <span data-k="_dash2">&#8211;</span></p>
+  </section>
+</div>
+
+<script>
+const DASH = '–'; // en-dash: dato sin conector
+const fmt = (n) => (n == null || Number.isNaN(n)) ? DASH : new Intl.NumberFormat('es-MX').format(Math.round(n));
+
+const setText = (k, v) => document.querySelectorAll(`[data-k="${k}"]`).forEach(el => {
+  const first = el.firstChild;
+  if (first && first.nodeType === Node.TEXT_NODE) first.nodeValue = v + ' ';
+  else el.insertBefore(document.createTextNode(v + ' '), el.firstChild);
+  if (v !== DASH) el.classList.remove('muted');
+});
+
+const setSrc = (id, s) => {
+  const el = document.getElementById(id); if (!el || !s) return;
+  el.className = 'src ' + s.status;
+  el.innerHTML = '<span class="dot"></span>' + s.note;
+};
+
+function renderBreakdown(containerId, obj) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  if (obj == null) { el.innerHTML = `<div class="row"><span class="label">Sin datos</span><span class="n muted">${DASH}</span></div>`; return; }
+  const entries = Object.entries(obj).sort((a, b) => b[1] - a[1]);
+  const max = entries.reduce((m, [, v]) => Math.max(m, v), 0) || 1;
+  el.innerHTML = entries.map(([k, v]) => `
+    <div class="row">
+      <span class="label">${k}</span>
+      <span class="n">${fmt(v)}</span>
+      <div class="track"><div class="fill" style="width:${Math.round((v / max) * 100)}%"></div></div>
+    </div>`).join('') || `<div class="row"><span class="label">Sin datos todavia</span><span class="n muted">${DASH}</span></div>`;
+}
+
+function renderTrend(daily) {
+  const bars = document.getElementById('trend-bars');
+  const axis = document.getElementById('trend-axis');
+  if (!daily || !daily.length) { bars.innerHTML = '<span class="empty">Sin actividad en los ultimos 30 dias.</span>'; return; }
+  const max = daily.reduce((m, d) => Math.max(m, d.count), 0) || 1;
+  bars.innerHTML = daily.map(d =>
+    `<div class="bar" style="height:${Math.max(6, Math.round((d.count / max) * 100))}%" title="${d.fecha}: ${d.count}"></div>`
+  ).join('');
+  const f = daily[0].fecha, l = daily[daily.length - 1].fecha;
+  axis.innerHTML = `<span>${f}</span><span>${l}</span>`;
+}
+
+async function load() {
+  let d;
+  try {
+    const r = await fetch('/api/metrics', { credentials: 'same-origin' });
+    if (r.status === 401) { location = '/login'; return; }
+    d = await r.json();
+  } catch { return; }
+
+  const f = d.funnel || {};
+  setText('total', fmt(f.total));
+  renderTrend(f.daily);
+  renderBreakdown('rows-banda', f.by_banda);
+  renderBreakdown('rows-segmento', f.by_segmento);
+  renderBreakdown('rows-lang', f.by_lang);
+  renderBreakdown('rows-fuente', f.by_fuente);
+
+  const s = d.sources || {};
+  ['src-funnel', 'src-banda', 'src-segmento', 'src-idfu'].forEach(id => setSrc(id, s.funnel));
+  setSrc('src-emails', s.emails);
+  setSrc('src-bookings', s.bookings);
+
+  const t = d.updated_at ? new Date(d.updated_at) : new Date();
+  document.getElementById('stamp').textContent =
+    'Actualizado ' + t.toLocaleString('es-MX', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
+}
+
+document.getElementById('logout').addEventListener('click', async () => {
+  await fetch('/api/logout', { method: 'POST', credentials: 'same-origin' });
+  location = '/login';
+});
+
+load();
+</script>
+</body>
+</html>
