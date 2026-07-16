@@ -18,11 +18,11 @@ function verifySession(cookieHeader) {
   if (!exp || !sig) return false;
   if (Date.now() > Number(exp)) return false;
   const expected = crypto.createHmac('sha256', secret).update(String(exp)).digest('hex');
-  const a = Buffer.from(sig, 'utf8'), b = Buffer.from(expected, 'utf8');
+  const a = Buffer.from(sig, 'utf8');
+  const b = Buffer.from(expected, 'utf8');
   return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
-// Adaptador: funnel del quiz desde Supabase (RPC SECURITY DEFINER, agregados).
 async function fetchQuizFunnel() {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_ANON_KEY;
@@ -40,9 +40,6 @@ async function fetchQuizFunnel() {
   }
 }
 
-// Adaptador: ultimos leads con datos de contacto (PII). Usa el service_role key,
-// SOLO del lado del servidor y SOLO tras verificar la sesion. El anon key nunca
-// puede leer esto (RLS deja quiz_leads en insert-only para anon).
 async function fetchRecentLeads() {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -83,17 +80,14 @@ export default async function handler(req, res) {
       daily:       funnelLive ? (f.daily ?? []) : null,
     },
     recent_leads: leadsLive ? (leads.data || []) : null,
-    // Adaptadores externos: lo no configurado sale como null + pending, nunca 0 falso.
-    emails: null,
     bookings: bookingsLive ? bookings : null,
     sources: {
       funnel: funnelLive
-        ? { status: 'live', note: 'Supabase RPC · dashboard_funnel_metrics · live' }
+        ? { status: 'live', note: 'Supabase RPC - dashboard_funnel_metrics - live' }
         : { status: 'pending', note: 'Falta SUPABASE_URL / SUPABASE_ANON_KEY o desplegar la RPC' },
       leads: leadsLive
-        ? { status: 'live', note: 'Supabase · quiz_leads (service role, server) · live' }
+        ? { status: 'live', note: 'Supabase - quiz_leads (service role, server) - live' }
         : { status: 'pending', note: 'Falta SUPABASE_SERVICE_ROLE_KEY en el servidor' },
-      emails:   { status: 'pending', note: 'Kit · webhooks sin wirear (forms 9611887 / 9610315)' },
       bookings: bookingsLive
         ? { status: 'live', note: 'Cal.com - cal_bookings via webhook - live' }
         : { status: 'pending', note: 'Cal.com - falta migracion o webhook (oscargmc/consulta)' },

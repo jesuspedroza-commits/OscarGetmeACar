@@ -32,6 +32,30 @@
   header p{color:var(--fg-3);margin:0;max-width:60ch;font-size:15px;line-height:1.5}
   header .key{font-family:var(--font-mono);font-size:12px;color:var(--fg-4)}
 
+  .ops-hero{position:relative;min-height:292px;margin:34px calc(50% - 50vw) 4px;padding:0;
+    border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);
+    background:#122642;color:#fff;overflow:hidden}
+  .ops-hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:.9}
+  .ops-hero::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,rgba(18,38,66,.96) 0%,rgba(18,38,66,.76) 42%,rgba(18,38,66,.52) 100%);
+    pointer-events:none}
+  .ops-inner{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:38px 24px 34px;
+    display:grid;grid-template-columns:1.05fr 1.35fr;gap:34px;align-items:end;min-height:292px}
+  .ops-copy .eyebrow{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;
+    color:var(--oscar-blue-200);margin:0 0 12px}
+  .ops-copy h2{font-family:var(--font-display);font-size:clamp(30px,5vw,58px);line-height:.96;
+    letter-spacing:0;margin:0;color:#fff;font-weight:800}
+  .ops-copy p{margin:16px 0 0;color:#B8CCDF;line-height:1.48;font-size:15px;max-width:42ch}
+  .ops-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(184,204,223,.22);
+    border:1px solid rgba(184,204,223,.22)}
+  .ops-metric{background:rgba(18,38,66,.68);padding:18px 18px 16px;min-height:116px;backdrop-filter:blur(10px)}
+  .ops-metric .n{font-family:var(--font-display);font-size:clamp(34px,5vw,56px);font-weight:800;line-height:.9;
+    letter-spacing:0;color:#fff}
+  .ops-metric .n.muted{color:rgba(255,255,255,.45)}
+  .ops-metric .cap{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;
+    color:#B8CCDF;margin-top:12px}
+  .ops-metric .sub{font-size:13px;color:rgba(255,255,255,.68);margin-top:8px;line-height:1.35}
+
   section{padding:40px 0;border-top:1px solid var(--line-1)}
   section:first-of-type{border-top:0}
   .shead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px;flex-wrap:wrap;gap:10px}
@@ -55,7 +79,8 @@
   .trend{margin-top:32px}
   .trend .bars{display:flex;align-items:flex-end;gap:6px;height:80px;border-bottom:1px solid var(--line-1);padding-bottom:0}
   .trend .bar{flex:1;min-width:4px;background:var(--oscar-blue-200);border-radius:3px 3px 0 0;
-    position:relative;transition:background var(--dur-2)}
+    position:relative;transform-origin:bottom;animation:barRise .8s var(--ease-out) both;
+    transition:background var(--dur-2),height var(--dur-3) var(--ease-out)}
   .trend .bar:hover{background:var(--oscar-blue)}
   .trend .axis{display:flex;justify-content:space-between;margin-top:8px;
     font-family:var(--font-mono);font-size:10px;color:var(--fg-4)}
@@ -67,7 +92,8 @@
     padding:16px 0;border-bottom:1px solid var(--line-1)}
   .row .label{font-size:15px;color:var(--oscar-ink-2);font-weight:500}
   .row .track{grid-column:1/-1;height:4px;background:var(--oscar-surface-3);border-radius:999px;overflow:hidden;margin-top:-4px}
-  .row .fill{height:100%;background:var(--oscar-blue);border-radius:999px}
+  .row .fill{height:100%;background:var(--oscar-blue);border-radius:999px;transform-origin:left;
+    animation:trackFill .85s var(--ease-out) both}
   .row .n{font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--oscar-navy);
     line-height:1;letter-spacing:-0.02em}
   .row .n.muted{color:var(--fg-4)}
@@ -98,9 +124,20 @@
   .mini-metric .n.muted{color:var(--fg-4)}
   .mini-metric .cap{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;
     letter-spacing:.12em;color:var(--fg-3);margin-top:8px}
+  .follow-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .follow-item{border-top:1px solid var(--line-1);padding:16px 0 0}
+  .follow-label{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;
+    color:var(--fg-3);margin-bottom:10px}
+  .follow-main{font-size:18px;font-weight:700;color:var(--oscar-navy);line-height:1.25}
+  .follow-sub{font-size:14px;color:var(--fg-3);margin-top:7px;line-height:1.4}
+  @keyframes barRise{from{transform:scaleY(.08);opacity:.35}to{transform:scaleY(1);opacity:1}}
+  @keyframes trackFill{from{transform:scaleX(.05);opacity:.45}to{transform:scaleX(1);opacity:1}}
   @media(max-width:640px){
+    .ops-inner{grid-template-columns:1fr;align-items:start;padding-top:32px}
+    .ops-metrics{grid-template-columns:1fr}
     .grid2{grid-template-columns:1fr;gap:32px}
     .mini-metrics{grid-template-columns:1fr;gap:20px}
+    .follow-grid{grid-template-columns:1fr;gap:24px}
     .lead,.lead.head{grid-template-columns:1fr auto;gap:4px 12px}
     .lead.head{display:none}
     .lead .lseg,.lead .lpago{grid-column:1/-1;font-size:13px}
@@ -122,6 +159,34 @@
     <p>Quien esta llegando por la calculadora, en que banda de credito cae y con que presupuesto.
        El signo <span class="key">&#8211;</span> quiere decir que esa fuente todavia no esta conectada, nunca un cero falso.</p>
   </header>
+
+  <section class="ops-hero" aria-label="Resumen operativo">
+    <canvas id="ops-canvas"></canvas>
+    <div class="ops-inner">
+      <div class="ops-copy">
+        <p class="eyebrow">Panel operativo</p>
+        <h2>Movimiento real, sin numeros inflados.</h2>
+        <p>Leads, citas y seguimiento en una sola lectura para decidir que hacer despues.</p>
+      </div>
+      <div class="ops-metrics">
+        <div class="ops-metric">
+          <div class="n muted" data-k="ops-total">&#8211;</div>
+          <div class="cap">leads</div>
+          <div class="sub">Capturados por el auto-chequeo.</div>
+        </div>
+        <div class="ops-metric">
+          <div class="n muted" data-k="ops-bookings">&#8211;</div>
+          <div class="cap">citas</div>
+          <div class="sub">Agendadas por Cal.com.</div>
+        </div>
+        <div class="ops-metric">
+          <div class="n muted" data-k="ops-refresh">&#8211;</div>
+          <div class="cap">refresh</div>
+          <div class="sub">Se actualiza cada 60 segundos.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Total + tendencia (live) -->
   <section>
@@ -178,16 +243,6 @@
     <div class="leads" id="leads"></div>
   </section>
 
-  <!-- Emails (pending) -->
-  <section>
-    <div class="shead">
-      <h2>Secuencia de emails</h2>
-      <span class="src pending" id="src-emails"><span class="dot"></span>fuente &#183; pendiente</span>
-    </div>
-    <p class="pending-note">Entregados, aperturas y clics apareceran aqui cuando se wiren los webhooks de Kit.
-       Por ahora: <span data-k="_dash">&#8211;</span></p>
-  </section>
-
   <!-- Citas -->
   <section>
     <div class="shead">
@@ -206,12 +261,35 @@
     </div>
     <div class="rows" id="rows-bookings"></div>
   </section>
+
+  <section>
+    <div class="shead">
+      <h2>Proximo seguimiento</h2>
+      <span class="src live"><span class="dot"></span>derivado de leads y citas</span>
+    </div>
+    <div class="follow-grid">
+      <div class="follow-item">
+        <div class="follow-label">Ultimo lead</div>
+        <div class="follow-main" id="follow-lead">&#8211;</div>
+        <div class="follow-sub" id="follow-lead-sub">Sin datos conectados.</div>
+      </div>
+      <div class="follow-item">
+        <div class="follow-label">Ultima cita</div>
+        <div class="follow-main" id="follow-booking">&#8211;</div>
+        <div class="follow-sub">Validar asistencia y preparar conversacion.</div>
+      </div>
+    </div>
+  </section>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
 const DASH = '–'; // en-dash: dato sin conector
 const EASTERN_TIME = 'America/New_York';
+const REFRESH_MS = 60000;
 const fmt = (n) => (n == null || Number.isNaN(n)) ? DASH : new Intl.NumberFormat('es-MX').format(Math.round(n));
+let lastUpdatedAt = null;
+let lastData = null;
 
 const setText = (k, v) => document.querySelectorAll(`[data-k="${k}"]`).forEach(el => {
   const first = el.firstChild;
@@ -219,6 +297,25 @@ const setText = (k, v) => document.querySelectorAll(`[data-k="${k}"]`).forEach(e
   else el.insertBefore(document.createTextNode(v + ' '), el.firstChild);
   if (v !== DASH) el.classList.remove('muted');
 });
+
+function setNumber(k, value) {
+  if (value == null || Number.isNaN(value)) { setText(k, DASH); return; }
+  document.querySelectorAll(`[data-k="${k}"]`).forEach(el => {
+    const target = Math.round(value);
+    const start = Number(el.dataset.value || 0);
+    el.dataset.value = String(target);
+    el.classList.remove('muted');
+    const t0 = performance.now();
+    const dur = 720;
+    function tick(now) {
+      const p = Math.min((now - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(start + (target - start) * eased);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
 
 const setSrc = (id, s) => {
   const el = document.getElementById(id); if (!el || !s) return;
@@ -254,6 +351,29 @@ function renderTrend(daily) {
 
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const shortDate = (iso) => { const d = new Date(iso); return isNaN(d) ? DASH : d.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }); };
+const easternStamp = (date) => date.toLocaleString('es-MX', {
+  day: 'numeric',
+  month: 'short',
+  hour: 'numeric',
+  minute: '2-digit',
+  timeZone: EASTERN_TIME,
+  timeZoneName: 'short',
+});
+function relativeTime(date) {
+  if (!date || isNaN(date)) return DASH;
+  const diff = Math.max(0, Date.now() - date.getTime());
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'hace segundos';
+  if (mins < 60) return 'hace ' + mins + ' min';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return 'hace ' + hrs + ' h';
+  return 'hace ' + Math.floor(hrs / 24) + ' d';
+}
+function updateStamp() {
+  const t = lastUpdatedAt || new Date();
+  document.getElementById('stamp').textContent = 'Actualizado ' + relativeTime(t) + ' · ' + easternStamp(t);
+  setText('ops-refresh', '60s');
+}
 
 function renderLeads(arr) {
   const el = document.getElementById('leads');
@@ -274,6 +394,101 @@ function renderLeads(arr) {
   el.innerHTML = head + rows;
 }
 
+function renderFollowUp(leads, bookings) {
+  const lead = Array.isArray(leads) && leads.length ? leads[0] : null;
+  document.getElementById('follow-lead').textContent = lead?.name || (lead ? 'Lead sin nombre' : DASH);
+  document.getElementById('follow-lead-sub').textContent = lead
+    ? [lead.phone || null, lead.banda ? 'Banda ' + lead.banda : null, lead.pago_estimado || null].filter(Boolean).join(' · ')
+    : 'Sin datos conectados.';
+  document.getElementById('follow-booking').textContent = bookings?.latest ? shortDate(bookings.latest) : DASH;
+}
+
+function initOpsScene() {
+  const canvas = document.getElementById('ops-canvas');
+  if (!canvas || !window.THREE || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  } catch { return; }
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(42, 1, .1, 100);
+  camera.position.set(0, 5.6, 12);
+  camera.lookAt(0, 0, 0);
+
+  const group = new THREE.Group();
+  group.rotation.x = -0.92;
+  scene.add(group);
+
+  const ringMaterial = new THREE.LineBasicMaterial({ color: 0x6b95c2, transparent: true, opacity: .32 });
+  const spokeMaterial = new THREE.LineBasicMaterial({ color: 0xb8ccdf, transparent: true, opacity: .18 });
+  const pulseMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: .58 });
+
+  for (let radius = 1.4; radius <= 6.2; radius += 1.2) {
+    const points = [];
+    for (let i = 0; i <= 96; i++) {
+      const a = (i / 96) * Math.PI * 2;
+      points.push(new THREE.Vector3(Math.cos(a) * radius, Math.sin(a) * radius, 0));
+    }
+    group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), ringMaterial));
+  }
+
+  for (let i = 0; i < 18; i++) {
+    const a = (i / 18) * Math.PI * 2;
+    const points = [
+      new THREE.Vector3(Math.cos(a) * .8, Math.sin(a) * .8, 0),
+      new THREE.Vector3(Math.cos(a) * 6.7, Math.sin(a) * 6.7, 0),
+    ];
+    group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), spokeMaterial));
+  }
+
+  const sweepGeo = new THREE.BufferGeometry();
+  const sweep = new THREE.Line(sweepGeo, pulseMaterial);
+  group.add(sweep);
+
+  const markers = new THREE.InstancedMesh(
+    new THREE.BoxGeometry(.08, .08, .08),
+    new THREE.MeshBasicMaterial({ color: 0xdce6f1, transparent: true, opacity: .72 }),
+    34
+  );
+  const matrix = new THREE.Matrix4();
+  for (let i = 0; i < 34; i++) {
+    const a = (i * 2.399) % (Math.PI * 2);
+    const r = 1.2 + (i % 9) * .58;
+    matrix.setPosition(Math.cos(a) * r, Math.sin(a) * r, .05 + (i % 4) * .08);
+    markers.setMatrixAt(i, matrix);
+  }
+  group.add(markers);
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    renderer.setPixelRatio(dpr);
+    renderer.setSize(rect.width, rect.height, false);
+    camera.aspect = rect.width / Math.max(1, rect.height);
+    camera.updateProjectionMatrix();
+  }
+
+  function frame(now) {
+    const t = now * .001;
+    group.rotation.z = t * .08;
+    markers.rotation.z = -t * .05;
+    const points = [new THREE.Vector3(0, 0, .06)];
+    const angle = t * .95;
+    for (let i = 0; i <= 26; i++) {
+      const a = angle - .62 + i * .024;
+      points.push(new THREE.Vector3(Math.cos(a) * 6.8, Math.sin(a) * 6.8, .06));
+    }
+    sweepGeo.setFromPoints(points);
+    renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+  requestAnimationFrame(frame);
+}
+
 async function load() {
   let d;
   try {
@@ -282,8 +497,10 @@ async function load() {
     d = await r.json();
   } catch { return; }
 
+  lastData = d;
   const f = d.funnel || {};
-  setText('total', fmt(f.total));
+  setNumber('total', f.total);
+  setNumber('ops-total', f.total);
   renderTrend(f.daily);
   renderBreakdown('rows-banda', f.by_banda);
   renderBreakdown('rows-segmento', f.by_segmento);
@@ -291,26 +508,19 @@ async function load() {
   renderBreakdown('rows-fuente', f.by_fuente);
   renderLeads(d.recent_leads);
   const b = d.bookings || null;
-  setText('bookings-total', fmt(b?.total));
+  setNumber('bookings-total', b?.total);
+  setNumber('ops-bookings', b?.total);
   setText('bookings-latest', b?.latest ? shortDate(b.latest) : DASH);
   renderBreakdown('rows-bookings', b?.by_status ?? null);
+  renderFollowUp(d.recent_leads, b);
 
   const s = d.sources || {};
   ['src-funnel', 'src-banda', 'src-segmento', 'src-idfu'].forEach(id => setSrc(id, s.funnel));
   setSrc('src-leads', s.leads);
-  setSrc('src-emails', s.emails);
   setSrc('src-bookings', s.bookings);
 
-  const t = d.updated_at ? new Date(d.updated_at) : new Date();
-  document.getElementById('stamp').textContent =
-    'Actualizado ' + t.toLocaleString('es-MX', {
-      day: 'numeric',
-      month: 'short',
-      hour: 'numeric',
-      minute: '2-digit',
-      timeZone: EASTERN_TIME,
-      timeZoneName: 'short',
-    });
+  lastUpdatedAt = d.updated_at ? new Date(d.updated_at) : new Date();
+  updateStamp();
 }
 
 document.getElementById('logout').addEventListener('click', async () => {
@@ -318,7 +528,10 @@ document.getElementById('logout').addEventListener('click', async () => {
   location = '/login.html';
 });
 
+initOpsScene();
 load();
+setInterval(load, REFRESH_MS);
+setInterval(updateStamp, 30000);
 </script>
 </body>
 </html>

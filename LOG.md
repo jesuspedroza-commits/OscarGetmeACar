@@ -41,6 +41,10 @@ Bitácora de cambios estructurales y de protocolo de este proyecto (no actividad
   - Nuevo endpoint `api/cal-webhook.js`: recibe POST de Cal.com, exige `CAL_WEBHOOK_SECRET`, normaliza payloads flexibles y hace upsert en `cal_bookings`.
   - `api/metrics.js` ahora expone `bookings` como `live` cuando la RPC devuelve el objeto; `dashboard.html` renderiza citas activas, ultima cita y desglose por status.
   - Pendiente para activar en produccion: aplicar la migracion en Supabase, crear `CAL_WEBHOOK_SECRET` en Vercel, redeploy, y configurar el webhook de Cal.com a `/api/cal-webhook`.
+- Dashboard polish post-Cal.com:
+  - Se retiro Kit/emails del dashboard y del contrato de `/api/metrics` porque ya no se usara como fuente.
+  - `dashboard.html` agrego hero operativo con radar 3D en Three.js, metricas compactas, auto-refresh cada 60s, tiempo relativo, count-up y animacion de barras.
+  - Nueva seccion "Proximo seguimiento" derivada de `recent_leads` y `bookings`, sin inventar numeros.
 
 ## 2026-06-26
 - Primer lead magnet del proyecto: "El Checklist Antes de Firmar" (`checklist-financiamiento.html`), via el skill `/lead-magnet`.
